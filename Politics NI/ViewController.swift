@@ -7,23 +7,21 @@
 //
 
 import UIKit
+import MapKit
 
 class ViewController: UIViewController {
-    var politiciansArr = [Politician]()
-    @IBOutlet weak var consChoices: UIPickerView!
+    var politiciansArr = DatabaseUtility.loadAllMembers()
     var myPoliticians = [Politician]()
-    
-    var constituencies = ["East Antrim","East Belfast","East Londonderry","Fermanagh and South Tyrone", "Foyle", "Lagan Valley", "Mid Ulster", "Newry and Armagh", "North Antrim", "North Belfast", "North Down", "South Antrim", "South Belfast", "South Down", "Strangford", "Upper Bann", "West Belfast", "West Tyrone"]
+    var parties = DatabaseUtility.getParties()
+    var constituencies = DatabaseUtility.getConstituencies()
     
     @IBOutlet var consPick: UIView!
-    
     @IBOutlet weak var profilePic: UIImageView!
     @IBOutlet weak var polName: UILabel!
     @IBOutlet weak var polParty: UILabel!
     
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         politiciansArr = DatabaseUtility.loadAllMembers()
     }
 
@@ -44,8 +42,17 @@ class ViewController: UIViewController {
         }
         loadMember(myPoliticians[0])
     }
-    @IBAction func choice(sender: AnyObject) {
-        switch(sender.tag) {
+    func loadMember(polit: Politician) {
+        let url = NSURL(string:polit.imageURL)
+        let data = NSData(contentsOfURL: url!)
+        profilePic.image = UIImage(data: data!)
+        polName.text = polit.firstName + " " + polit.lastName
+        polParty.text = polit.party
+    }
+    
+    @IBAction func choices(sender: AnyObject) {
+        
+        switch (sender.tag) {
         case 1:
             loadMember(myPoliticians[0])
         case 2:
@@ -60,30 +67,8 @@ class ViewController: UIViewController {
             loadMember(myPoliticians[5])
         default:
             loadMember(myPoliticians[0])
-}
         }
-    func loadMember(polit: Politician) {
-        let url = NSURL(string:polit.imageURL)
-        let data = NSData(contentsOfURL: url!)
-        profilePic.image = UIImage(data: data!)
-        polName.text = polit.name
-        polParty.text = polit.party
     }
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return constituencies.count
-    }
-    
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-        return constituencies[row]
-    }
-    
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
-    {
-    }
-    }
+}
 

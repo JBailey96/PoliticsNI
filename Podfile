@@ -7,6 +7,10 @@ target 'Politics NI' do
 
   # Pods for Politics NI
     pod 'SwiftyJSON'
-
-
+    pod ‘Firebase’, ‘>= 2.5.1’
+    pod 'Firebase/Database'
+    pod ‘Firebase/Auth’
+    pod ‘Fabric’
+    pod ‘TwitterKit’
+    pod ’TwitterCore’
 end

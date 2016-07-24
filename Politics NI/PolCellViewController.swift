@@ -6,4 +6,12 @@
 //  Copyright © 2016 App Camp. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class PolCellViewController:UITableViewCell {
+    @IBOutlet weak var profilePic: UIImageView!
+    @IBOutlet weak var constituencyLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    
+    
+}
