@@ -1,5 +1,5 @@
 //
-//  PolTwitterViewController.swift
+//  PartyTwitterViewController.swift
 //  Politics NI
 //
 //  Created by App Camp on 29/07/2016.
