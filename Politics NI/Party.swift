@@ -7,7 +7,6 @@
 //
 
 class Party  {
-    var leaderID:Int
     var name:String
     var logo:String
     var image = [String]()
@@ -20,8 +19,7 @@ class Party  {
     var email: String
     var policies: [(String,Int)]
     
-    init(leaderID: Int, name: String, logo: String, image: [String], description: String, facebookLink: String, youtubeLink: String, webLink: String, twitterLink: String, phoneNum: String, email: String, policies: [(String,Int)]) {
-        self.leaderID = leaderID
+    init(name: String, logo: String, image: [String], description: String, facebookLink: String, youtubeLink: String, webLink: String, twitterLink: String, phoneNum: String, email: String, policies: [(String,Int)]) {
         self.name = name
         self.logo = logo
         self.image = image

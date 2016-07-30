@@ -8,22 +8,28 @@
 
 
 class Politician {
-    var id:Int
-    var name:String
+    var id:String
+    var firstName:String
+    var lastName: String
     var constituency:String
     var party:String
     var imageURL:String
     var email:String
+    var altEmail:String
     var phoneNumber:String
+    var twitter:String
     
-    init(id: Int, name: String, constituency: String, party: String, imageURL: String, email: String, phoneNumber: String) {
+    init(id: String, firstName: String, lastName: String, constituency: String, party: String, imageURL: String, email: String, phoneNumber: String, twitter: String, altEmail: String) {
         self.id = id
-        self.name = name
+        self.firstName = firstName
+        self.lastName = lastName
         self.constituency = constituency
         self.party = party
         self.imageURL = imageURL
         self.email = email
         self.phoneNumber = phoneNumber
+        self.twitter = twitter
+        self.altEmail = email
     }
     
 }

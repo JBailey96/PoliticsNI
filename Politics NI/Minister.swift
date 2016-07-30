@@ -10,8 +10,8 @@ class Minister: Politician {
     var department:String?
     var role:String?
     
-    init(department: String, role: String, id: Int, name: String, constituency: String, party: String, imageURL: String, email: String, phoneNumber: String) {
-    super.init(id: id, name: name, constituency: constituency, party: party, imageURL: imageURL, email: email, phoneNumber: phoneNumber)
+    init(department: String, role: String, id: String, firstName: String, lastName: String, constituency: String, party: String, imageURL: String, email: String, phoneNumber: String, twitter: String, altEmail: String) {
+        super.init(id: id, firstName: firstName, lastName: lastName, constituency: constituency, party: party, imageURL: imageURL, email: email, phoneNumber: phoneNumber, twitter: twitter, altEmail: altEmail)
         self.department = department
         self.role = role
     }

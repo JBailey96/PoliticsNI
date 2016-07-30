@@ -7,9 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0700F4501D42BA6900E52F1D /* backbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 0700F44F1D42BA6900E52F1D /* backbutton.png */; };
+		0700F4521D42D15C00E52F1D /* forwardArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0700F4511D42D15C00E52F1D /* forwardArrow.png */; };
+		0727682C1D42301900FA9821 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0727682B1D42301900FA9821 /* Default-568h@2x.png */; };
+		0757BC8E1D43A9EA005D16B3 /* emailIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0757BC8D1D43A9EA005D16B3 /* emailIcon.png */; };
+		0757BC901D43AADE005D16B3 /* phoneIcon in Resources */ = {isa = PBXBuildFile; fileRef = 0757BC8F1D43AADE005D16B3 /* phoneIcon */; };
+		076516951D4111A200E4C04E /* PolTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076516941D4111A200E4C04E /* PolTableViewController.swift */; };
+		076D432D1D4406C300A2A69D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 076D432C1D4406C300A2A69D /* GoogleService-Info.plist */; };
+		078C02451D44F7A400FBBF81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 078C02431D44F7A400FBBF81 /* Main.storyboard */; };
 		079EA8BC1D3FA78D000570B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079EA8BB1D3FA78D000570B2 /* AppDelegate.swift */; };
 		079EA8BE1D3FA78D000570B2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079EA8BD1D3FA78D000570B2 /* ViewController.swift */; };
-		079EA8C11D3FA78D000570B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 079EA8BF1D3FA78D000570B2 /* Main.storyboard */; };
 		079EA8C31D3FA78D000570B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 079EA8C21D3FA78D000570B2 /* Assets.xcassets */; };
 		079EA8C61D3FA78D000570B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 079EA8C41D3FA78D000570B2 /* LaunchScreen.storyboard */; };
 		079EA8CE1D3FA7A3000570B2 /* Politician.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079EA8CD1D3FA7A3000570B2 /* Politician.swift */; };
@@ -17,14 +24,24 @@
 		079EA8D21D3FB233000570B2 /* Minister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079EA8D11D3FB233000570B2 /* Minister.swift */; };
 		079EA8D41D3FC8BB000570B2 /* DatabaseUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079EA8D31D3FC8BB000570B2 /* DatabaseUtility.swift */; };
 		079EA8D61D3FC955000570B2 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 079EA8D51D3FC955000570B2 /* SwiftyJSON.framework */; };
+		07B8253D1D411F3400E20DD4 /* PolCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B8253C1D411F3400E20DD4 /* PolCellViewController.swift */; };
+		07DE60591D439C2300AAAC37 /* PoliticianProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DE60581D439C2300AAAC37 /* PoliticianProfileViewController.swift */; };
+		07DE605B1D439EB600AAAC37 /* polProfile in Resources */ = {isa = PBXBuildFile; fileRef = 07DE605A1D439EB600AAAC37 /* polProfile */; };
 		0A5FAFA8909D6940CEF7F1D6 /* Pods_Politics_NI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2FF61639C63311AF561F235 /* Pods_Politics_NI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0700F44F1D42BA6900E52F1D /* backbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backbutton.png; sourceTree = "<group>"; };
+		0700F4511D42D15C00E52F1D /* forwardArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = forwardArrow.png; path = Images/forwardArrow.png; sourceTree = "<group>"; };
+		0727682B1D42301900FA9821 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		0757BC8D1D43A9EA005D16B3 /* emailIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = emailIcon.png; path = Images/emailIcon.png; sourceTree = "<group>"; };
+		0757BC8F1D43AADE005D16B3 /* phoneIcon */ = {isa = PBXFileReference; lastKnownFileType = file; name = phoneIcon; path = Images/phoneIcon; sourceTree = "<group>"; };
+		076516941D4111A200E4C04E /* PolTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolTableViewController.swift; sourceTree = "<group>"; };
+		076D432C1D4406C300A2A69D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		078C02441D44F7A400FBBF81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		079EA8B81D3FA78D000570B2 /* Politics NI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Politics NI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		079EA8BB1D3FA78D000570B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		079EA8BD1D3FA78D000570B2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		079EA8C01D3FA78D000570B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		079EA8C21D3FA78D000570B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		079EA8C51D3FA78D000570B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		079EA8C71D3FA78D000570B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -33,6 +50,9 @@
 		079EA8D11D3FB233000570B2 /* Minister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Minister.swift; sourceTree = "<group>"; };
 		079EA8D31D3FC8BB000570B2 /* DatabaseUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseUtility.swift; sourceTree = "<group>"; };
 		079EA8D51D3FC955000570B2 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../Library/Developer/Xcode/DerivedData/Politics_NI-bcrcekjquayitoblqcfdvzfhxptr/Build/Products/Debug-iphonesimulator/SwiftyJSON/SwiftyJSON.framework"; sourceTree = "<group>"; };
+		07B8253C1D411F3400E20DD4 /* PolCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolCellViewController.swift; sourceTree = "<group>"; };
+		07DE60581D439C2300AAAC37 /* PoliticianProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoliticianProfileViewController.swift; sourceTree = "<group>"; };
+		07DE605A1D439EB600AAAC37 /* polProfile */ = {isa = PBXFileReference; lastKnownFileType = file; name = polProfile; path = Images/polProfile; sourceTree = "<group>"; };
 		56CEBB80F2990F497E9FF87C /* Pods-Politics NI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Politics NI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Politics NI/Pods-Politics NI.debug.xcconfig"; sourceTree = "<group>"; };
 		A2FF61639C63311AF561F235 /* Pods_Politics_NI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Politics_NI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B528CF04131D3C2E3181221D /* Pods-Politics NI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Politics NI.release.xcconfig"; path = "Pods/Target Support Files/Pods-Politics NI/Pods-Politics NI.release.xcconfig"; sourceTree = "<group>"; };
@@ -51,9 +71,51 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0757BC891D43A7B2005D16B3 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				0757BC8F1D43AADE005D16B3 /* phoneIcon */,
+				0757BC8D1D43A9EA005D16B3 /* emailIcon.png */,
+				0700F44F1D42BA6900E52F1D /* backbutton.png */,
+				0700F4511D42D15C00E52F1D /* forwardArrow.png */,
+				07DE605A1D439EB600AAAC37 /* polProfile */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
+		0757BC8A1D43A7DE005D16B3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				079EA8CF1D3FB1AB000570B2 /* Party.swift */,
+				079EA8CD1D3FA7A3000570B2 /* Politician.swift */,
+				079EA8D11D3FB233000570B2 /* Minister.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		0757BC8B1D43A7EE005D16B3 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				079EA8BD1D3FA78D000570B2 /* ViewController.swift */,
+				076516941D4111A200E4C04E /* PolTableViewController.swift */,
+				07B8253C1D411F3400E20DD4 /* PolCellViewController.swift */,
+				07DE60581D439C2300AAAC37 /* PoliticianProfileViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		0757BC8C1D43A7FF005D16B3 /* Utility Classes */ = {
+			isa = PBXGroup;
+			children = (
+				079EA8D31D3FC8BB000570B2 /* DatabaseUtility.swift */,
+			);
+			name = "Utility Classes";
+			sourceTree = "<group>";
+		};
 		079EA8AF1D3FA78D000570B2 = {
 			isa = PBXGroup;
 			children = (
+				0727682B1D42301900FA9821 /* Default-568h@2x.png */,
 				079EA8BA1D3FA78D000570B2 /* Politics NI */,
 				079EA8B91D3FA78D000570B2 /* Products */,
 				720C82D250EA104B5D62F840 /* Pods */,
@@ -72,16 +134,16 @@
 		079EA8BA1D3FA78D000570B2 /* Politics NI */ = {
 			isa = PBXGroup;
 			children = (
+				076D432C1D4406C300A2A69D /* GoogleService-Info.plist */,
+				0757BC8C1D43A7FF005D16B3 /* Utility Classes */,
+				0757BC8B1D43A7EE005D16B3 /* View Controllers */,
+				0757BC8A1D43A7DE005D16B3 /* Models */,
+				0757BC891D43A7B2005D16B3 /* images */,
 				079EA8BB1D3FA78D000570B2 /* AppDelegate.swift */,
-				079EA8BD1D3FA78D000570B2 /* ViewController.swift */,
-				079EA8BF1D3FA78D000570B2 /* Main.storyboard */,
+				078C02431D44F7A400FBBF81 /* Main.storyboard */,
 				079EA8C21D3FA78D000570B2 /* Assets.xcassets */,
 				079EA8C41D3FA78D000570B2 /* LaunchScreen.storyboard */,
 				079EA8C71D3FA78D000570B2 /* Info.plist */,
-				079EA8CF1D3FB1AB000570B2 /* Party.swift */,
-				079EA8CD1D3FA7A3000570B2 /* Politician.swift */,
-				079EA8D11D3FB233000570B2 /* Minister.swift */,
-				079EA8D31D3FC8BB000570B2 /* DatabaseUtility.swift */,
 			);
 			path = "Politics NI";
 			sourceTree = "<group>";
@@ -117,6 +179,7 @@
 				079EA8B61D3FA78D000570B2 /* Resources */,
 				3237F3083F3F1752F496A2A6 /* [CP] Embed Pods Frameworks */,
 				CD2C56218499278333A5D82C /* [CP] Copy Pods Resources */,
+				078C02461D4524EF00FBBF81 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -166,15 +229,36 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0700F4501D42BA6900E52F1D /* backbutton.png in Resources */,
+				078C02451D44F7A400FBBF81 /* Main.storyboard in Resources */,
+				0757BC8E1D43A9EA005D16B3 /* emailIcon.png in Resources */,
+				0700F4521D42D15C00E52F1D /* forwardArrow.png in Resources */,
 				079EA8C61D3FA78D000570B2 /* LaunchScreen.storyboard in Resources */,
+				0727682C1D42301900FA9821 /* Default-568h@2x.png in Resources */,
+				0757BC901D43AADE005D16B3 /* phoneIcon in Resources */,
+				07DE605B1D439EB600AAAC37 /* polProfile in Resources */,
+				076D432D1D4406C300A2A69D /* GoogleService-Info.plist in Resources */,
 				079EA8C31D3FA78D000570B2 /* Assets.xcassets in Resources */,
-				079EA8C11D3FA78D000570B2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		078C02461D4524EF00FBBF81 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" ee203f49deb3e6ee60263dc80eb6289589ed084b a67893daa3ec1cc0fcad880934d29dc0f2e07b472ddd8e9927efc3fe19eca366";
+		};
 		1308D6271E112A77840E7495 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -227,7 +311,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07B8253D1D411F3400E20DD4 /* PolCellViewController.swift in Sources */,
+				07DE60591D439C2300AAAC37 /* PoliticianProfileViewController.swift in Sources */,
 				079EA8BE1D3FA78D000570B2 /* ViewController.swift in Sources */,
+				076516951D4111A200E4C04E /* PolTableViewController.swift in Sources */,
 				079EA8D41D3FC8BB000570B2 /* DatabaseUtility.swift in Sources */,
 				079EA8BC1D3FA78D000570B2 /* AppDelegate.swift in Sources */,
 				079EA8D01D3FB1AB000570B2 /* Party.swift in Sources */,
@@ -239,10 +326,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		079EA8BF1D3FA78D000570B2 /* Main.storyboard */ = {
+		078C02431D44F7A400FBBF81 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				079EA8C01D3FA78D000570B2 /* Base */,
+				078C02441D44F7A400FBBF81 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
