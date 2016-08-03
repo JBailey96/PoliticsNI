@@ -6,8 +6,9 @@
 //  Copyright © 2016 App Camp. All rights reserved.
 //
 
-import Cocoa
 
 class IssuesCellViewController: UITableViewCell {
-
+    
+    @IBOutlet weak var issueLabel: UILabel!
+    
 }

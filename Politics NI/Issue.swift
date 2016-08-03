@@ -6,4 +6,14 @@
 //  Copyright © 2016 App Camp. All rights reserved.
 //
 
-import Foundation
+class Issue {
+    var desc: String!
+    var id: String!
+    
+    init(desc: String, id: String) {
+        self.desc = desc
+        self.id = id
+    }
+    
+    
+}

@@ -6,4 +6,14 @@
 //  Copyright © 2016 App Camp. All rights reserved.
 //
 
-import Foundation
+import TwitterKit
+
+class PolTwitterViewController: TWTRTimelineViewController {
+    var currentPol: Politician?
+    
+    override func viewDidLoad() {
+            super.viewDidLoad()
+            let client = TWTRAPIClient()
+            self.dataSource = TWTRUserTimelineDataSource(screenName: currentPol!.twitter, APIClient: client)
+    }
+}

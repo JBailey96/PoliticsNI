@@ -14,26 +14,34 @@ import TwitterKit
 class PoliticianProfileViewController: UIViewController {
     let rootRef = FIRDatabase.database().reference()
     
-    @IBOutlet weak var emailAddress: UILabel!
-    @IBOutlet weak var polNameTwitter: UILabel!
-    @IBOutlet weak var phoneNumber: UILabel!
+    @IBOutlet weak var polPartyName: UIButton!
+    @IBOutlet weak var phoneNumTextView: UITextView!
     @IBOutlet weak var polProfileImage: UIImageView!
     @IBOutlet weak var polName: UILabel!
-    @IBOutlet weak var polParty: UILabel!
+    @IBOutlet weak var altEmailTextView: UITextView!
     @IBOutlet weak var polPartyImage: UIImageView!
-    var currentPol: Politician?
+    @IBOutlet weak var emailTextView: UITextView!
     
-    @IBOutlet weak var button: UIButton!
+    var currentPol: Politician?
+    var party: Party?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        polPartyName.hidden = true
+        loadParties()
+        
+        //setting up properties of nav bar
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
         self.navigationController?.navigationBar.titleTextAttributes =  [NSForegroundColorAttributeName : UIColor.whiteColor()]
         self.navigationController?.navigationBar.backItem?.backBarButtonItem?.tintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
-            //let mlaRef = rootRef.child(pol.id)
-            //print(mlaRef)
-            
-            rootRef.observeEventType(.Value, withBlock: { snapshot in
+        //hiding twitter options until verified politician has twitter
+        
+            let mlaRef = rootRef.child("MLAContact") //
+        
+            mlaRef.observeEventType(.Value, withBlock: { snapshot in
                 print(snapshot.value)
                 print(self.currentPol?.id)
                 for child in snapshot.children {
@@ -42,50 +50,35 @@ class PoliticianProfileViewController: UIViewController {
                         let phoneNum = childSnapshot.value!.objectForKey("Telephone Number")?.stringValue
                         self.currentPol?.phoneNumber = phoneNum!
                         print(self.currentPol?.phoneNumber)
-                        self.phoneNumber.text = "0" + (self.currentPol?.phoneNumber)!
+                        self.phoneNumTextView.text = "0" + (self.currentPol?.phoneNumber)!
                         
                         let email = childSnapshot.value!.objectForKey("Email contact address") as! String
                         print(email)
                         self.currentPol?.email = email
-                        self.emailAddress.text = email
+                        self.emailTextView.text = email
                         
                         let twitter = childSnapshot.value!.objectForKey("Twitter") as! String
-                        print(twitter)
                         self.currentPol?.twitter = twitter
                         
                         let altEmail = childSnapshot.value!.objectForKey("Alternative Email contact") as! String
                         self.currentPol?.altEmail = altEmail
+                        self.altEmailTextView.text = altEmail
                         
                     }
                 }
                 
-                let client = TWTRAPIClient()
-                client.loadUserWithID("12") { (user, error) -> Void in
-                    
+                if (self.currentPol?.twitter == "na") {
+                    if  let arrayOfTabBarItems = self.tabBarController!.tabBar.items as! AnyObject as? NSArray,tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
+                        tabBarItem.enabled = false
+                    }
                 }
                 
-                
-//                for child in snapshot.children {
-//                    if let w = child.value.objectForKey("Twitter") as? String {
-//                        print(w)
-//                    }
-//                }
-//                twitter  = (snapshot.value!.objectForKey("Twitter")!) as! String
-//                phoneNum = (snapshot.value!.objectForKey("Telephone Number"))!.stringValue
-//                altEmail = (snapshot.value!.objectForKey("Alternative Email contact"))! as! String
-//                email = (snapshot.value!.objectForKey("Email contact address"))! as! String
-//                self.currentPol?.twitter = twitter
-//                self.currentPol?.phoneNumber = phoneNum
-//                self.currentPol?.altEmail = altEmail
-//                self.currentPol?.email = email
-//                self.phoneNumber.text = "0" + (phoneNum)
                 }, withCancelBlock:  { error in
                     print(error.description)
             })
         
+        
         // Add a button to the center of the view to show the timeline
-        button.addTarget(self, action: #selector(showTimeline), forControlEvents: [.TouchUpInside])
-        view.addSubview(button)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -96,26 +89,42 @@ class PoliticianProfileViewController: UIViewController {
         //polProfileImage.layer.cornerRadius = 25
        // polProfileImage.layer.masksToBounds = true
        // polProfileImage.layer.borderWidth = 0.1;
-        polName.text = (currentPol?.firstName)! + " " + (currentPol?.lastName)!
-        polParty.text = (currentPol?.party)
-        polNameTwitter.text = polName.text
+        polName.text = (currentPol?.firstName)! + " " + (currentPol?.lastName)! + ", MLA"
     }
     
-    func showTimeline() {
-        // Create an API client and data source to fetch Tweets for the timeline
-        let client = TWTRAPIClient()
-        //TODO: Replace with your collection id or a different data source
-        let dataSource = TWTRUserTimelineDataSource(screenName: currentPol!.twitter, APIClient: client)
-        // Create the timeline view controller
-        let timelineViewControlller = TWTRTimelineViewController(dataSource: dataSource)
-        // Create done button to dismiss the view controller
-        let button = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(dismissTimeline))
-        timelineViewControlller.navigationItem.leftBarButtonItem = button
-        // Create a navigation controller to hold the
-        let navigationController = UINavigationController(rootViewController: timelineViewControlller)
-        showDetailViewController(navigationController, sender: self)
-    }
-    func dismissTimeline() {
-        dismissViewControllerAnimated(true, completion: nil)
+    
+    func loadParties() {
+        let partiesRef = FIRDatabase.database().reference().child("parties").child("party")
+        partiesRef.observeEventType(.Value, withBlock: { snapshot in
+            for child in snapshot.children {
+                let childSnapshot = snapshot.childSnapshotForPath(child.key)
+                let name = childSnapshot.value!.objectForKey("name") as! String
+                if (self.currentPol?.party == name) {
+                    let childSnapshot = snapshot.childSnapshotForPath(child.key)
+                    let id = childSnapshot.value!.objectForKey("PartyOrganisationId") as! String
+                    let email = childSnapshot.value!.objectForKey("email") as! String
+                    let logo = childSnapshot.value!.objectForKey("logo") as! String
+                    let phoneNum = childSnapshot.value!.objectForKey("phoneNum") as! String
+                    let webLink = childSnapshot.value!.objectForKey("webLink") as! String
+                    let twitter = childSnapshot.value!.objectForKey("twitter") as! String
+                    self.party = Party(id: id, name: name, logo: logo, webLink: webLink, twitterLink: twitter, phoneNum: phoneNum, email: email)
+                    self.polPartyImage.image = UIImage(named: (self.party?.logo)!)
+                    self.polPartyName.setTitle(name, forState: UIControlState.Normal)
+                    self.polPartyName.hidden = false
+                }
+            }
+            
+        })
+}
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if  segue.identifier == "goToParty" {
+            let tabBarC : UITabBarController = segue.destinationViewController as! UITabBarController
+            let desView: PartyProfileVIewController = tabBarC.viewControllers?.first as! PartyProfileVIewController
+            let des2View: PartyTwitterController = tabBarC.viewControllers?[1] as! PartyTwitterController
+            let des3View: PartyIssuesViewController = tabBarC.viewControllers?[2] as! PartyIssuesViewController
+            desView.currentParty = party
+            des2View.currentParty = party
+            des3View.currentParty = party
+        }
     }
 }

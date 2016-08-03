@@ -12,6 +12,4 @@ class PolCellViewController:UITableViewCell {
     @IBOutlet weak var profilePic: UIImageView!
     @IBOutlet weak var constituencyLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
-    
-    
 }

@@ -11,7 +11,10 @@ import Firebase
 import FirebaseDatabase
 
 class DatabaseUtility {
+    static let rootRef = FIRDatabase.database().reference()
     
+
+    // method for loading all the members of NI assembly
     class func loadAllMembers() -> [Politician] {
         var politiciansArr = [Politician]()
         
@@ -21,9 +24,6 @@ class DatabaseUtility {
             if let data = try? NSData(contentsOfURL: url, options: []) {
                 let json = JSON(data: data)
                 for item in json["AllMembersList"]["Member"].arrayValue {
-                    //if item["ConstituencyName"].string == "North Down" {
-                        //print(item["MemberFullDisplayName"].stringValue)
-                    //
                     let id = item["PersonId"].stringValue
                     let firstName = item["MemberFirstName"].stringValue
                     let lastName = item["MemberLastName"].stringValue
@@ -35,7 +35,6 @@ class DatabaseUtility {
                     let altEmail = ""
                     let twitter = ""
                     
-                    
                     let pol = Politician(id: id, firstName: firstName, lastName: lastName, constituency: constituency, party: party, imageURL: imageURL, email: email, phoneNumber: phoneNumber, twitter: twitter, altEmail: altEmail)
                     politiciansArr.append(pol)
                 }
@@ -44,67 +43,97 @@ class DatabaseUtility {
 }
         return [Politician]()
 }
+    // class for loading all the constiuencies and their respective ID
     
-    class func getConstituencies() -> [[String: String]] {
-        var constitArr = [[String: String]]()
+//    class func getConstituencies() -> [[String: String]] {
+//        var constitArr = [[String: String]]()
+//        let urlString = "http://data.niassembly.gov.uk/members_json.ashx?m=GetAllConstituencies"
+//        
+//        
+//        if let url = NSURL(string: urlString) {
+//            if let data = try? NSData(contentsOfURL: url, options: []) {
+//                let json = JSON(data: data)
+//                for item in json["AllConstituencies"]["Constituency"].arrayValue {
+//                    let cons = item["ConstituencyName"].stringValue
+//                    let consID = item["ConstituencyId"].stringValue
+//                    constitArr.append([cons: consID])
+//                }
+//                return constitArr
+//            }
+//        }
+//        return constitArr
+//    }
+    
+    //method for getting the name of a constiuency by searching through nia assembly API
+    class func getConstituenciesName(conID: String) -> String {
         let urlString = "http://data.niassembly.gov.uk/members_json.ashx?m=GetAllConstituencies"
+        let formatString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         
-        
-        if let url = NSURL(string: urlString) {
+        if let url = NSURL(string: formatString!) {
             if let data = try? NSData(contentsOfURL: url, options: []) {
                 let json = JSON(data: data)
                 for item in json["AllConstituencies"]["Constituency"].arrayValue {
                     let cons = item["ConstituencyName"].stringValue
-                    let consID = item["ConstituencyId"].stringValue
-                    constitArr.append([cons: consID])
-                    //print(cons)
+                    print(cons)
+                    let consID = item["ConstituencyOnsCode"].stringValue
+                    print(consID)
+                    
+                    if (conID == consID) {
+                        print(cons)
+                        return cons
+                    }
                 }
-                return constitArr
             }
         }
-        return constitArr
+        return ""
     }
     
-    class func getParties() -> [String] {
-        var partiesArr = [String]()
-        let urlString = "http://data.niassembly.gov.uk/organisations_json.ashx?m=GetPartiesListCurrent"
-        
-        
-        if let url = NSURL(string: urlString) {
-            if let data = try? NSData(contentsOfURL: url, options: []) {
-                let json = JSON(data: data)
-                for item in json["OrganisationsList"]["Organisation"].arrayValue {
-                    let party = item["OrganisationName"].stringValue
-                    partiesArr.append(party)
-                    //print(party)
-                }
-                return partiesArr
-            }
-        }
-        return partiesArr
-    }
-    
+    //method for getting the constituency from the user's current location (longitude and latitude)
     class func getConstituency(lat: String, long: String) -> String {
         var constit:String = ""
         var uri:String = ""
         let urlString = "http://uk-postcodes.com/postcode/nearest?lat=" + lat + "&lng=" + long + "&miles=0.2)]&format=json"
+        let formatString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         
-        if let url = NSURL(string: urlString) {
+        if let url = NSURL(string: formatString!) {
             if let data = try? NSData(contentsOfURL: url, options: []) {
                 let json = JSON(data: data)
-                    uri = json["uri"].stringValue + ".json"
+                    uri = json[0]["uri"].stringValue + ".json"
             }
         }
         
-        if let url = NSURL(string: uri) {
+
+        
+        let formatUri = uri.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        
+        if let url = NSURL(string: formatUri!) {
             if let data = try? NSData(contentsOfURL: url, options: []) {
                 let json = JSON(data: data)
                 constit = json["administrative"]["constituency"]["title"].stringValue
+                let constitID = json["administrative"]["constituency"]["code"].stringValue
+                constit = getConstituenciesName(constitID)
+                print(constit)
+                return constit
             }
         }
         return constit
     }
     
-    
+    class func getConstituencyPostCode(postCode: String) -> String {
+        let uri = "http://uk-postcodes.com/postcode/" + postCode + ".json"
+        let formatUri = uri.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        var constit = ""
+        
+        if let url = NSURL(string: formatUri!) {
+            if let data = try? NSData(contentsOfURL: url, options: []) {
+                let json = JSON(data: data)
+                constit = json["administrative"]["constituency"]["title"].stringValue
+                let constitID = json["administrative"]["constituency"]["code"].stringValue
+                constit = getConstituenciesName(constitID)
+                return constit
+            }
+        }
+        return constit
     }
-
+    
+}
