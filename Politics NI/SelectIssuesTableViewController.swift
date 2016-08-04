@@ -25,12 +25,16 @@ class SelectIssuesTableViewController: UITableViewController {
         loadPartyViews()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        compareIssues()
+    }
+    
     func loadPartyViews() {
         let issuesRef = FIRDatabase.database().reference().child("parties").child("issues").child("issue")
         
         self.issues.removeAll()
         self.partyViews.removeAll()
-        issuesRef.observeEventType(.Value, withBlock: { snapshot in
+        issuesRef.observeSingleEventOfType(.Value, withBlock: { snapshot in
             for child in snapshot.children {
                 let childSnapshot = snapshot.childSnapshotForPath(child.key)
                 let desc = childSnapshot.value!.objectForKey("desc") as! String
@@ -49,7 +53,6 @@ class SelectIssuesTableViewController: UITableViewController {
                     self.partyViews.append(partyView)
                 }
             }
-            self.compareIssues()
         })
     }
     
@@ -79,7 +82,6 @@ class SelectIssuesTableViewController: UITableViewController {
             }
             let desView = segue.destinationViewController as! UserResponseViewController
             desView.partyViews = partyViewsCollect
-
             partyViewsCollect.removeAll()
         }
         }
@@ -87,17 +89,18 @@ class SelectIssuesTableViewController: UITableViewController {
     
     func compareIssues() {
         let userResponded = userUtility.issues
-        if (!userResponded.isEmpty) {
-            for i in 0..<userResponded.count {
-                for x in 0..<userResponded.count {
-                    if userResponded[i].id == issues[x].id {
-                        issues.removeAtIndex(x)
+        if (!userResponded.isEmpty) && (!issues.isEmpty) {
+            for (usrResindex, usrRes) in userResponded.enumerate() {
+                for (issIndex, issue) in issues.enumerate() {
+                    if usrRes.id == issue.id {
+                        print("in")
+                        print(issues[issIndex].desc)
+                        issues.removeAtIndex(issIndex)
                     }
                 }
             }
-
         }
-            self.tableView.reloadData()
+        self.tableView.reloadData()
     }
 
 }

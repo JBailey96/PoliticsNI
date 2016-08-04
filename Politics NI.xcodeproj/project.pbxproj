@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0719DF3F1D53677B00C1C55B /* PartyEvaluationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0719DF3E1D53677B00C1C55B /* PartyEvaluationViewController.swift */; };
+		0719DF411D53687A00C1C55B /* PartyEvalCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0719DF401D53687A00C1C55B /* PartyEvalCellViewController.swift */; };
 		071F343F1D51DCCC000400F7 /* SelectIssuesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071F343E1D51DCCC000400F7 /* SelectIssuesTableViewController.swift */; };
 		071F34411D51DE73000400F7 /* IssuesCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071F34401D51DE73000400F7 /* IssuesCellViewController.swift */; };
 		07211A2F1D50ACE400C502D3 /* UserResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07211A2E1D50ACE400C502D3 /* UserResponseViewController.swift */; };
@@ -20,6 +22,7 @@
 		076516951D4111A200E4C04E /* PolTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076516941D4111A200E4C04E /* PolTableViewController.swift */; };
 		077981F11D4A1731008B6417 /* email.png in Resources */ = {isa = PBXBuildFile; fileRef = 077981F01D4A1731008B6417 /* email.png */; };
 		078C02451D44F7A400FBBF81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 078C02431D44F7A400FBBF81 /* Main.storyboard */; };
+		078C626C1D536F65003CA96F /* PartyEval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078C626B1D536F65003CA96F /* PartyEval.swift */; };
 		079EA8BC1D3FA78D000570B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079EA8BB1D3FA78D000570B2 /* AppDelegate.swift */; };
 		079EA8C31D3FA78D000570B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 079EA8C21D3FA78D000570B2 /* Assets.xcassets */; };
 		079EA8C61D3FA78D000570B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 079EA8C41D3FA78D000570B2 /* LaunchScreen.storyboard */; };
@@ -69,6 +72,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0719DF3E1D53677B00C1C55B /* PartyEvaluationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyEvaluationViewController.swift; sourceTree = "<group>"; };
+		0719DF401D53687A00C1C55B /* PartyEvalCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyEvalCellViewController.swift; sourceTree = "<group>"; };
 		071F343E1D51DCCC000400F7 /* SelectIssuesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectIssuesTableViewController.swift; sourceTree = "<group>"; };
 		071F34401D51DE73000400F7 /* IssuesCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssuesCellViewController.swift; sourceTree = "<group>"; };
 		07211A2E1D50ACE400C502D3 /* UserResponseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserResponseViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +87,7 @@
 		076516941D4111A200E4C04E /* PolTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolTableViewController.swift; sourceTree = "<group>"; };
 		077981F01D4A1731008B6417 /* email.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = email.png; path = Images/email.png; sourceTree = "<group>"; };
 		078C02441D44F7A400FBBF81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		078C626B1D536F65003CA96F /* PartyEval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyEval.swift; sourceTree = "<group>"; };
 		079EA8B81D3FA78D000570B2 /* Politics NI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Politics NI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		079EA8BB1D3FA78D000570B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		079EA8C21D3FA78D000570B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -157,6 +163,8 @@
 				07211A301D50AFDA00C502D3 /* IssuesHubTableViewController.swift */,
 				071F343E1D51DCCC000400F7 /* SelectIssuesTableViewController.swift */,
 				071F34401D51DE73000400F7 /* IssuesCellViewController.swift */,
+				0719DF3E1D53677B00C1C55B /* PartyEvaluationViewController.swift */,
+				0719DF401D53687A00C1C55B /* PartyEvalCellViewController.swift */,
 			);
 			name = "My Issues";
 			sourceTree = "<group>";
@@ -226,6 +234,7 @@
 				07DDA55E1D4617CF0001B507 /* User.swift */,
 				07A4E2E81D4F754300523B3E /* Issue.swift */,
 				07A4E2EA1D4F75C600523B3E /* PartyView.swift */,
+				078C626B1D536F65003CA96F /* PartyEval.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -497,8 +506,10 @@
 				07DDA56D1D463E120001B507 /* RegisterViewController.swift in Sources */,
 				0741AD841D4B6576009CDABF /* PolTwitterViewController.swift in Sources */,
 				071F34411D51DE73000400F7 /* IssuesCellViewController.swift in Sources */,
+				0719DF411D53687A00C1C55B /* PartyEvalCellViewController.swift in Sources */,
 				07F401DF1D4907120007384A /* SideMenuTableViewController.swift in Sources */,
 				07DE60591D439C2300AAAC37 /* PoliticianProfileViewController.swift in Sources */,
+				078C626C1D536F65003CA96F /* PartyEval.swift in Sources */,
 				07A4E2E91D4F754300523B3E /* Issue.swift in Sources */,
 				07211A2F1D50ACE400C502D3 /* UserResponseViewController.swift in Sources */,
 				07E0EFED1D49F75C0013B5B7 /* PartyProfileVIewController.swift in Sources */,
@@ -508,6 +519,7 @@
 				079EA8BC1D3FA78D000570B2 /* AppDelegate.swift in Sources */,
 				07EAF6391D47919C007A2208 /* LandingPageViewController.swift in Sources */,
 				071F343F1D51DCCC000400F7 /* SelectIssuesTableViewController.swift in Sources */,
+				0719DF3F1D53677B00C1C55B /* PartyEvaluationViewController.swift in Sources */,
 				0741AD861D4B862D009CDABF /* PartyTwitterViewController.swift in Sources */,
 				07A4E2E71D4F736D00523B3E /* PartyIssuesViewController.swift in Sources */,
 				079EA8D01D3FB1AB000570B2 /* Party.swift in Sources */,

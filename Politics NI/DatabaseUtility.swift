@@ -7,11 +7,8 @@
 //
 
 import SwiftyJSON
-import Firebase
-import FirebaseDatabase
 
 class DatabaseUtility {
-    static let rootRef = FIRDatabase.database().reference()
     
 
     // method for loading all the members of NI assembly
@@ -43,26 +40,7 @@ class DatabaseUtility {
 }
         return [Politician]()
 }
-    // class for loading all the constiuencies and their respective ID
-    
-//    class func getConstituencies() -> [[String: String]] {
-//        var constitArr = [[String: String]]()
-//        let urlString = "http://data.niassembly.gov.uk/members_json.ashx?m=GetAllConstituencies"
-//        
-//        
-//        if let url = NSURL(string: urlString) {
-//            if let data = try? NSData(contentsOfURL: url, options: []) {
-//                let json = JSON(data: data)
-//                for item in json["AllConstituencies"]["Constituency"].arrayValue {
-//                    let cons = item["ConstituencyName"].stringValue
-//                    let consID = item["ConstituencyId"].stringValue
-//                    constitArr.append([cons: consID])
-//                }
-//                return constitArr
-//            }
-//        }
-//        return constitArr
-//    }
+
     
     //method for getting the name of a constiuency by searching through nia assembly API
     class func getConstituenciesName(conID: String) -> String {

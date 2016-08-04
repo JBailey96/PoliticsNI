@@ -12,7 +12,7 @@ import TwitterKit
 
 
 class PoliticianProfileViewController: UIViewController {
-    let rootRef = FIRDatabase.database().reference()
+    let mlaRef = FIRDatabase.database().reference().child("MLAContact")
     
     @IBOutlet weak var polPartyName: UIButton!
     @IBOutlet weak var phoneNumTextView: UITextView!
@@ -39,7 +39,6 @@ class PoliticianProfileViewController: UIViewController {
         
         //hiding twitter options until verified politician has twitter
         
-            let mlaRef = rootRef.child("MLAContact") //
         
             mlaRef.observeEventType(.Value, withBlock: { snapshot in
                 print(snapshot.value)

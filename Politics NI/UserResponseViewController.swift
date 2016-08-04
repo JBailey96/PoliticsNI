@@ -76,6 +76,7 @@ class UserResponseViewController: UIViewController {
         let user = FIRAuth.auth()?.currentUser
         let issueWrite = ["issueDesc": partyViews[0].issueDesc, "issueID": partyViews[0].issueID]
         self.ref.child("users").child(user!.uid).child("issueResponses").child(partyViews[0].issueID).setValue(issueWrite)
+        
        
         for view in agreeViews {
             let partyView = ["partyID": view.partyID, "view": view.view, "viewsrc": view.viewsrc]
@@ -104,47 +105,7 @@ class UserResponseViewController: UIViewController {
         }
             self.ref.child("users").child(user!.uid).child("issueResponses").child(partyViews[0].issueID).child("partyViews").child("Neutral").setValue(dictionaryPartyViews)
             dictionaryPartyViews.removeAll()
+            userUtility.getUserIssues()
     }
-    
-//    class func getUserIssues() {
-//        let issueResp = rootRef.child("users").child(authData!).child("issueResponses")
-//        
-//        issueResp.observeEventType(.Value, withBlock: { snapshot in
-//            for child in snapshot.children {
-//                let childSnapshot = snapshot.childSnapshotForPath(child.key)
-//                let issueDesc = childSnapshot.value?.objectForKey("issueDesc") as! String
-//                let issueID = childSnapshot.value?.objectForKey("issueID") as! String
-//                let issue = Issue(desc: issueDesc, id: issueID)
-//                issues.append(issue)
-//                
-//                let viewsChild = childSnapshot.childSnapshotForPath("partyViews")
-//                for child in viewsChild.children {
-//                    let test = viewsChild.childSnapshotForPath(child.key)
-//                    let partyID = test.value!.objectForKey("partyID") as! String
-//                    let view = test.value!.objectForKey("view") as! String
-//                    let viewsrc = test.value!.objectForKey("viewsrc") as! String
-//                    let partyView = PartyView(issueID: issue.id, issueDesc: issue.desc, partyID: partyID, view: view, viewsrc: viewsrc)
-//                    
-//                    switch test.value!.objectForKey("viewsrc") as! String {
-//                    case "A":
-//                        agreeViews.append(partyView)
-//                    case "D":
-//                        disagreeViews.append(partyView)
-//                    case "U":
-//                        unsureViews.append(partyView)
-//                    case "N":
-//                        neutralViews.append(partyView)
-//                    default:
-//                        unsureViews.append(partyView)
-//                    }
-//                }
-//            }
-//            
-//            }, withCancelBlock:  { error in
-//                print(error.description)
-//        })
-//        
-//    }
-
 
 }

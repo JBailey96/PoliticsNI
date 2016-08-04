@@ -8,6 +8,7 @@
 import Firebase
 
 class PartyIssuesViewController: UITableViewController {
+    let issuesRef = FIRDatabase.database().reference().child("parties").child("issues").child("issue")
      var currentParty: Party!
     var issue: Issue!
     var partyViewsArray = [PartyView]()
@@ -22,8 +23,7 @@ class PartyIssuesViewController: UITableViewController {
     }
     
     func loadIssues() {
-        let issuesRef = FIRDatabase.database().reference().child("parties").child("issues").child("issue")
-        
+        issuesRef.keepSynced(true)
         issuesRef.observeEventType(.Value, withBlock: { snapshot in
             for child in snapshot.children {
                 let childSnapshot = snapshot.childSnapshotForPath(child.key)

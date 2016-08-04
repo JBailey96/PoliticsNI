@@ -8,7 +8,7 @@
 import Firebase
 
 class PartyTableViewController: UITableViewController {
-    lazy var rootRef = FIRDatabase.database().reference()
+    lazy var partiesRef = FIRDatabase.database().reference().child("parties").child("party")
     var parties = [Party]()
     
     override func viewDidLoad() {
@@ -22,8 +22,7 @@ class PartyTableViewController: UITableViewController {
     }
     
     func loadParties() {
-        let partiesRef = FIRDatabase.database().reference().child("parties").child("party")
-        
+        partiesRef.keepSynced(true)
             partiesRef.observeEventType(.Value, withBlock: { snapshot in
                 for child in snapshot.children {
                     let childSnapshot = snapshot.childSnapshotForPath(child.key)

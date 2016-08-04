@@ -1,4 +1,4 @@
-//
+	//
 //  LandingPageViewController.swift
 //  Politics NI
 //
@@ -35,7 +35,7 @@ class LandingPageViewController: UIViewController {
                 self.presentViewController(alert, animated: true, completion: nil)
             } else {
                 userUtility.getUserInfo()
-                //userUtility.getUserIssues()
+                userUtility.getUserIssues()
                 self.performSegueWithIdentifier("takeToHub", sender: self)
             }
         }
