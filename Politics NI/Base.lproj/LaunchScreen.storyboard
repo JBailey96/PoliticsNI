@@ -3,6 +3,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -14,14 +16,32 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="politicsni copy.png" translatesAutoresizingMaskIntoConstraints="NO" id="iTe-K5-tMt">
+                                <rect key="frame" x="57" y="218" width="300" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="iTe-K5-tMt" secondAttribute="height" multiplier="1:1" id="imI-a0-x7p"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.18823529410000001" green="0.52941176469999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="iTe-K5-tMt" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="37" id="7kj-ry-Ez6"/>
+                            <constraint firstItem="iTe-K5-tMt" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Act-Lw-FEz"/>
+                            <constraint firstItem="iTe-K5-tMt" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="198" id="F1l-21-dIW"/>
+                            <constraint firstItem="iTe-K5-tMt" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="ODM-zz-c2z"/>
+                        </constraints>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="politicsni copy.png" width="1024" height="1024"/>
+    </resources>
 </document>

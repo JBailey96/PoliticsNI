@@ -16,10 +16,12 @@ import TwitterKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var currentPol: Politician?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         FIRApp.configure()
+        FIRDatabase.database().persistenceEnabled = true
         Fabric.with([Twitter.self])
         // Override point for customization after application launch.
         return true

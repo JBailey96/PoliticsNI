@@ -7,52 +7,130 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0700F4501D42BA6900E52F1D /* backbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 0700F44F1D42BA6900E52F1D /* backbutton.png */; };
-		0700F4521D42D15C00E52F1D /* forwardArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0700F4511D42D15C00E52F1D /* forwardArrow.png */; };
+		071F343F1D51DCCC000400F7 /* SelectIssuesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071F343E1D51DCCC000400F7 /* SelectIssuesTableViewController.swift */; };
+		071F34411D51DE73000400F7 /* IssuesCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071F34401D51DE73000400F7 /* IssuesCellViewController.swift */; };
+		07211A2F1D50ACE400C502D3 /* UserResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07211A2E1D50ACE400C502D3 /* UserResponseViewController.swift */; };
+		07211A311D50AFDA00C502D3 /* IssuesHubTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07211A301D50AFDA00C502D3 /* IssuesHubTableViewController.swift */; };
 		0727682C1D42301900FA9821 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0727682B1D42301900FA9821 /* Default-568h@2x.png */; };
+		0741AD841D4B6576009CDABF /* PolTwitterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0741AD831D4B6576009CDABF /* PolTwitterViewController.swift */; };
+		0741AD861D4B862D009CDABF /* PartyTwitterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0741AD851D4B862D009CDABF /* PartyTwitterViewController.swift */; };
+		074B46701D4E7A20004F9C0E /* EditDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B466F1D4E7A20004F9C0E /* EditDetailsViewController.swift */; };
 		0757BC8E1D43A9EA005D16B3 /* emailIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0757BC8D1D43A9EA005D16B3 /* emailIcon.png */; };
 		0757BC901D43AADE005D16B3 /* phoneIcon in Resources */ = {isa = PBXBuildFile; fileRef = 0757BC8F1D43AADE005D16B3 /* phoneIcon */; };
 		076516951D4111A200E4C04E /* PolTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076516941D4111A200E4C04E /* PolTableViewController.swift */; };
-		076D432D1D4406C300A2A69D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 076D432C1D4406C300A2A69D /* GoogleService-Info.plist */; };
+		077981F11D4A1731008B6417 /* email.png in Resources */ = {isa = PBXBuildFile; fileRef = 077981F01D4A1731008B6417 /* email.png */; };
 		078C02451D44F7A400FBBF81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 078C02431D44F7A400FBBF81 /* Main.storyboard */; };
 		079EA8BC1D3FA78D000570B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079EA8BB1D3FA78D000570B2 /* AppDelegate.swift */; };
-		079EA8BE1D3FA78D000570B2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079EA8BD1D3FA78D000570B2 /* ViewController.swift */; };
 		079EA8C31D3FA78D000570B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 079EA8C21D3FA78D000570B2 /* Assets.xcassets */; };
 		079EA8C61D3FA78D000570B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 079EA8C41D3FA78D000570B2 /* LaunchScreen.storyboard */; };
 		079EA8CE1D3FA7A3000570B2 /* Politician.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079EA8CD1D3FA7A3000570B2 /* Politician.swift */; };
 		079EA8D01D3FB1AB000570B2 /* Party.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079EA8CF1D3FB1AB000570B2 /* Party.swift */; };
-		079EA8D21D3FB233000570B2 /* Minister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079EA8D11D3FB233000570B2 /* Minister.swift */; };
 		079EA8D41D3FC8BB000570B2 /* DatabaseUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079EA8D31D3FC8BB000570B2 /* DatabaseUtility.swift */; };
 		079EA8D61D3FC955000570B2 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 079EA8D51D3FC955000570B2 /* SwiftyJSON.framework */; };
+		07A4E2E71D4F736D00523B3E /* PartyIssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A4E2E61D4F736D00523B3E /* PartyIssuesViewController.swift */; };
+		07A4E2E91D4F754300523B3E /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A4E2E81D4F754300523B3E /* Issue.swift */; };
+		07A4E2EB1D4F75C600523B3E /* PartyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A4E2EA1D4F75C600523B3E /* PartyView.swift */; };
+		07A4E2ED1D4F7C5900523B3E /* PartyIssuesCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A4E2EC1D4F7C5900523B3E /* PartyIssuesCellViewController.swift */; };
 		07B8253D1D411F3400E20DD4 /* PolCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B8253C1D411F3400E20DD4 /* PolCellViewController.swift */; };
+		07DDA55F1D4617CF0001B507 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDA55E1D4617CF0001B507 /* User.swift */; };
+		07DDA5611D461E310001B507 /* politicsni.png in Resources */ = {isa = PBXBuildFile; fileRef = 07DDA5601D461E310001B507 /* politicsni.png */; };
+		07DDA5631D4621D40001B507 /* nameIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 07DDA5621D4621D40001B507 /* nameIcon.png */; };
+		07DDA5651D46230C0001B507 /* birthdayIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 07DDA5641D46230C0001B507 /* birthdayIcon.png */; };
+		07DDA5671D4623E70001B507 /* genderIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 07DDA5661D4623E70001B507 /* genderIcon.png */; };
+		07DDA5691D4624410001B507 /* locationIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 07DDA5681D4624410001B507 /* locationIcon.png */; };
+		07DDA56B1D4625A60001B507 /* passwordIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 07DDA56A1D4625A60001B507 /* passwordIcon.png */; };
+		07DDA56D1D463E120001B507 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDA56C1D463E120001B507 /* RegisterViewController.swift */; };
+		07DDA5701D46562C0001B507 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 07DDA56F1D46562C0001B507 /* GoogleService-Info.plist */; };
 		07DE60591D439C2300AAAC37 /* PoliticianProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DE60581D439C2300AAAC37 /* PoliticianProfileViewController.swift */; };
-		07DE605B1D439EB600AAAC37 /* polProfile in Resources */ = {isa = PBXBuildFile; fileRef = 07DE605A1D439EB600AAAC37 /* polProfile */; };
+		07E0EFEB1D49F5E90013B5B7 /* webIcon in Resources */ = {isa = PBXBuildFile; fileRef = 07E0EFEA1D49F5E90013B5B7 /* webIcon */; };
+		07E0EFED1D49F75C0013B5B7 /* PartyProfileVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E0EFEC1D49F75C0013B5B7 /* PartyProfileVIewController.swift */; };
+		07E0EFF11D49FBFD0013B5B7 /* PartyCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E0EFF01D49FBFD0013B5B7 /* PartyCellViewController.swift */; };
+		07E0EFF31D49FC390013B5B7 /* PartyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E0EFF21D49FC390013B5B7 /* PartyTableViewController.swift */; };
+		07E0EFFD1D4A04870013B5B7 /* alliance.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E0EFF41D4A04870013B5B7 /* alliance.png */; };
+		07E0EFFE1D4A04870013B5B7 /* dup.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E0EFF51D4A04870013B5B7 /* dup.png */; };
+		07E0EFFF1D4A04870013B5B7 /* green.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E0EFF61D4A04870013B5B7 /* green.png */; };
+		07E0F0001D4A04870013B5B7 /* Independent.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E0EFF71D4A04870013B5B7 /* Independent.png */; };
+		07E0F0011D4A04870013B5B7 /* pbp.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E0EFF81D4A04870013B5B7 /* pbp.png */; };
+		07E0F0021D4A04870013B5B7 /* sdlp.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E0EFF91D4A04870013B5B7 /* sdlp.png */; };
+		07E0F0031D4A04870013B5B7 /* sf.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E0EFFA1D4A04870013B5B7 /* sf.png */; };
+		07E0F0041D4A04870013B5B7 /* tuv.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E0EFFB1D4A04870013B5B7 /* tuv.png */; };
+		07E0F0051D4A04870013B5B7 /* uup.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E0EFFC1D4A04870013B5B7 /* uup.png */; };
+		07E0F0081D4A12FB0013B5B7 /* politicsni copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E0F0071D4A12FB0013B5B7 /* politicsni copy.png */; };
+		07EAF6371D475D6B007A2208 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07EAF6361D475D6B007A2208 /* CoreLocation.framework */; };
+		07EAF6391D47919C007A2208 /* LandingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07EAF6381D47919C007A2208 /* LandingPageViewController.swift */; };
+		07F401D01D48A5E90007384A /* myIssues.png in Resources */ = {isa = PBXBuildFile; fileRef = 07F401CD1D48A5E90007384A /* myIssues.png */; };
+		07F401D11D48A5E90007384A /* myPolitics in Resources */ = {isa = PBXBuildFile; fileRef = 07F401CE1D48A5E90007384A /* myPolitics */; };
+		07F401D21D48A5E90007384A /* parties.png in Resources */ = {isa = PBXBuildFile; fileRef = 07F401CF1D48A5E90007384A /* parties.png */; };
+		07F401D41D48A7DD0007384A /* HubViewControlller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F401D31D48A7DD0007384A /* HubViewControlller.swift */; };
+		07F401D91D48B9180007384A /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07F401D81D48B9180007384A /* SWRevealViewController.m */; };
+		07F401DD1D48E6F20007384A /* userUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F401DC1D48E6F20007384A /* userUtility.swift */; };
+		07F401DF1D4907120007384A /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F401DE1D4907120007384A /* SideMenuTableViewController.swift */; };
 		0A5FAFA8909D6940CEF7F1D6 /* Pods_Politics_NI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2FF61639C63311AF561F235 /* Pods_Politics_NI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0700F44F1D42BA6900E52F1D /* backbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backbutton.png; sourceTree = "<group>"; };
-		0700F4511D42D15C00E52F1D /* forwardArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = forwardArrow.png; path = Images/forwardArrow.png; sourceTree = "<group>"; };
+		071F343E1D51DCCC000400F7 /* SelectIssuesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectIssuesTableViewController.swift; sourceTree = "<group>"; };
+		071F34401D51DE73000400F7 /* IssuesCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssuesCellViewController.swift; sourceTree = "<group>"; };
+		07211A2E1D50ACE400C502D3 /* UserResponseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserResponseViewController.swift; sourceTree = "<group>"; };
+		07211A301D50AFDA00C502D3 /* IssuesHubTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssuesHubTableViewController.swift; sourceTree = "<group>"; };
 		0727682B1D42301900FA9821 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		0741AD831D4B6576009CDABF /* PolTwitterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolTwitterViewController.swift; sourceTree = "<group>"; };
+		0741AD851D4B862D009CDABF /* PartyTwitterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyTwitterViewController.swift; sourceTree = "<group>"; };
+		074B466F1D4E7A20004F9C0E /* EditDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDetailsViewController.swift; sourceTree = "<group>"; };
 		0757BC8D1D43A9EA005D16B3 /* emailIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = emailIcon.png; path = Images/emailIcon.png; sourceTree = "<group>"; };
 		0757BC8F1D43AADE005D16B3 /* phoneIcon */ = {isa = PBXFileReference; lastKnownFileType = file; name = phoneIcon; path = Images/phoneIcon; sourceTree = "<group>"; };
 		076516941D4111A200E4C04E /* PolTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolTableViewController.swift; sourceTree = "<group>"; };
-		076D432C1D4406C300A2A69D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		077981F01D4A1731008B6417 /* email.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = email.png; path = Images/email.png; sourceTree = "<group>"; };
 		078C02441D44F7A400FBBF81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		079EA8B81D3FA78D000570B2 /* Politics NI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Politics NI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		079EA8BB1D3FA78D000570B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		079EA8BD1D3FA78D000570B2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		079EA8C21D3FA78D000570B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		079EA8C51D3FA78D000570B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		079EA8C71D3FA78D000570B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		079EA8CD1D3FA7A3000570B2 /* Politician.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Politician.swift; sourceTree = "<group>"; };
 		079EA8CF1D3FB1AB000570B2 /* Party.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Party.swift; sourceTree = "<group>"; };
-		079EA8D11D3FB233000570B2 /* Minister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Minister.swift; sourceTree = "<group>"; };
 		079EA8D31D3FC8BB000570B2 /* DatabaseUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseUtility.swift; sourceTree = "<group>"; };
 		079EA8D51D3FC955000570B2 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../Library/Developer/Xcode/DerivedData/Politics_NI-bcrcekjquayitoblqcfdvzfhxptr/Build/Products/Debug-iphonesimulator/SwiftyJSON/SwiftyJSON.framework"; sourceTree = "<group>"; };
+		07A4E2E61D4F736D00523B3E /* PartyIssuesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyIssuesViewController.swift; sourceTree = "<group>"; };
+		07A4E2E81D4F754300523B3E /* Issue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
+		07A4E2EA1D4F75C600523B3E /* PartyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyView.swift; sourceTree = "<group>"; };
+		07A4E2EC1D4F7C5900523B3E /* PartyIssuesCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyIssuesCellViewController.swift; sourceTree = "<group>"; };
 		07B8253C1D411F3400E20DD4 /* PolCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolCellViewController.swift; sourceTree = "<group>"; };
+		07DDA55E1D4617CF0001B507 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		07DDA5601D461E310001B507 /* politicsni.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = politicsni.png; path = Images/politicsni.png; sourceTree = "<group>"; };
+		07DDA5621D4621D40001B507 /* nameIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nameIcon.png; path = Images/nameIcon.png; sourceTree = "<group>"; };
+		07DDA5641D46230C0001B507 /* birthdayIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = birthdayIcon.png; path = Images/birthdayIcon.png; sourceTree = "<group>"; };
+		07DDA5661D4623E70001B507 /* genderIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = genderIcon.png; path = Images/genderIcon.png; sourceTree = "<group>"; };
+		07DDA5681D4624410001B507 /* locationIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = locationIcon.png; path = Images/locationIcon.png; sourceTree = "<group>"; };
+		07DDA56A1D4625A60001B507 /* passwordIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = passwordIcon.png; path = Images/passwordIcon.png; sourceTree = "<group>"; };
+		07DDA56C1D463E120001B507 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		07DDA56F1D46562C0001B507 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		07DE60581D439C2300AAAC37 /* PoliticianProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoliticianProfileViewController.swift; sourceTree = "<group>"; };
-		07DE605A1D439EB600AAAC37 /* polProfile */ = {isa = PBXFileReference; lastKnownFileType = file; name = polProfile; path = Images/polProfile; sourceTree = "<group>"; };
+		07E0EFEA1D49F5E90013B5B7 /* webIcon */ = {isa = PBXFileReference; lastKnownFileType = file; name = webIcon; path = Images/webIcon; sourceTree = "<group>"; };
+		07E0EFEC1D49F75C0013B5B7 /* PartyProfileVIewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyProfileVIewController.swift; sourceTree = "<group>"; };
+		07E0EFF01D49FBFD0013B5B7 /* PartyCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyCellViewController.swift; sourceTree = "<group>"; };
+		07E0EFF21D49FC390013B5B7 /* PartyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyTableViewController.swift; sourceTree = "<group>"; };
+		07E0EFF41D4A04870013B5B7 /* alliance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = alliance.png; path = Images/PartyLogos/alliance.png; sourceTree = "<group>"; };
+		07E0EFF51D4A04870013B5B7 /* dup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dup.png; path = Images/PartyLogos/dup.png; sourceTree = "<group>"; };
+		07E0EFF61D4A04870013B5B7 /* green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = green.png; path = Images/PartyLogos/green.png; sourceTree = "<group>"; };
+		07E0EFF71D4A04870013B5B7 /* Independent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Independent.png; path = Images/PartyLogos/Independent.png; sourceTree = "<group>"; };
+		07E0EFF81D4A04870013B5B7 /* pbp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pbp.png; path = Images/PartyLogos/pbp.png; sourceTree = "<group>"; };
+		07E0EFF91D4A04870013B5B7 /* sdlp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sdlp.png; path = Images/PartyLogos/sdlp.png; sourceTree = "<group>"; };
+		07E0EFFA1D4A04870013B5B7 /* sf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sf.png; path = Images/PartyLogos/sf.png; sourceTree = "<group>"; };
+		07E0EFFB1D4A04870013B5B7 /* tuv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tuv.png; path = Images/PartyLogos/tuv.png; sourceTree = "<group>"; };
+		07E0EFFC1D4A04870013B5B7 /* uup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uup.png; path = Images/PartyLogos/uup.png; sourceTree = "<group>"; };
+		07E0F0071D4A12FB0013B5B7 /* politicsni copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "politicsni copy.png"; path = "Images/politicsni copy.png"; sourceTree = "<group>"; };
+		07EAF6361D475D6B007A2208 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		07EAF6381D47919C007A2208 /* LandingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandingPageViewController.swift; sourceTree = "<group>"; };
+		07F401CD1D48A5E90007384A /* myIssues.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = myIssues.png; path = Images/myIssues.png; sourceTree = "<group>"; };
+		07F401CE1D48A5E90007384A /* myPolitics */ = {isa = PBXFileReference; lastKnownFileType = file; name = myPolitics; path = Images/myPolitics; sourceTree = "<group>"; };
+		07F401CF1D48A5E90007384A /* parties.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = parties.png; path = Images/parties.png; sourceTree = "<group>"; };
+		07F401D31D48A7DD0007384A /* HubViewControlller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HubViewControlller.swift; sourceTree = "<group>"; };
+		07F401D61D48B9170007384A /* Politics NI-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Politics NI-Bridging-Header.h"; sourceTree = "<group>"; };
+		07F401D71D48B9180007384A /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = "../../Downloads/SWRevealViewController-master/SWRevealViewController/SWRevealViewController.h"; sourceTree = "<group>"; };
+		07F401D81D48B9180007384A /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWRevealViewController.m; path = "../../Downloads/SWRevealViewController-master/SWRevealViewController/SWRevealViewController.m"; sourceTree = "<group>"; };
+		07F401DC1D48E6F20007384A /* userUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = userUtility.swift; sourceTree = "<group>"; };
+		07F401DE1D4907120007384A /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
 		56CEBB80F2990F497E9FF87C /* Pods-Politics NI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Politics NI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Politics NI/Pods-Politics NI.debug.xcconfig"; sourceTree = "<group>"; };
 		A2FF61639C63311AF561F235 /* Pods_Politics_NI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Politics_NI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B528CF04131D3C2E3181221D /* Pods-Politics NI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Politics NI.release.xcconfig"; path = "Pods/Target Support Files/Pods-Politics NI/Pods-Politics NI.release.xcconfig"; sourceTree = "<group>"; };
@@ -63,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07EAF6371D475D6B007A2208 /* CoreLocation.framework in Frameworks */,
 				079EA8D61D3FC955000570B2 /* SwiftyJSON.framework in Frameworks */,
 				0A5FAFA8909D6940CEF7F1D6 /* Pods_Politics_NI.framework in Frameworks */,
 			);
@@ -71,14 +150,70 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		07211A2D1D50990D00C502D3 /* My Issues */ = {
+			isa = PBXGroup;
+			children = (
+				07211A2E1D50ACE400C502D3 /* UserResponseViewController.swift */,
+				07211A301D50AFDA00C502D3 /* IssuesHubTableViewController.swift */,
+				071F343E1D51DCCC000400F7 /* SelectIssuesTableViewController.swift */,
+				071F34401D51DE73000400F7 /* IssuesCellViewController.swift */,
+			);
+			name = "My Issues";
+			sourceTree = "<group>";
+		};
+		0741AD801D4B626E009CDABF /* My Politics */ = {
+			isa = PBXGroup;
+			children = (
+				076516941D4111A200E4C04E /* PolTableViewController.swift */,
+				07B8253C1D411F3400E20DD4 /* PolCellViewController.swift */,
+				07DE60581D439C2300AAAC37 /* PoliticianProfileViewController.swift */,
+				0741AD831D4B6576009CDABF /* PolTwitterViewController.swift */,
+			);
+			name = "My Politics";
+			sourceTree = "<group>";
+		};
+		0741AD811D4B62A4009CDABF /* Account Management */ = {
+			isa = PBXGroup;
+			children = (
+				07DDA56C1D463E120001B507 /* RegisterViewController.swift */,
+				07EAF6381D47919C007A2208 /* LandingPageViewController.swift */,
+				07F401D31D48A7DD0007384A /* HubViewControlller.swift */,
+				07F401DE1D4907120007384A /* SideMenuTableViewController.swift */,
+				074B466F1D4E7A20004F9C0E /* EditDetailsViewController.swift */,
+			);
+			name = "Account Management";
+			sourceTree = "<group>";
+		};
+		0741AD821D4B62B5009CDABF /* Party */ = {
+			isa = PBXGroup;
+			children = (
+				07E0EFEC1D49F75C0013B5B7 /* PartyProfileVIewController.swift */,
+				07E0EFF01D49FBFD0013B5B7 /* PartyCellViewController.swift */,
+				07E0EFF21D49FC390013B5B7 /* PartyTableViewController.swift */,
+				0741AD851D4B862D009CDABF /* PartyTwitterViewController.swift */,
+				07A4E2E61D4F736D00523B3E /* PartyIssuesViewController.swift */,
+				07A4E2EC1D4F7C5900523B3E /* PartyIssuesCellViewController.swift */,
+			);
+			name = Party;
+			sourceTree = "<group>";
+		};
 		0757BC891D43A7B2005D16B3 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				077981F01D4A1731008B6417 /* email.png */,
+				07E0F0071D4A12FB0013B5B7 /* politicsni copy.png */,
+				07E0EFEA1D49F5E90013B5B7 /* webIcon */,
+				07F401CD1D48A5E90007384A /* myIssues.png */,
+				07F401CE1D48A5E90007384A /* myPolitics */,
+				07F401CF1D48A5E90007384A /* parties.png */,
+				07DDA56A1D4625A60001B507 /* passwordIcon.png */,
+				07DDA5681D4624410001B507 /* locationIcon.png */,
+				07DDA5661D4623E70001B507 /* genderIcon.png */,
+				07DDA5641D46230C0001B507 /* birthdayIcon.png */,
+				07DDA5621D4621D40001B507 /* nameIcon.png */,
+				07DDA5601D461E310001B507 /* politicsni.png */,
 				0757BC8F1D43AADE005D16B3 /* phoneIcon */,
 				0757BC8D1D43A9EA005D16B3 /* emailIcon.png */,
-				0700F44F1D42BA6900E52F1D /* backbutton.png */,
-				0700F4511D42D15C00E52F1D /* forwardArrow.png */,
-				07DE605A1D439EB600AAAC37 /* polProfile */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -88,7 +223,9 @@
 			children = (
 				079EA8CF1D3FB1AB000570B2 /* Party.swift */,
 				079EA8CD1D3FA7A3000570B2 /* Politician.swift */,
-				079EA8D11D3FB233000570B2 /* Minister.swift */,
+				07DDA55E1D4617CF0001B507 /* User.swift */,
+				07A4E2E81D4F754300523B3E /* Issue.swift */,
+				07A4E2EA1D4F75C600523B3E /* PartyView.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -96,10 +233,10 @@
 		0757BC8B1D43A7EE005D16B3 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				079EA8BD1D3FA78D000570B2 /* ViewController.swift */,
-				076516941D4111A200E4C04E /* PolTableViewController.swift */,
-				07B8253C1D411F3400E20DD4 /* PolCellViewController.swift */,
-				07DE60581D439C2300AAAC37 /* PoliticianProfileViewController.swift */,
+				07211A2D1D50990D00C502D3 /* My Issues */,
+				0741AD821D4B62B5009CDABF /* Party */,
+				0741AD801D4B626E009CDABF /* My Politics */,
+				0741AD811D4B62A4009CDABF /* Account Management */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -108,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				079EA8D31D3FC8BB000570B2 /* DatabaseUtility.swift */,
+				07F401DC1D48E6F20007384A /* userUtility.swift */,
 			);
 			name = "Utility Classes";
 			sourceTree = "<group>";
@@ -115,6 +253,7 @@
 		079EA8AF1D3FA78D000570B2 = {
 			isa = PBXGroup;
 			children = (
+				07F401D51D48B8FB0007384A /* SWRevealViewController */,
 				0727682B1D42301900FA9821 /* Default-568h@2x.png */,
 				079EA8BA1D3FA78D000570B2 /* Politics NI */,
 				079EA8B91D3FA78D000570B2 /* Products */,
@@ -134,7 +273,7 @@
 		079EA8BA1D3FA78D000570B2 /* Politics NI */ = {
 			isa = PBXGroup;
 			children = (
-				076D432C1D4406C300A2A69D /* GoogleService-Info.plist */,
+				07DDA56F1D46562C0001B507 /* GoogleService-Info.plist */,
 				0757BC8C1D43A7FF005D16B3 /* Utility Classes */,
 				0757BC8B1D43A7EE005D16B3 /* View Controllers */,
 				0757BC8A1D43A7DE005D16B3 /* Models */,
@@ -142,10 +281,29 @@
 				079EA8BB1D3FA78D000570B2 /* AppDelegate.swift */,
 				078C02431D44F7A400FBBF81 /* Main.storyboard */,
 				079EA8C21D3FA78D000570B2 /* Assets.xcassets */,
+				07E0EFF41D4A04870013B5B7 /* alliance.png */,
+				07E0EFF51D4A04870013B5B7 /* dup.png */,
+				07E0EFF61D4A04870013B5B7 /* green.png */,
+				07E0EFF71D4A04870013B5B7 /* Independent.png */,
+				07E0EFF81D4A04870013B5B7 /* pbp.png */,
+				07E0EFF91D4A04870013B5B7 /* sdlp.png */,
+				07E0EFFA1D4A04870013B5B7 /* sf.png */,
+				07E0EFFB1D4A04870013B5B7 /* tuv.png */,
+				07E0EFFC1D4A04870013B5B7 /* uup.png */,
 				079EA8C41D3FA78D000570B2 /* LaunchScreen.storyboard */,
 				079EA8C71D3FA78D000570B2 /* Info.plist */,
 			);
 			path = "Politics NI";
+			sourceTree = "<group>";
+		};
+		07F401D51D48B8FB0007384A /* SWRevealViewController */ = {
+			isa = PBXGroup;
+			children = (
+				07F401D71D48B9180007384A /* SWRevealViewController.h */,
+				07F401D81D48B9180007384A /* SWRevealViewController.m */,
+				07F401D61D48B9170007384A /* Politics NI-Bridging-Header.h */,
+			);
+			name = SWRevealViewController;
 			sourceTree = "<group>";
 		};
 		720C82D250EA104B5D62F840 /* Pods */ = {
@@ -160,6 +318,7 @@
 		A562A23B3C48DADBF9E5B18D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				07EAF6361D475D6B007A2208 /* CoreLocation.framework */,
 				079EA8D51D3FC955000570B2 /* SwiftyJSON.framework */,
 				A2FF61639C63311AF561F235 /* Pods_Politics_NI.framework */,
 			);
@@ -229,16 +388,34 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0700F4501D42BA6900E52F1D /* backbutton.png in Resources */,
+				07F401D21D48A5E90007384A /* parties.png in Resources */,
 				078C02451D44F7A400FBBF81 /* Main.storyboard in Resources */,
+				07E0F0031D4A04870013B5B7 /* sf.png in Resources */,
 				0757BC8E1D43A9EA005D16B3 /* emailIcon.png in Resources */,
-				0700F4521D42D15C00E52F1D /* forwardArrow.png in Resources */,
+				07DDA5651D46230C0001B507 /* birthdayIcon.png in Resources */,
+				07F401D01D48A5E90007384A /* myIssues.png in Resources */,
+				07E0EFEB1D49F5E90013B5B7 /* webIcon in Resources */,
+				07DDA5611D461E310001B507 /* politicsni.png in Resources */,
+				07DDA5631D4621D40001B507 /* nameIcon.png in Resources */,
+				07E0EFFD1D4A04870013B5B7 /* alliance.png in Resources */,
+				07E0F0041D4A04870013B5B7 /* tuv.png in Resources */,
+				07E0F0001D4A04870013B5B7 /* Independent.png in Resources */,
+				07E0F0021D4A04870013B5B7 /* sdlp.png in Resources */,
+				07E0F0011D4A04870013B5B7 /* pbp.png in Resources */,
 				079EA8C61D3FA78D000570B2 /* LaunchScreen.storyboard in Resources */,
 				0727682C1D42301900FA9821 /* Default-568h@2x.png in Resources */,
+				07DDA5701D46562C0001B507 /* GoogleService-Info.plist in Resources */,
+				07F401D11D48A5E90007384A /* myPolitics in Resources */,
+				07E0F0051D4A04870013B5B7 /* uup.png in Resources */,
+				07E0EFFE1D4A04870013B5B7 /* dup.png in Resources */,
+				077981F11D4A1731008B6417 /* email.png in Resources */,
 				0757BC901D43AADE005D16B3 /* phoneIcon in Resources */,
-				07DE605B1D439EB600AAAC37 /* polProfile in Resources */,
-				076D432D1D4406C300A2A69D /* GoogleService-Info.plist in Resources */,
+				07DDA5691D4624410001B507 /* locationIcon.png in Resources */,
 				079EA8C31D3FA78D000570B2 /* Assets.xcassets in Resources */,
+				07E0F0081D4A12FB0013B5B7 /* politicsni copy.png in Resources */,
+				07E0EFFF1D4A04870013B5B7 /* green.png in Resources */,
+				07DDA5671D4623E70001B507 /* genderIcon.png in Resources */,
+				07DDA56B1D4625A60001B507 /* passwordIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,15 +488,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07E0EFF31D49FC390013B5B7 /* PartyTableViewController.swift in Sources */,
+				07F401D91D48B9180007384A /* SWRevealViewController.m in Sources */,
 				07B8253D1D411F3400E20DD4 /* PolCellViewController.swift in Sources */,
+				07211A311D50AFDA00C502D3 /* IssuesHubTableViewController.swift in Sources */,
+				07F401D41D48A7DD0007384A /* HubViewControlller.swift in Sources */,
+				07A4E2ED1D4F7C5900523B3E /* PartyIssuesCellViewController.swift in Sources */,
+				07DDA56D1D463E120001B507 /* RegisterViewController.swift in Sources */,
+				0741AD841D4B6576009CDABF /* PolTwitterViewController.swift in Sources */,
+				071F34411D51DE73000400F7 /* IssuesCellViewController.swift in Sources */,
+				07F401DF1D4907120007384A /* SideMenuTableViewController.swift in Sources */,
 				07DE60591D439C2300AAAC37 /* PoliticianProfileViewController.swift in Sources */,
-				079EA8BE1D3FA78D000570B2 /* ViewController.swift in Sources */,
+				07A4E2E91D4F754300523B3E /* Issue.swift in Sources */,
+				07211A2F1D50ACE400C502D3 /* UserResponseViewController.swift in Sources */,
+				07E0EFED1D49F75C0013B5B7 /* PartyProfileVIewController.swift in Sources */,
 				076516951D4111A200E4C04E /* PolTableViewController.swift in Sources */,
 				079EA8D41D3FC8BB000570B2 /* DatabaseUtility.swift in Sources */,
+				07F401DD1D48E6F20007384A /* userUtility.swift in Sources */,
 				079EA8BC1D3FA78D000570B2 /* AppDelegate.swift in Sources */,
+				07EAF6391D47919C007A2208 /* LandingPageViewController.swift in Sources */,
+				071F343F1D51DCCC000400F7 /* SelectIssuesTableViewController.swift in Sources */,
+				0741AD861D4B862D009CDABF /* PartyTwitterViewController.swift in Sources */,
+				07A4E2E71D4F736D00523B3E /* PartyIssuesViewController.swift in Sources */,
 				079EA8D01D3FB1AB000570B2 /* Party.swift in Sources */,
 				079EA8CE1D3FA7A3000570B2 /* Politician.swift in Sources */,
-				079EA8D21D3FB233000570B2 /* Minister.swift in Sources */,
+				07DDA55F1D4617CF0001B507 /* User.swift in Sources */,
+				07A4E2EB1D4F75C600523B3E /* PartyView.swift in Sources */,
+				07E0EFF11D49FBFD0013B5B7 /* PartyCellViewController.swift in Sources */,
+				074B46701D4E7A20004F9C0E /* EditDetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +631,7 @@
 			baseConfigurationReference = 56CEBB80F2990F497E9FF87C /* Pods-Politics NI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Politics NI/Info.plist";
@@ -442,6 +639,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.AppCamp.Politics-NI";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Politics NI-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -450,6 +649,7 @@
 			baseConfigurationReference = B528CF04131D3C2E3181221D /* Pods-Politics NI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Politics NI/Info.plist";
@@ -457,6 +657,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.AppCamp.Politics-NI";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Politics NI-Bridging-Header.h";
 			};
 			name = Release;
 		};

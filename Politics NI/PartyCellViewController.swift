@@ -6,8 +6,8 @@
 //  Copyright © 2016 App Camp. All rights reserved.
 //
 
-import Cocoa
 
 class PartyCellViewController: UITableViewCell {
-
+    @IBOutlet weak var partyLogo: UIImageView!
+    @IBOutlet weak var partyName: UILabel!
 }
