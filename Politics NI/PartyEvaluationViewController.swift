@@ -7,6 +7,7 @@
 //
 
 import Firebase
+import Social
 
 class PartyEvaluationViewController: UITableViewController {
     lazy var partiesRef = FIRDatabase.database().reference().child("parties").child("party")
@@ -54,16 +55,20 @@ class PartyEvaluationViewController: UITableViewController {
         cell.partyName.text = entry.name
         
         for party in partyEval {
-            if (party.partyID == entry.id) {
-                if (party.percent >= 0.75) {
-                    cell.partyPercent.text = "Strongly agree on issues"
-                } else if (party.percent >= 0.50) {
-                    cell.partyPercent.text = "Mostly agree on issues"
-                } else if (party.percent >= 0.25) {
-                    cell.partyPercent.text = "Mostly disagree on issues"
-                } else if (party.percent >= 0) {
-                    cell.partyPercent.text = "Strongly disagree on issues"
+            if (party.percent != nil) {
+                if (party.partyID == entry.id) {
+                    if (party.percent >= 0.75) {
+                        cell.partyPercent.text = "Strongly agree on issues"
+                    } else if (party.percent >= 0.50) {
+                        cell.partyPercent.text = "Mostly agree on issues"
+                    } else if (party.percent >= 0.25) {
+                        cell.partyPercent.text = "Mostly disagree on issues"
+                    } else if (party.percent >= 0) {
+                        cell.partyPercent.text = "Strongly disagree on issues"
+                    }
                 }
+            } else {
+                cell.partyPercent.text = "Not enough information."
             }
         }
         return cell
@@ -136,5 +141,22 @@ class PartyEvaluationViewController: UITableViewController {
         }
         return sortedParties
         }
-
+    
+    @IBAction func shareSocialMedia(sender: AnyObject) {
+        let screen = UIScreen.mainScreen()
+        
+        if let window = UIApplication.sharedApplication().keyWindow {
+            UIGraphicsBeginImageContextWithOptions(screen.bounds.size, false, 0);
+            window.drawViewHierarchyInRect(window.bounds, afterScreenUpdates: false)
+            let image = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            
+            let composeSheet = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+            composeSheet.setInitialText("I now know what party represents my views using Politics NI, available on the iOS appstore.")
+            composeSheet.addImage(image)
+            
+            presentViewController(composeSheet, animated: true, completion: nil)
+        }
+    }
+    
 }

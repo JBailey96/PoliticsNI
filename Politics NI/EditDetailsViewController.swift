@@ -26,7 +26,6 @@ class EditDetailsViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var locat: UILabel!
     @IBOutlet weak var postCode: UITextField!
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
@@ -35,6 +34,7 @@ class EditDetailsViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
         
         postCode.hidden = true
+        changeEmail.text = FIRAuth.auth()?.currentUser?.email
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
         self.navigationController?.navigationBar.titleTextAttributes =  [NSForegroundColorAttributeName : UIColor.whiteColor()]
@@ -55,7 +55,7 @@ class EditDetailsViewController: UIViewController, CLLocationManagerDelegate {
                     let latitude = String(format: "%f", locationManager.location!.coordinate.latitude)
                     let longitude = String(format: "%f", locationManager.location!.coordinate.longitude)
                     userConstit = DatabaseUtility.getConstituency(latitude, long: longitude)
-                    print(userConstit)
+                    userUtility.user.constituency = userConstit
                     
                     if userConstit == "" {
                         alert("Problem with your location services.")
@@ -83,6 +83,7 @@ class EditDetailsViewController: UIViewController, CLLocationManagerDelegate {
         } else {
             locat.text = userConstit
             self.locationSet = true
+            userUtility.user.constituency = userConstit
         }
     }
     
@@ -97,5 +98,52 @@ func alert(alertDesc: String) {
         field.text = ""
     }
     
+    @IBAction func editDetails(sender: AnyObject) {
+        let user = FIRAuth.auth()?.currentUser
+        let credential = FIREmailPasswordAuthProvider.credentialWithEmail((user?.email)!, password: currentPass.text!)
+        
+        let newEmail = changeEmail.text
+        
+        user!.reauthenticateWithCredential(credential) { error in
+            if let error = error {
+                print("Please enter your current password.")
+            } else {
+                // User re-authenticated.
+            }
+        }
+        
+        user!.updateEmail(newEmail!) { error in
+            if let error = error {
+                self.alert("Error with email entry.")
+            } else {
+                self.updatePass()
+            }
+        }
+        }
     
+    func updatePass() {
+        let user = FIRAuth.auth()?.currentUser
+        if newPass.text != "" {
+            let credential = FIREmailPasswordAuthProvider.credentialWithEmail((user?.email)!, password: currentPass.text!)
+            user!.reauthenticateWithCredential(credential) { error in
+                if let error = error {
+                    self.alert("Current password not valid.")
+                } else {
+                    let newPassword = self.newPass.text
+                    user!.updatePassword(newPassword!) { error in
+                        if let error = error {
+                            self.alert("New password not valid.")
+                        } else {
+                            self.alert("Settings updated.")
+                            self.performSegueWithIdentifier("returntoHub", sender: self)
+                        }
+                    }
+                }
+            }
+        } else {
+            alert("Settings updated.")
+            performSegueWithIdentifier("returntoHub", sender: self)
+        }
+        
+    }
 }

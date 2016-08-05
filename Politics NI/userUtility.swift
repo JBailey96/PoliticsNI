@@ -9,8 +9,7 @@
 import Firebase
 
 class userUtility {
-    static let uidRef = FIRDatabase.database().reference().child("users").child((FIRAuth.auth()?.currentUser?.uid)!)
-    static var user: User = User(fullName: "", birthDay: "", gender: "", constituency: "") //current user
+    static var user: User = User(birthDay: "", gender: "", constituency: "") //current user
    
     static var issues =  [Issue]()
     static var agreeViews = [PartyView]()
@@ -20,18 +19,19 @@ class userUtility {
     
     //gets all the users information and saves it as the current user variable
     class func getUserInfo() {
+        let uidRef = FIRDatabase.database().reference().child("users").child((FIRAuth.auth()?.currentUser?.uid)!)
         uidRef.keepSynced(true)
         uidRef.observeEventType(.Value, withBlock: { snapshot in
             let constituency = snapshot.value?.objectForKey("constituency") as! String
             let dob = snapshot.value?.objectForKey("dob") as! String
-            let fullName = snapshot.value?.objectForKey("full_name") as! String
             let gender = snapshot.value?.objectForKey("gender") as! String
-            user = User(fullName: fullName, birthDay: dob, gender: gender, constituency: constituency)
+            user = User(birthDay: dob, gender: gender, constituency: constituency)
             }, withCancelBlock:  { error in
                 print(error.description)
         })
 }
     class func getUserIssues() {
+        let uidRef = FIRDatabase.database().reference().child("users").child((FIRAuth.auth()?.currentUser?.uid)!)
         let issueResp = uidRef.child("issueResponses")
         var issuesinBlock = [Issue]()
         var agreeinBlock =  [PartyView]()

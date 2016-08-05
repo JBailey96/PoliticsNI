@@ -15,16 +15,10 @@ class LandingPageViewController: UIViewController {
     @IBOutlet weak var emailAddress: UITextField!
     @IBOutlet weak var password: UITextField!
     
+    
+
+    
     override func viewDidLoad() {
-        FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
-            if let user = user {
-                 userUtility.getUserInfo()
-                 userUtility.getUserIssues()
-                self.performSegueWithIdentifier("takeToHub", sender: self)
-            } else {
-                // No user is signed in.
-            }
-        }
         super.viewDidLoad()
     }
     @IBAction func logInButton(sender: AnyObject) {
@@ -34,6 +28,11 @@ class LandingPageViewController: UIViewController {
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
             } else {
+                userUtility.issues = [Issue]()
+                userUtility.agreeViews = [PartyView]()
+                userUtility.disagreeViews = [PartyView]()
+                userUtility.unsureViews = [PartyView]()
+                userUtility.neutralViews = [PartyView]()
                 userUtility.getUserInfo()
                 userUtility.getUserIssues()
                 self.performSegueWithIdentifier("takeToHub", sender: self)
@@ -44,8 +43,5 @@ class LandingPageViewController: UIViewController {
     @IBAction func clearTextFields(sender: AnyObject) {
         let textfield = sender as! UITextField
         textfield.text = ""
-    }
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
     }
 }

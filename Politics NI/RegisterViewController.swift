@@ -16,7 +16,6 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
     let locationManager = CLLocationManager()
     let pickerData = ["Prefer not to say", "Under 16", "17-19", "20-24", "25-49", "50+"]
     
-    @IBOutlet weak var agePicker: UIPickerView!
     @IBOutlet weak var homePostCode: UITextField!
     @IBOutlet weak var password1: UITextField!
     @IBOutlet weak var password2: UITextField!
@@ -25,11 +24,10 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
     @IBOutlet weak var femaleButton: UIButton!
     @IBOutlet weak var maleButton: UIButton!
     @IBOutlet weak var preferNotToSay: UIButton!
-    @IBOutlet weak var fullName: UITextField!
     
+    @IBOutlet weak var ageField: UITextField!
     var gender: String!
     var genderSet: Bool = false
-    var fullName1: String!
     var userConstit: String!
     var locationSet: Bool = false
     var userAge: String = "Prefer not to say"
@@ -42,13 +40,16 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
         locationManager.startUpdatingLocation()
         
         homePostCode.hidden = true
-        self.agePicker.delegate = self
-        self.agePicker.dataSource = self
         
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
         self.navigationController?.navigationBar.titleTextAttributes =  [NSForegroundColorAttributeName : UIColor.whiteColor()]
         self.navigationController?.navigationBar.backItem?.backBarButtonItem?.tintColor = UIColor.whiteColor()
+        
+        let pickerView  : UIPickerView = UIPickerView()
+        pickerView.dataSource = self
+        pickerView.delegate = self
+        ageField.inputView = pickerView
     }
     
     override func didReceiveMemoryWarning() {
@@ -70,7 +71,7 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         userAge = pickerData[row]
-        print(userAge)
+        ageField.text = userAge
     }
     
     func passAuth() -> Bool {
@@ -92,16 +93,22 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
     }
     
     @IBAction func registerButton(sender: AnyObject) {
-        if passAuth() && dateAuth() && validateFullName() && genderAuth() && LocationAuth() {
+        if passAuth() && dateAuth() && genderAuth() && LocationAuth() {
             FIRAuth.auth()?.createUserWithEmail(email1.text!, password: password1.text!) { (user, error) in
                 print(error?.description)
                 if let error = error {
                     self.alert("Could not sign up.")
                 }
                 if let user = user {
-                    let user1 = ["full_name": self.fullName1, "dob": self.userAge, "gender": self.gender, "constituency": self.userConstit]
+                    let user1 = ["dob": self.userAge, "gender": self.gender, "constituency": self.userConstit]
                     self.ref.child("users").child(user.uid).setValue(user1)
                     userUtility.getUserInfo()
+                    userUtility.getUserIssues()
+                    userUtility.issues = [Issue]()
+                    userUtility.agreeViews = [PartyView]()
+                    userUtility.disagreeViews = [PartyView]()
+                    userUtility.unsureViews = [PartyView]()
+                    userUtility.neutralViews = [PartyView]()
                     self.performSegueWithIdentifier("finishReg", sender: self)
                 }
             }
@@ -189,19 +196,6 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
             location.text = userConstit
             self.locationSet = true
         }
-    }
-    
-    func validateFullName() -> Bool {
-        if (fullName.text?.characters.count > 70) {
-            alert("Full name is too long.")
-            return false
-        }
-        else if (fullName.text == "") {
-                alert("You have not entered your full name.")
-                return false
-        }
-          self.fullName1 = self.fullName.text
-          return true
     }
     
     @IBAction func clearTextFields(sender: AnyObject) {

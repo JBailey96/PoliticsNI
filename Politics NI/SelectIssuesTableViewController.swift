@@ -61,14 +61,30 @@ class SelectIssuesTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return issues.count
+        if (!issues.isEmpty) {
+         return issues.count
+        } else {
+            return 1
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell3", forIndexPath: indexPath) as! IssuesCellViewController
-        let entry = issues[indexPath.row]
         
-        cell.issueLabel.text = entry.desc
+        
+        if (!issues.isEmpty) {
+             let entry = issues[indexPath.row]
+             cell.issueLabel.text = entry.desc
+             cell.userInteractionEnabled = true
+             cell.issueLabel.textColor = UIColor.blackColor()
+             cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        } else {
+            cell.issueLabel.text = "There are no more issues."
+            cell.userInteractionEnabled = false
+            cell.issueLabel.textColor = UIColor.grayColor()
+            cell.accessoryType = .None
+        }
+        
         return cell
     }
     

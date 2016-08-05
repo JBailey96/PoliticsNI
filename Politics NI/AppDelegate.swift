@@ -23,6 +23,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FIRApp.configure()
         FIRDatabase.database().persistenceEnabled = true
         Fabric.with([Twitter.self])
+        
+        FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
+            if let user = user {
+                userUtility.getUserInfo()
+                userUtility.getUserIssues()
+                self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                
+                let initialViewController = storyboard.instantiateViewControllerWithIdentifier("initHub")
+                
+                self.window?.rootViewController = initialViewController
+                self.window?.makeKeyAndVisible()
+                
+                userUtility.issues = [Issue]()
+                userUtility.agreeViews = [PartyView]()
+                userUtility.disagreeViews = [PartyView]()
+                userUtility.unsureViews = [PartyView]()
+                userUtility.neutralViews = [PartyView]()
+            } else {
+                // No user is signed in.
+            }
+        }
+
         // Override point for customization after application launch.
         return true
     }
