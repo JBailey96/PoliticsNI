@@ -17,5 +17,7 @@ class SideMenuTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.revealViewController().rearViewRevealWidth = self.view.frame.width-100
+
     }
 }

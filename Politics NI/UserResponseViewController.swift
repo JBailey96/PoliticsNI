@@ -80,6 +80,7 @@ class UserResponseViewController: UIViewController {
        
         for view in agreeViews {
             let partyView = ["partyID": view.partyID, "view": view.view, "viewsrc": view.viewsrc]
+            saveUserStat("Agree", issueID: view.issueID, partyID: view.partyID)
             dictionaryPartyViews.append(partyView)
         }
             self.ref.child("users").child(user!.uid).child("issueResponses").child(partyViews[0].issueID).child("partyViews").child("Agree").setValue(dictionaryPartyViews)
@@ -107,5 +108,25 @@ class UserResponseViewController: UIViewController {
             dictionaryPartyViews.removeAll()
             userUtility.getUserIssues()
     }
+    
+    func saveUserStat(opinion: String, issueID: String, partyID: String) {
+        let ref = self.ref.child("parties").child("issues").child("issue")
+        var ref2: FIRDatabaseReference!
+        var childSnapshot: FIRDataSnapshot!
+        
+        ref.observeSingleEventOfType(.Value, withBlock: { snapshot in
+            for child in snapshot.children {
+                if (child.value!.objectForKey("id") as! String! == issueID) {
+                childSnapshot = snapshot.childSnapshotForPath(child.key).childSnapshotForPath("partyViews")
+                ref2 = ref2.child(child.key).child("partyViews")
+                }
+                for child in childSnapshot.children {
+                    if (snapshot.value!.objectForKey("partyID") as! String? == partyID) {
+                        ref2.child(child.key).child(opinion).setValue("1")
+                    }
+                }
+            }
+        })
+    }
+    }
 
-}

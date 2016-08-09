@@ -31,11 +31,15 @@ class PoliticianProfileViewController: UIViewController {
         polPartyName.hidden = true
         loadParties()
         
-        //setting up properties of nav bar
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState:.Normal)
+        
+            //setting up properties of nav bar
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
         self.navigationController?.navigationBar.titleTextAttributes =  [NSForegroundColorAttributeName : UIColor.whiteColor()]
         self.navigationController?.navigationBar.backItem?.backBarButtonItem?.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        polPartyName.titleLabel!.adjustsFontSizeToFitWidth = true
+        polPartyName.titleLabel!.minimumScaleFactor = 0.5
         
         //hiding twitter options until verified politician has twitter
         

@@ -34,6 +34,10 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
@@ -163,7 +167,7 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
                 case .NotDetermined, .Restricted, .Denied:
                     alert("Problem with your location services.")
                     homePostCode.hidden = false
-                case .AuthorizedAlways, .AuthorizedWhenInUse:
+                case .AuthorizedAlways, .AuthorizedWhenInUse:   
                     let latitude = String(format: "%f", locationManager.location!.coordinate.latitude)
                     let longitude = String(format: "%f", locationManager.location!.coordinate.longitude)
                     userConstit = DatabaseUtility.getConstituency(latitude, long: longitude)
@@ -208,4 +212,34 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            if view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+            else {
+                
+            }
+        }
+        
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            if view.frame.origin.y != 0 {
+                self.view.frame.origin.y += keyboardSize.height
+            }
+            else {
+                
+            }
+        }
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
+        view.endEditing(true)
+        super.touchesBegan(touches, withEvent: event)
+    }
+
     }

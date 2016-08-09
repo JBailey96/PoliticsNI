@@ -13,6 +13,8 @@ class PolTwitterViewController: TWTRTimelineViewController {
     
     override func viewDidLoad() {
             super.viewDidLoad()
+            UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState:.Normal)
+            self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
             let client = TWTRAPIClient()
             self.dataSource = TWTRUserTimelineDataSource(screenName: currentPol!.twitter, APIClient: client)
     }

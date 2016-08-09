@@ -21,6 +21,13 @@ class PartyEvaluationViewController: UITableViewController {
             self.tableView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0)
             self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
             self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        let attrs = [
+            NSForegroundColorAttributeName : UIColor.whiteColor(),
+        ]
+        
+        self.navigationController?.navigationBar.backItem?.title
+        
+        self.navigationController?.navigationBar.titleTextAttributes = attrs
             loadParties()
     }
     
@@ -159,4 +166,21 @@ class PartyEvaluationViewController: UITableViewController {
         }
     }
     
+    @IBAction func shareTwitter(sender: UIBarButtonItem) {
+        let screen = UIScreen.mainScreen()
+        
+        if let window = UIApplication.sharedApplication().keyWindow {
+            UIGraphicsBeginImageContextWithOptions(screen.bounds.size, false, 0);
+            window.drawViewHierarchyInRect(window.bounds, afterScreenUpdates: false)
+            let image = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            
+            let composeSheet = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+            composeSheet.setInitialText("I now know what party represents my views using Politics NI, available on the iOS appstore.")
+            composeSheet.addImage(image)
+            
+            presentViewController(composeSheet, animated: true, completion: nil)
+    }
+    
+    }
 }

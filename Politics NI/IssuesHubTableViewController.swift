@@ -21,6 +21,16 @@ class IssuesHubTableViewController: UITableViewController {
         self.tableView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0)
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationItem.titleView?.tintColor = UIColor.whiteColor()
+        
+        let attrs = [
+            NSForegroundColorAttributeName : UIColor.whiteColor(),
+            //NSFontAttributeName : UIFont(name: "Georgia-Bold", size: 24)!
+        ]
+        
+        self.navigationController?.navigationBar.backItem?.title
+        
+        self.navigationController?.navigationBar.titleTextAttributes = attrs
 
     }
     

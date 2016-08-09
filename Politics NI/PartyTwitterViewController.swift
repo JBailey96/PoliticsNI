@@ -14,6 +14,7 @@ class PartyTwitterController: TWTRTimelineViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState:.Normal)
         let client = TWTRAPIClient()
         self.dataSource = TWTRUserTimelineDataSource(screenName: currentParty!.twitterLink , APIClient: client)
     }
