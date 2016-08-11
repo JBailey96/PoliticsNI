@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Firebase
 
-class LandingPageViewController: UIViewController {
+class LandingPageViewController: UIViewController, UITextFieldDelegate {
     let data = PolTableViewController()
     @IBOutlet weak var emailAddress: UITextField!
     @IBOutlet weak var password: UITextField!
@@ -20,9 +20,8 @@ class LandingPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LandingPageViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LandingPageViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
-        
+        emailAddress.delegate = self
+        password.delegate = self
     }
     @IBAction func logInButton(sender: AnyObject) {
         FIRAuth.auth()?.signInWithEmail(emailAddress.text!, password: password.text!) { (user, error) in
@@ -43,37 +42,15 @@ class LandingPageViewController: UIViewController {
         }
 }
     
-    @IBAction func clearTextFields(sender: AnyObject) {
-        let textfield = sender as! UITextField
-        textfield.text = ""
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
-    func keyboardWillShow(notification: NSNotification) {
-        
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-            if view.frame.origin.y == 0{
-                self.view.frame.origin.y -= keyboardSize.height
-            }
-            else {
-                
-            }
-        }
-        
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        emailAddress.resignFirstResponder()
+        password.resignFirstResponder()
+        return true
     }
     
-    func keyboardWillHide(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-            if view.frame.origin.y != 0 {
-                self.view.frame.origin.y += keyboardSize.height
-            }
-            else {
-                
-            }
-        }
-    }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
-        view.endEditing(true)
-        super.touchesBegan(touches, withEvent: event)
-    }
+
 }

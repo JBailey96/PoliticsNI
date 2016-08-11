@@ -11,14 +11,13 @@ import UIKit
 import Firebase
 import CoreLocation
 
-class EditDetailsViewController: UIViewController, CLLocationManagerDelegate {
+class EditDetailsViewController: UITableViewController, CLLocationManagerDelegate, UITextFieldDelegate {
     let ref = FIRDatabase.database().reference()
     let locationManager = CLLocationManager()
     var userConstit: String!
     var locationSet: Bool = false
     
     @IBOutlet weak var changeEmail: UITextField!
-    
     @IBOutlet weak var currentPass: UITextField!
     
     @IBOutlet weak var newPass: UITextField!
@@ -33,12 +32,17 @@ class EditDetailsViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
+        changeEmail.delegate = self
+        currentPass.delegate = self
+        newPass.delegate = self
+        postCode.delegate = self
+        
         postCode.hidden = true
-        changeEmail.text = FIRAuth.auth()?.currentUser?.email
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
         self.navigationController?.navigationBar.titleTextAttributes =  [NSForegroundColorAttributeName : UIColor.whiteColor()]
         self.navigationController?.navigationBar.backItem?.backBarButtonItem?.tintColor = UIColor.whiteColor()
+        userConstit = userUtility.user.constituency
     }
     
     
@@ -52,17 +56,20 @@ class EditDetailsViewController: UIViewController, CLLocationManagerDelegate {
                     alert("Problem with your location services.")
                     postCode.hidden = false
                 case .AuthorizedAlways, .AuthorizedWhenInUse:
-                    let latitude = String(format: "%f", locationManager.location!.coordinate.latitude)
-                    let longitude = String(format: "%f", locationManager.location!.coordinate.longitude)
-                    userConstit = DatabaseUtility.getConstituency(latitude, long: longitude)
-                    userUtility.user.constituency = userConstit
-                    
-                    if userConstit == "" {
+                    if locationManager.location != nil {
+                        let latitude = String(format: "%f", locationManager.location!.coordinate.latitude)
+                        let longitude = String(format: "%f", locationManager.location!.coordinate.longitude)
+                        userConstit = DatabaseUtility.getConstituency(latitude, long: longitude)
+                        if userConstit == "" {
+                            alert("Problem with your location services.")
+                            postCode.hidden = false
+                        } else {
+                            locat.text = userConstit
+                            self.locationSet = true
+                        }
+                    } else {
                         alert("Problem with your location services.")
                         postCode.hidden = false
-                    } else {
-                        locat.text = userConstit
-                        self.locationSet = true
                     }
                 }
             } else {
@@ -93,10 +100,6 @@ func alert(alertDesc: String) {
     self.presentViewController(alert, animated: true, completion: nil)
 }
     
-    @IBAction func clearTextFields(sender: AnyObject) {
-        let field = sender as! UITextField
-        field.text = ""
-    }
     
     @IBAction func editDetails(sender: AnyObject) {
         let user = FIRAuth.auth()?.currentUser
@@ -106,19 +109,23 @@ func alert(alertDesc: String) {
         
         user!.reauthenticateWithCredential(credential) { error in
             if let error = error {
-                print("Please enter your current password.")
+               self.alert("Error with validation. Have you entered your current password?")
             } else {
-                // User re-authenticated.
             }
         }
         
-        user!.updateEmail(newEmail!) { error in
-            if let error = error {
-                self.alert("Error with email entry.")
-            } else {
-                self.updatePass()
+        if newEmail != "" {
+            user!.updateEmail(newEmail!) { error in
+                if let error = error {
+                    self.alert("Error with email entry.")
+                } else {
+                    self.updatePass()
+                }
             }
+        } else {
+            self.updatePass()
         }
+
         }
     
     func updatePass() {
@@ -134,16 +141,41 @@ func alert(alertDesc: String) {
                         if let error = error {
                             self.alert("New password not valid.")
                         } else {
-                            self.alert("Settings updated.")
-                            self.performSegueWithIdentifier("returntoHub", sender: self)
+                            let user1 = ["dob": userUtility.user.birthDay, "gender": userUtility.user.gender, "constituency": self.userConstit]
+                            self.ref.child("users").child(user!.uid).setValue(user1)
+                            userUtility.getUserInfo()
+                            let alert = UIAlertController(title: "Alert", message: "You have successfully updated your details.", preferredStyle: UIAlertControllerStyle.Alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { _ in
+                                self.performSegueWithIdentifier("settingsUpdated", sender: nil)
+                            }))
+                            self.presentViewController(alert, animated: true, completion: nil)
                         }
                     }
                 }
             }
         } else {
             alert("Settings updated.")
+            self.ref.child("users").child(user!.uid).child("constituency").setValue(self.userConstit)
+            userUtility.getUserInfo()
             performSegueWithIdentifier("returntoHub", sender: self)
         }
-        
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
+
+    
+    @IBAction func dismissKeyboard(sender: AnyObject) {
+            changeEmail.resignFirstResponder()
+            currentPass.resignFirstResponder()
+            newPass.resignFirstResponder()
+            postCode.resignFirstResponder()
     }
 }

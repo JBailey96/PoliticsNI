@@ -11,7 +11,7 @@ import UIKit
 import Firebase
 import CoreLocation
 
-class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class RegisterViewController: UITableViewController, UITextFieldDelegate, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     let ref = FIRDatabase.database().reference()
     let locationManager = CLLocationManager()
     let pickerData = ["Prefer not to say", "Under 16", "17-19", "20-24", "25-49", "50+"]
@@ -30,13 +30,12 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
     var genderSet: Bool = false
     var userConstit: String!
     var locationSet: Bool = false
-    var userAge: String = "Prefer not to say"
+    var userAge = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        
         
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -54,6 +53,12 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
         pickerView.dataSource = self
         pickerView.delegate = self
         ageField.inputView = pickerView
+        
+        homePostCode.delegate = self
+        password1.delegate = self
+        password2.delegate = self
+        email1.delegate = self
+        ageField.delegate = self
     }
     
     override func didReceiveMemoryWarning() {
@@ -91,13 +96,14 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
     
     func dateAuth() -> Bool {
         if(userAge == "") {
+            alert("You have not set your age.")
             return false
         }
         return true
     }
     
     @IBAction func registerButton(sender: AnyObject) {
-        if passAuth() && dateAuth() && genderAuth() && LocationAuth() {
+        if dateAuth() && genderAuth() && LocationAuth() && passAuth() {
             FIRAuth.auth()?.createUserWithEmail(email1.text!, password: password1.text!) { (user, error) in
                 print(error?.description)
                 if let error = error {
@@ -167,19 +173,23 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
                 case .NotDetermined, .Restricted, .Denied:
                     alert("Problem with your location services.")
                     homePostCode.hidden = false
-                case .AuthorizedAlways, .AuthorizedWhenInUse:   
+                case .AuthorizedAlways, .AuthorizedWhenInUse:
+                    if locationManager.location != nil {
                     let latitude = String(format: "%f", locationManager.location!.coordinate.latitude)
                     let longitude = String(format: "%f", locationManager.location!.coordinate.longitude)
                     userConstit = DatabaseUtility.getConstituency(latitude, long: longitude)
-                    print(userConstit)
-                    
-                    if userConstit == "" {
+                        if userConstit == "" {
+                            alert("Problem with your location services.")
+                            homePostCode.hidden = false
+                        } else {
+                            location.text = userConstit
+                            self.locationSet = true
+                        }
+
+                    } else {
                         alert("Problem with your location services.")
                         homePostCode.hidden = false
-                    } else {
-                        location.text = userConstit
-                        self.locationSet = true
-                    }
+                                }
                 }
             } else {
                 alert("Problem with your location services.")
@@ -202,10 +212,6 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
         }
     }
     
-    @IBAction func clearTextFields(sender: AnyObject) {
-        let field = sender as! UITextField
-        field.text = ""
-    }
     
     func alert(alertDesc: String) {
         let alert = UIAlertController(title: "Alert", message: alertDesc, preferredStyle: UIAlertControllerStyle.Alert)
@@ -213,33 +219,21 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    func keyboardWillShow(notification: NSNotification) {
-        
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-            if view.frame.origin.y == 0{
-                self.view.frame.origin.y -= keyboardSize.height
-            }
-            else {
-                
-            }
-        }
-        
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
-    func keyboardWillHide(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-            if view.frame.origin.y != 0 {
-                self.view.frame.origin.y += keyboardSize.height
-            }
-            else {
-                
-            }
-        }
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        homePostCode.resignFirstResponder()
+        password1.resignFirstResponder()
+        password2.resignFirstResponder()
+        email1.resignFirstResponder()
+        ageField.resignFirstResponder()
+        return true
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
-        view.endEditing(true)
-        super.touchesBegan(touches, withEvent: event)
-    }
+    
+
 
     }

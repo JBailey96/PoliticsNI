@@ -23,7 +23,7 @@ class HubViewControlller: UITableViewController {
         self.navigationController?.navigationBar.backItem?.title
         
         self.navigationController?.navigationBar.titleTextAttributes = attrs
-        self.tableView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0)
+        //self.tableView.contentInset = UIEdgeInsetsMake(25, 0, 0, 0)
         
         if self.revealViewController() != nil {
             openSide.target = self.revealViewController()

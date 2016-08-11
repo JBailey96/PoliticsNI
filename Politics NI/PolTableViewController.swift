@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PolTableViewController:  UITableViewController{
+class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     lazy var politciansArr = DatabaseUtility.loadAllMembers() //array of all the politicians
     var myPol = [Politician]() //array of your politicians
     lazy var userConstituency = userUtility.user.constituency //get current user's constituency
@@ -17,6 +17,8 @@ class PolTableViewController:  UITableViewController{
     @IBOutlet weak var constituencyLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
+    
+    
     
     
     override func viewDidLoad() {
@@ -28,11 +30,14 @@ class PolTableViewController:  UITableViewController{
         }
         
         super.viewDidLoad()
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
+        tableView.tableFooterView = UIView()
 
         //sets up table view properties
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         self.tableView.rowHeight = 90
-        self.tableView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0)
+        self.tableView.contentInset = UIEdgeInsetsMake(25, 0, 0, 0)
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor() 
     }
@@ -76,5 +81,12 @@ class PolTableViewController:  UITableViewController{
             des2View.currentPol = myPol[polIndex!]
     }
 }
+    
+    func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
+        let str = "There was a problem loading your local politicians. Could there be an issue with your internet?"
+        let attrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)]
+        return NSAttributedString(string: str, attributes: attrs)
+    }
+
     
 }

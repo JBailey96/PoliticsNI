@@ -80,7 +80,7 @@ class UserResponseViewController: UIViewController {
        
         for view in agreeViews {
             let partyView = ["partyID": view.partyID, "view": view.view, "viewsrc": view.viewsrc]
-            saveUserStat("Agree", issueID: view.issueID, partyID: view.partyID)
+            saveUserStat(agreeViews, opinion: "Agree")
             dictionaryPartyViews.append(partyView)
         }
             self.ref.child("users").child(user!.uid).child("issueResponses").child(partyViews[0].issueID).child("partyViews").child("Agree").setValue(dictionaryPartyViews)
@@ -88,13 +88,15 @@ class UserResponseViewController: UIViewController {
         
         for view in disagreeViews {
             let partyView = ["partyID": view.partyID, "view": view.view, "viewsrc": view.viewsrc]
+            saveUserStat(disagreeViews, opinion: "Disagree")
             dictionaryPartyViews.append(partyView)
         }
             self.ref.child("users").child(user!.uid).child("issueResponses").child(partyViews[0].issueID).child("partyViews").child("Disagree").setValue(dictionaryPartyViews)
-            dictionaryPartyViews.removeAll()
+        dictionaryPartyViews.removeAll()
         
         for view in unsureViews {
             let partyView = ["partyID": view.partyID, "view": view.view, "viewsrc": view.viewsrc]
+            saveUserStat(unsureViews, opinion: "Unsure")
             dictionaryPartyViews.append(partyView)
         }
             self.ref.child("users").child(user!.uid).child("issueResponses").child(partyViews[0].issueID).child("partyViews").child("Unsure").setValue(dictionaryPartyViews)
@@ -102,6 +104,7 @@ class UserResponseViewController: UIViewController {
         
         for view in neutralViews {
             let partyView = ["partyID": view.partyID, "view": view.view, "viewsrc": view.viewsrc]
+            saveUserStat(neutralViews, opinion: "Neutral")
             dictionaryPartyViews.append(partyView)
         }
             self.ref.child("users").child(user!.uid).child("issueResponses").child(partyViews[0].issueID).child("partyViews").child("Neutral").setValue(dictionaryPartyViews)
@@ -109,24 +112,50 @@ class UserResponseViewController: UIViewController {
             userUtility.getUserIssues()
     }
     
-    func saveUserStat(opinion: String, issueID: String, partyID: String) {
-        let ref = self.ref.child("parties").child("issues").child("issue")
-        var ref2: FIRDatabaseReference!
-        var childSnapshot: FIRDataSnapshot!
-        
-        ref.observeSingleEventOfType(.Value, withBlock: { snapshot in
-            for child in snapshot.children {
-                if (child.value!.objectForKey("id") as! String! == issueID) {
-                childSnapshot = snapshot.childSnapshotForPath(child.key).childSnapshotForPath("partyViews")
-                ref2 = ref2.child(child.key).child("partyViews")
-                }
-                for child in childSnapshot.children {
-                    if (snapshot.value!.objectForKey("partyID") as! String? == partyID) {
-                        ref2.child(child.key).child(opinion).setValue("1")
-                    }
-                }
+    func saveUserStat(views: [PartyView], opinion: String) {
+        let statRef = self.ref.child("Stats")
+        statRef.observeSingleEventOfType(.Value, withBlock: { snapshot in
+            for view in views {
+            let viewStatRef = statRef.child(view.issueID).child(view.partyID).child(opinion)
+            let userAge = userUtility.user.birthDay
+            let userGender = userUtility.user.gender
+            let userConstit = userUtility.user.constituency
+            
+            let ageSnapshot = snapshot.childSnapshotForPath(view.issueID).childSnapshotForPath(view.partyID).childSnapshotForPath(opinion).childSnapshotForPath("Age")
+            let ageRef = viewStatRef.child("Age").child(userAge)
+                if ageSnapshot.childSnapshotForPath(userAge).exists() {
+                let currentCountAge = ageSnapshot.value!.objectForKey(userAge) as? Int
+                let newCountAge = currentCountAge! + 1
+                ageRef.setValue(newCountAge)
+            } else {
+                ageRef.setValue(1)
             }
-        })
+            
+            let genderSnapshot = snapshot.childSnapshotForPath(view.issueID).childSnapshotForPath(view.partyID).childSnapshotForPath(opinion).childSnapshotForPath("Gender")
+            let genderRef = viewStatRef.child("Gender").child(userGender)
+            if genderSnapshot.childSnapshotForPath(userGender).exists() {
+                let currentCountGender = genderSnapshot.value!.objectForKey(userGender) as? Int
+                let newCountGender = currentCountGender! + 1
+                genderRef.setValue(newCountGender)
+            } else {
+                genderRef.setValue(1)
+            }
+            
+            let constitSnapshot = snapshot.childSnapshotForPath(view.issueID).childSnapshotForPath(view.partyID).childSnapshotForPath(opinion).childSnapshotForPath("Constit")
+            let constitRef = viewStatRef.child("Constit").child(userConstit)
+            if  constitSnapshot.childSnapshotForPath(userConstit).exists() {
+                let currentCountConstit = constitSnapshot.value!.objectForKey(userConstit) as? Int
+                let newCountConstit = currentCountConstit! + 1
+                constitRef.setValue(newCountConstit)
+            } else {
+                constitRef.setValue(1)
+            }
+
+            }
+            })
+        { (error) in
+            print(error.localizedDescription)
+        }
     }
     }
 

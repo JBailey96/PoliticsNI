@@ -1,27 +1,27 @@
-    //
-//  SelectIssuesTableViewController.swift
+//
+//  RespondPartyIssueTableViewController.swift
 //  Politics NI
 //
-//  Created by App Camp on 03/08/2016.
+//  Created by App Camp on 09/08/2016.
 //  Copyright © 2016 App Camp. All rights reserved.
 //
 
 import Firebase
-class SelectIssuesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
-    var rootRef: FIRDatabaseReference!
-    var partyViews = [PartyView]()
+
+class RespondPartyIssueTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+    
     var issues = [Issue]()
-    var issue:Issue!
+    var partyViews = [PartyView]()
+    var issue: Issue!
+    var respondIssues = [Issue]()
     var partyViewsCollect = [PartyView]()
     
     override func viewDidLoad() {
-        super.viewDidLoad()
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
-        rootRef = FIRDatabase.database().reference()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
-        self.tableView.rowHeight = 90
+        self.tableView.rowHeight = 122
         self.tableView.contentInset = UIEdgeInsetsMake(25, 0, 0, 0)
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
@@ -64,56 +64,69 @@ class SelectIssuesTableViewController: UITableViewController, DZNEmptyDataSetSou
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-         return issues.count
+            return respondIssues.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell3", forIndexPath: indexPath) as! IssuesCellViewController
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell4", forIndexPath: indexPath) as! RespondPartyIssuesCellViewController
         
-             let entry = issues[indexPath.row]
-             cell.issueLabel.text = entry.desc
-             cell.userInteractionEnabled = true
-             cell.issueLabel.textColor = UIColor.blackColor()
-             cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        
+        if (!respondIssues.isEmpty) {
+            let entry = respondIssues[indexPath.row]
+            cell.issue.text = entry.desc
+            cell.userInteractionEnabled = true
+            cell.issue.textColor = UIColor.blackColor()
+            cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        } else {
+            cell.issue.text = "There are no more issues."
+            cell.userInteractionEnabled = false
+            cell.issue.textColor = UIColor.grayColor()
+            cell.accessoryType = .None
+        }
         
         return cell
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if  segue.identifier == "goToIssues" {
-            let issueIndex = tableView.indexPathForSelectedRow?.row
-            for view in partyViews {
-                if (issues[issueIndex!].id == view.issueID) {
-                    partyViewsCollect.append(view)
-                }
-            }
-            let desView = segue.destinationViewController as! UserResponseViewController
-            desView.partyViews = partyViewsCollect
-            partyViewsCollect.removeAll()
-        }
-        }
-    
-    
     func compareIssues() {
+        var currentIssueResp = [Issue]()
         let userResponded = userUtility.issues
         if (!userResponded.isEmpty) && (!issues.isEmpty) {
+        for (issIndex, issue) in issues.enumerate() {
             for (usrResindex, usrRes) in userResponded.enumerate() {
-                for (issIndex, issue) in issues.enumerate() {
                     if usrRes.id == issue.id {
                         print("in")
                         print(issues[issIndex].desc)
-                        issues.removeAtIndex(issIndex)
+                        currentIssueResp.append(issue)
                     }
-                }
+            }
             }
         }
+        self.respondIssues = currentIssueResp
         self.tableView.reloadData()
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if  segue.identifier == "goToViews" {
+            let issueIndex = tableView.indexPathForSelectedRow?.row
+            for view in partyViews {
+                if (respondIssues[issueIndex!].id == view.issueID) {
+                    partyViewsCollect.append(view)
+                }
+            }
+            let desView = segue.destinationViewController as! RespondPartyViewsTableViewController
+            desView.partyViews = partyViewsCollect
+            partyViewsCollect.removeAll()
+        }
+    }
+    
     func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
-        let str = "There are no more issues to reply to."
+        let str = "You have not responded to any issues."
         let attrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)]
         return NSAttributedString(string: str, attributes: attrs)
     }
+
+
+
+
 
 }
