@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import Firebase
 import CoreLocation
+import SCLAlertView
 
 class EditDetailsViewController: UITableViewController, CLLocationManagerDelegate, UITextFieldDelegate {
     let ref = FIRDatabase.database().reference()
@@ -53,7 +54,7 @@ class EditDetailsViewController: UITableViewController, CLLocationManagerDelegat
             if CLLocationManager.locationServicesEnabled() {
                 switch(CLLocationManager.authorizationStatus()) {
                 case .NotDetermined, .Restricted, .Denied:
-                    alert("Problem with your location services.")
+                    SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
                     postCode.hidden = false
                 case .AuthorizedAlways, .AuthorizedWhenInUse:
                     if locationManager.location != nil {
@@ -61,19 +62,21 @@ class EditDetailsViewController: UITableViewController, CLLocationManagerDelegat
                         let longitude = String(format: "%f", locationManager.location!.coordinate.longitude)
                         userConstit = DatabaseUtility.getConstituency(latitude, long: longitude)
                         if userConstit == "" {
-                            alert("Problem with your location services.")
+                            SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
                             postCode.hidden = false
                         } else {
                             locat.text = userConstit
                             self.locationSet = true
                         }
                     } else {
-                        alert("Problem with your location services.")
+                        SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
+
                         postCode.hidden = false
                     }
                 }
             } else {
-                alert("Problem with your location services.")
+                SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
+
                 postCode.hidden = false
             }
         } else {
@@ -86,7 +89,7 @@ class EditDetailsViewController: UITableViewController, CLLocationManagerDelegat
         userConstit = DatabaseUtility.getConstituencyPostCode(postCode)
         
         if userConstit == "" {
-            alert("Problem with your location services.")
+            SCLAlertView().showError("Error", subTitle: "Not a valid Northern Ireland postcode.")
         } else {
             locat.text = userConstit
             self.locationSet = true
@@ -94,11 +97,6 @@ class EditDetailsViewController: UITableViewController, CLLocationManagerDelegat
         }
     }
     
-func alert(alertDesc: String) {
-    let alert = UIAlertController(title: "Alert", message: alertDesc, preferredStyle: UIAlertControllerStyle.Alert)
-    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-    self.presentViewController(alert, animated: true, completion: nil)
-}
     
     
     @IBAction func editDetails(sender: AnyObject) {
@@ -109,23 +107,21 @@ func alert(alertDesc: String) {
         
         user!.reauthenticateWithCredential(credential) { error in
             if let error = error {
-               self.alert("Error with validation. Have you entered your current password?")
+                SCLAlertView().showError("Error", subTitle: "Have you entered your current password correctly?")
             } else {
-            }
-        }
-        
-        if newEmail != "" {
-            user!.updateEmail(newEmail!) { error in
-                if let error = error {
-                    self.alert("Error with email entry.")
+                if newEmail != "" {
+                    user!.updateEmail(newEmail!) { error in
+                        if let error = error {
+                            SCLAlertView().showError("Error", subTitle:"Have you entered a valid new email address?")
+                        } else {
+                            self.updatePass()
+                        }
+                    }
                 } else {
                     self.updatePass()
                 }
             }
-        } else {
-            self.updatePass()
         }
-
         }
     
     func updatePass() {
@@ -134,30 +130,34 @@ func alert(alertDesc: String) {
             let credential = FIREmailPasswordAuthProvider.credentialWithEmail((user?.email)!, password: currentPass.text!)
             user!.reauthenticateWithCredential(credential) { error in
                 if let error = error {
-                    self.alert("Current password not valid.")
+                    SCLAlertView().showError("Error", subTitle: "Have you entered your current password correctly?")
                 } else {
                     let newPassword = self.newPass.text
                     user!.updatePassword(newPassword!) { error in
                         if let error = error {
-                            self.alert("New password not valid.")
+                            SCLAlertView().showError("Error", subTitle: "Have you entered your new password correctly?")
                         } else {
                             let user1 = ["dob": userUtility.user.birthDay, "gender": userUtility.user.gender, "constituency": self.userConstit]
                             self.ref.child("users").child(user!.uid).setValue(user1)
                             userUtility.getUserInfo()
-                            let alert = UIAlertController(title: "Alert", message: "You have successfully updated your details.", preferredStyle: UIAlertControllerStyle.Alert)
-                            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { _ in
-                                self.performSegueWithIdentifier("settingsUpdated", sender: nil)
-                            }))
-                            self.presentViewController(alert, animated: true, completion: nil)
+                            
+                            let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+                            let alert = SCLAlertView(appearance: appearance)
+                            alert.addButton("Ok", target:self, selector:#selector(EditDetailsViewController.firstButton))
+                            alert.showSuccess("Well done!", subTitle: "You have successfully updated your settings.")
                         }
                     }
                 }
             }
         } else {
-            alert("Settings updated.")
             self.ref.child("users").child(user!.uid).child("constituency").setValue(self.userConstit)
             userUtility.getUserInfo()
-            performSegueWithIdentifier("returntoHub", sender: self)
+            //performSegueWithIdentifier("settingsUpdated", sender: self)
+            
+            let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+            let alert = SCLAlertView(appearance: appearance)
+            alert.addButton("Ok", target:self, selector:#selector(EditDetailsViewController.firstButton))
+            alert.showSuccess("Well done!", subTitle: "You have successfully updated your settings.")
         }
     }
     
@@ -177,5 +177,9 @@ func alert(alertDesc: String) {
             currentPass.resignFirstResponder()
             newPass.resignFirstResponder()
             postCode.resignFirstResponder()
+    }
+    
+    func firstButton() {
+        performSegueWithIdentifier("settingsUpdated", sender: self)
     }
 }

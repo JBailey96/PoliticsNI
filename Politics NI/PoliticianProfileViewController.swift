@@ -28,6 +28,8 @@ class PoliticianProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController!.navigationBar.topItem!.title = "Politicians in my area"
+        
         polPartyName.hidden = true
         loadParties()
         

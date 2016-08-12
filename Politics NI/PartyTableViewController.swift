@@ -17,11 +17,16 @@ class PartyTableViewController: UITableViewController {
         self.tableView.rowHeight = 90
             self.tableView.contentInset = UIEdgeInsetsMake(25, 0, 0, 0)
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor() 
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        
+        
         loadParties()
     }
     
     func loadParties() {
+        
         partiesRef.keepSynced(true)
             partiesRef.observeEventType(.Value, withBlock: { snapshot in
                 for child in snapshot.children {
@@ -65,7 +70,7 @@ class PartyTableViewController: UITableViewController {
         let tabBarC : UITabBarController = segue.destinationViewController as! UITabBarController
         let desView: PartyProfileVIewController = tabBarC.viewControllers?.first as! PartyProfileVIewController
         let des2View: PartyTwitterController = tabBarC.viewControllers?[1] as! PartyTwitterController
-        let des3View: PartyIssuesViewController = tabBarC.viewControllers?[2] as! PartyIssuesViewController
+        let des3View: PartyTableIssuesViewController = tabBarC.viewControllers?[2] as! PartyTableIssuesViewController
         let partyIndex = tableView.indexPathForSelectedRow?.row
         desView.currentParty = parties[partyIndex!]
         des2View.currentParty = parties[partyIndex!]

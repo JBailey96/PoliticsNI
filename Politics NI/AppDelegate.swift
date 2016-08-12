@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var currentPol: Politician?
-
+    var firstRun: Bool = true
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         FIRApp.configure()
@@ -26,22 +26,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
             if let user = user {
-                userUtility.getUserInfo()
-                userUtility.getUserIssues()
-                self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-                
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                
-                let initialViewController = storyboard.instantiateViewControllerWithIdentifier("initHub")
-                
-                self.window?.rootViewController = initialViewController
-                self.window?.makeKeyAndVisible()
-                
-                userUtility.issues = [Issue]()
-                userUtility.agreeViews = [PartyView]()
-                userUtility.disagreeViews = [PartyView]()
-                userUtility.unsureViews = [PartyView]()
-                userUtility.neutralViews = [PartyView]()
+                if (self.firstRun == true) {
+                    userUtility.getUserInfo()
+                    userUtility.getUserIssues()
+                    self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                    
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    
+                    let initialViewController = storyboard.instantiateViewControllerWithIdentifier("initHub")
+                    
+                    self.window?.rootViewController = initialViewController
+                    self.window?.makeKeyAndVisible()
+                    
+                    userUtility.issues = [Issue]()
+                    userUtility.agreeViews = [PartyView]()
+                    userUtility.disagreeViews = [PartyView]()
+                    userUtility.unsureViews = [PartyView]()
+                    userUtility.neutralViews = [PartyView]()
+                    self.firstRun = false
+                }
             } else {
                 // No user is signed in.
             }

@@ -15,79 +15,107 @@ class RespondPartyViewsTableViewController: UITableViewController {
     var disagreeViews =  [PartyView]()
     var unsureViews = [PartyView]()
     var neutralViews = [PartyView]()
+    
+    var agreeViewsSorted =  [PartyView]()
+    var disagreeViewsSorted =  [PartyView]()
+    var unsureViewsSorted = [PartyView]()
+    var neutralViewsSorted = [PartyView]()
+    
     var opinions =  [String]()
     var parties = [Party]()
+    
+    @IBOutlet weak var mySegmentedControl: UISegmentedControl!
+    
     
     override func viewDidLoad() {
         agreeViews = userUtility.agreeViews
         disagreeViews = userUtility.disagreeViews
         unsureViews = userUtility.unsureViews
         neutralViews = userUtility.neutralViews
+        chooseOpinion()
         
         super.viewDidLoad()
+        //opinions.removeAll()
+        //chooseOpinion()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
-        self.tableView.contentInset = UIEdgeInsetsMake(25, 0, 0, 0)
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return partyViews.count
+        let returnValue = 0
+        switch(mySegmentedControl.selectedSegmentIndex) {
+        case 0:
+            return agreeViewsSorted.count
+        case 1:
+            return disagreeViewsSorted.count
+        case 2:
+            return neutralViewsSorted.count
+        case 3:
+            return unsureViewsSorted.count
+        default:
+            break
+        }
+        return returnValue
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell5", forIndexPath: indexPath) as! RespondPartyViewsCellViewController
-        let entry = partyViews[indexPath.row]
+        
+        var entry: PartyView!
+        switch(mySegmentedControl.selectedSegmentIndex) {
+            case 0:
+            entry = agreeViewsSorted[indexPath.row]
+            case 1:
+            entry = disagreeViewsSorted[indexPath.row]
+            case 2:
+            entry = neutralViewsSorted[indexPath.row]
+            case 3:
+            entry = unsureViewsSorted[indexPath.row]
+            default:
+            break
+        }
+
         cell.partyView.text = entry.view
         cell.partySrc.text = entry.viewsrc
         cell.partyLogo.image = setLogo(entry.partyID)
-        let opinion = chooseOpinion()
-        opinions.append(opinion)
-        
-        cell.userOpinion.text = opinions[indexPath.row]
+        //cell.userOpinion.text = opinions[indexPath.row]
         return cell
     }
     
     
-    func chooseOpinion() -> String! {
-        
+    func chooseOpinion() {
         for view in partyViews {
-        for viewOp in agreeViews.enumerate() {
+            for viewOp in agreeViews.enumerate() {
                 if (view.partyID == viewOp.element.partyID) && (view.issueID == viewOp.element.issueID) {
+                    agreeViewsSorted.append(view)
                     self.agreeViews.removeAtIndex(viewOp.index)
-                    return "You agree with this view"
                 }
             }
-        }
         
-        for view in partyViews {
         for viewOp in disagreeViews.enumerate() {
                 if (view.partyID == viewOp.element.partyID) && (view.issueID == viewOp.element.issueID) {
+                    disagreeViewsSorted.append(view)
                     self.disagreeViews.removeAtIndex(viewOp.index)
-                    return "You disagree with this view"
                 }
             }
-        }
         
-        for view in partyViews {
         for viewOp in unsureViews.enumerate() {
                 if (view.partyID == viewOp.element.partyID) && (view.issueID == viewOp.element.issueID) {
+                    unsureViewsSorted.append(view)
                     self.unsureViews.removeAtIndex(viewOp.index)
-                    return "You are undecided with this view"
-                }
             }
-        }
+            }
         
-        for view in partyViews {
         for viewOp in neutralViews.enumerate() {
             if (view.partyID == viewOp.element.partyID) && (view.issueID == viewOp.element.issueID) {
+                    neutralViewsSorted.append(view)
                     self.neutralViews.removeAtIndex(viewOp.index)
-                    return "You neither agree nor disagree with this view"
-                }
             }
-        }
-        return ""
+            }
     }
+    }
+    
     
     func setLogo(partyID: String) -> UIImage {
         switch partyID {
@@ -116,5 +144,8 @@ class RespondPartyViewsTableViewController: UITableViewController {
         return 1
     }
     
+    @IBAction func segmentedControlActionChanged(sender: AnyObject) {
+        tableView.reloadData()
+    }
     
 }

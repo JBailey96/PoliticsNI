@@ -8,7 +8,6 @@
 
 class PartyIssuesCellViewController: UITableViewCell {
     
-    @IBOutlet weak var issueDesc: UILabel!
     @IBOutlet weak var partyView: UILabel!
     @IBOutlet weak var partyViewSrc: UITextView!
 }

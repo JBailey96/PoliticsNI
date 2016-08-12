@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import Firebase
 import CoreLocation
+import SCLAlertView
 
 class RegisterViewController: UITableViewController, UITextFieldDelegate, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     let ref = FIRDatabase.database().reference()
@@ -35,6 +36,8 @@ class RegisterViewController: UITableViewController, UITextFieldDelegate, CLLoca
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(RegisterViewController.tap(_:)))
+        view.addGestureRecognizer(tapGesture)
         
         
         locationManager.delegate = self
@@ -53,6 +56,20 @@ class RegisterViewController: UITableViewController, UITextFieldDelegate, CLLoca
         pickerView.dataSource = self
         pickerView.delegate = self
         ageField.inputView = pickerView
+        
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .Default
+        toolBar.translucent = true
+        toolBar.tintColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        toolBar.sizeToFit()
+        
+        // Adding Button ToolBar
+        let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(RegisterViewController.doneClick))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(RegisterViewController.cancelClick))
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolBar.userInteractionEnabled = true
+        ageField.inputAccessoryView = toolBar
         
         homePostCode.delegate = self
         password1.delegate = self
@@ -107,7 +124,7 @@ class RegisterViewController: UITableViewController, UITextFieldDelegate, CLLoca
             FIRAuth.auth()?.createUserWithEmail(email1.text!, password: password1.text!) { (user, error) in
                 print(error?.description)
                 if let error = error {
-                    self.alert("Could not sign up.")
+                    self.alert("Could not sign up. Have you entered a valid password and email?")
                 }
                 if let user = user {
                     let user1 = ["dob": self.userAge, "gender": self.gender, "constituency": self.userConstit]
@@ -171,7 +188,7 @@ class RegisterViewController: UITableViewController, UITextFieldDelegate, CLLoca
             if CLLocationManager.locationServicesEnabled() {
                 switch(CLLocationManager.authorizationStatus()) {
                 case .NotDetermined, .Restricted, .Denied:
-                    alert("Problem with your location services.")
+                    SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
                     homePostCode.hidden = false
                 case .AuthorizedAlways, .AuthorizedWhenInUse:
                     if locationManager.location != nil {
@@ -179,7 +196,7 @@ class RegisterViewController: UITableViewController, UITextFieldDelegate, CLLoca
                     let longitude = String(format: "%f", locationManager.location!.coordinate.longitude)
                     userConstit = DatabaseUtility.getConstituency(latitude, long: longitude)
                         if userConstit == "" {
-                            alert("Problem with your location services.")
+                            SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
                             homePostCode.hidden = false
                         } else {
                             location.text = userConstit
@@ -187,12 +204,12 @@ class RegisterViewController: UITableViewController, UITextFieldDelegate, CLLoca
                         }
 
                     } else {
-                        alert("Problem with your location services.")
+                        SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
                         homePostCode.hidden = false
                                 }
                 }
             } else {
-                alert("Problem with your location services.")
+               SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
                 homePostCode.hidden = false
             }
         } else {
@@ -205,8 +222,8 @@ class RegisterViewController: UITableViewController, UITextFieldDelegate, CLLoca
         userConstit = DatabaseUtility.getConstituencyPostCode(postCode)
         
         if userConstit == "" {
-            alert("Problem with your location services.")
-        } else {
+            SCLAlertView().showWarning("Warning", subTitle: "Problem with your postcode entry. Is it a valid Northern Ireland postcode?")        }
+        else {
             location.text = userConstit
             self.locationSet = true
         }
@@ -214,26 +231,56 @@ class RegisterViewController: UITableViewController, UITextFieldDelegate, CLLoca
     
     
     func alert(alertDesc: String) {
-        let alert = UIAlertController(title: "Alert", message: alertDesc, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+       SCLAlertView().showError("Error with registration", subTitle: alertDesc)
     }
     
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        self.view.endEditing(true)
-    }
+//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+//        self.view.endEditing(true)
+//    }
+//    
+//    func textFieldShouldReturn(textField: UITextField) -> Bool {
+//        homePostCode.resignFirstResponder()
+//        password1.resignFirstResponder()
+//        password2.resignFirstResponder()
+//        email1.resignFirstResponder()
+//        ageField.resignFirstResponder()
+//        return true
+//    }
+//    
     
+//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
+//        view.endEditing(true)
+//        super.touchesBegan(touches, withEvent: event)
+//        homePostCode.resignFirstResponder()
+//        password1.resignFirstResponder()
+//        password2.resignFirstResponder()
+//        email1.resignFirstResponder()
+//        ageField.resignFirstResponder()
+//    }
+//   
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        homePostCode.resignFirstResponder()
-        password1.resignFirstResponder()
-        password2.resignFirstResponder()
-        email1.resignFirstResponder()
+        textField.resignFirstResponder()
+        return true;
+    }
+    
+    func tap(gesture: UITapGestureRecognizer) {
+        //password1.resignFirstResponder()
+        view.endEditing(true)
+    }
+    
+    func doneClick() {
         ageField.resignFirstResponder()
-        return true
+    }
+    
+    
+    func cancelClick() {
+        ageField.resignFirstResponder()
     }
     
     
 
+    
+    
+}
 
-    }

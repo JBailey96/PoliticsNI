@@ -9,15 +9,18 @@
 import Firebase
 import Social
 
-class PartyEvaluationViewController: UITableViewController {
+class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     lazy var partiesRef = FIRDatabase.database().reference().child("parties").child("party")
     var parties = [Party]()
     var partyEval = [PartyEval]()
 
     override func viewDidLoad() {
-            super.viewDidLoad()
+        super.viewDidLoad()
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
+        tableView.tableFooterView = UIView()
             self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
-            self.tableView.rowHeight = 111
+            //self.tableView.rowHeight = 150
                 self.tableView.contentInset = UIEdgeInsetsMake(25, 0, 0, 0)
             self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
             self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
@@ -55,30 +58,93 @@ class PartyEvaluationViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell4", forIndexPath: indexPath) as! PartyEvalCellViewController
         let entry = parties[indexPath.row]
-        let image = UIImage(named: entry.logo)
-        cell.partyLogo.image = image
-        cell.partyName.text = entry.name
         
-        for party in partyEval {
-            if (party.percent != nil) {
-                if (party.partyID == entry.id) {
-                    if (party.percent >= 0.75) {
-                        cell.partyPercent.text = "Strongly agree on issues"
-                    } else if (party.percent >= 0.50) {
-                        cell.partyPercent.text = "Mostly agree on issues"
-                    } else if (party.percent >= 0.25) {
-                        cell.partyPercent.text = "Mostly disagree on issues"
-                    } else if (party.percent >= 0) {
-                        cell.partyPercent.text = "Strongly disagree on issues"
+        var cmpPartyEval1: PartyEval!
+        var cmpPartyEval2: PartyEval!
+        
+        if (indexPath.row <= 2)  {
+            let topCell = tableView.dequeueReusableCellWithIdentifier("topCell", forIndexPath: indexPath) as! PartyEvalTopCellViewController
+            topCell.partyLogo.image = UIImage(named: entry.logo)
+            topCell.partyName.text = entry.name
+            
+            if (indexPath.row >= 1) {
+                for party in partyEval {
+                    if party.partyID == entry.id {
+                        cmpPartyEval1 = party
+                    } else if parties[indexPath.row-1].id == party.partyID {
+                        cmpPartyEval2 = party
                     }
                 }
+                if (cmpPartyEval1.percent == cmpPartyEval2.percent) {
+                    topCell.rank.text = "="
+                } else {
+                    topCell.rank.text = String(indexPath.row + 1)
+                }
             } else {
-                cell.partyPercent.text = "Not enough information."
+                topCell.rank.text = String(indexPath.row + 1)
             }
+            
+            for party in partyEval {
+                if (party.percent != nil) {
+                    if (party.partyID == entry.id) {
+                        if (party.percent >= 0.90) {
+                            topCell.partyEvaluation.text = "Strongly agree on issues"
+                        } else if (party.percent >= 0.75) {
+                            topCell.partyEvaluation.text = "Mostly agree on issues"
+                        } else if (party.percent > 0.50) {
+                            topCell.partyEvaluation.text = "Generally agree on issues"
+                        } else if (party.percent >= 45) {
+                            topCell.partyEvaluation.text = "Balanced on agreement on issues"
+                        } else if (party.percent >= 0.25) {
+                            topCell.partyEvaluation.text = "Mostly disagree on issues"
+                        } else {
+                            topCell.partyEvaluation.text = "Strongly disagree on issues"
+                        }
+                    }
+                } else {
+                    topCell.partyEvaluation.text = "Not enough information."
+                }
+            }
+            return topCell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell4", forIndexPath: indexPath) as! PartyEvalCellViewController
+            let image = UIImage(named: entry.logo)
+            cell.partyLogo.image = image
+            cell.partyName.text = entry.name
+            
+                for party in partyEval {
+                    if party.partyID == entry.id {
+                        cmpPartyEval1 = party
+                    } else if parties[indexPath.row-1].id == party.partyID {
+                        cmpPartyEval2 = party
+                    }
+                }
+                if (cmpPartyEval1.percent == cmpPartyEval2.percent) {
+                    cell.rank.text = "="
+            } else {
+                cell.rank.text = String(indexPath.row + 1)
+            }
+
+            for party in partyEval {
+                if (party.percent != nil) {
+                    if (party.partyID == entry.id) {
+                        if (party.percent >= 0.75) {
+                            cell.partyPercent.text = "Strongly agree on issues"
+                        } else if (party.percent >= 0.50) {
+                            cell.partyPercent.text = "Mostly agree on issues"
+                        } else if (party.percent >= 0.25) {
+                            cell.partyPercent.text = "Mostly disagree on issues"
+                        } else if (party.percent >= 0) {
+                            cell.partyPercent.text = "Strongly disagree on issues"
+                        }
+                    }
+                } else {
+                    cell.partyPercent.text = "Not enough information."
+                }
+            }
+            return cell
         }
-        return cell
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -136,12 +202,11 @@ class PartyEvaluationViewController: UITableViewController {
     
     func sortParties() -> [Party] {
         let partyEvalsorted = partyEval.sort {$0.percent > $1.percent}
-        
         var sortedParties =  [Party]()
         
         for partyE in partyEvalsorted  {
             for party in parties {
-                if (partyE.partyID == party.id) {
+                if (partyE.partyID == party.id) && (partyE.numViewsAns >= 3){
                     sortedParties.append(party)
                 }
             }
@@ -183,4 +248,20 @@ class PartyEvaluationViewController: UITableViewController {
     }
     
     }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.row <= 2 {
+            return 120
+        }
+        else {
+            return 100
+        }
+    }
+    
+    func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
+        let str = "You have not responded to enough issues. Please respond to more issues."
+        let attrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)]
+        return NSAttributedString(string: str, attributes: attrs)
+    }
+
 }

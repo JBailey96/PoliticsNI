@@ -13,4 +13,5 @@ target 'Politics NI' do
     pod ‘Fabric’
     pod ‘TwitterKit’
     pod ’TwitterCore’
+    pod 'SCLAlertView'
 end

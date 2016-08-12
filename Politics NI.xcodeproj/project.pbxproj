@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0716B8A01D5B2382002F8F1D /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0716B89F1D5B2382002F8F1D /* UIScrollView+EmptyDataSet.m */; };
 		0716B8A31D5B33DD002F8F1D /* ResetPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0716B8A21D5B33DD002F8F1D /* ResetPasswordController.swift */; };
+		0717620A1D5C6E2C007A31C9 /* PartyEvalTopCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071762091D5C6E2C007A31C9 /* PartyEvalTopCellViewController.swift */; };
 		0719DF3F1D53677B00C1C55B /* PartyEvaluationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0719DF3E1D53677B00C1C55B /* PartyEvaluationViewController.swift */; };
 		0719DF411D53687A00C1C55B /* PartyEvalCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0719DF401D53687A00C1C55B /* PartyEvalCellViewController.swift */; };
 		071F343F1D51DCCC000400F7 /* SelectIssuesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071F343E1D51DCCC000400F7 /* SelectIssuesTableViewController.swift */; };
@@ -40,6 +41,8 @@
 		07A90F581D5A03E800D4B7E4 /* RespondPartyIssueTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A90F571D5A03E800D4B7E4 /* RespondPartyIssueTableViewController.swift */; };
 		07A90F5A1D5A0B8300D4B7E4 /* RespondPartyViewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A90F591D5A0B8300D4B7E4 /* RespondPartyViewsTableViewController.swift */; };
 		07A90F5C1D5A0BC700D4B7E4 /* RespondPartyViewsCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A90F5B1D5A0BC700D4B7E4 /* RespondPartyViewsCellViewController.swift */; };
+		07B1B9B01D5DD97A004BEAF8 /* PartyCellIssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B1B9AF1D5DD97A004BEAF8 /* PartyCellIssuesViewController.swift */; };
+		07B1B9B21D5DD996004BEAF8 /* PartyTableIssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B1B9B11D5DD996004BEAF8 /* PartyTableIssuesViewController.swift */; };
 		07B8253D1D411F3400E20DD4 /* PolCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B8253C1D411F3400E20DD4 /* PolCellViewController.swift */; };
 		07DDA55F1D4617CF0001B507 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDA55E1D4617CF0001B507 /* User.swift */; };
 		07DDA5611D461E310001B507 /* politicsni.png in Resources */ = {isa = PBXBuildFile; fileRef = 07DDA5601D461E310001B507 /* politicsni.png */; };
@@ -81,6 +84,7 @@
 		0716B89E1D5B2382002F8F1D /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
 		0716B89F1D5B2382002F8F1D /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
 		0716B8A21D5B33DD002F8F1D /* ResetPasswordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordController.swift; sourceTree = "<group>"; };
+		071762091D5C6E2C007A31C9 /* PartyEvalTopCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyEvalTopCellViewController.swift; sourceTree = "<group>"; };
 		0719DF3E1D53677B00C1C55B /* PartyEvaluationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyEvaluationViewController.swift; sourceTree = "<group>"; };
 		0719DF401D53687A00C1C55B /* PartyEvalCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyEvalCellViewController.swift; sourceTree = "<group>"; };
 		071F343E1D51DCCC000400F7 /* SelectIssuesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectIssuesTableViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +118,8 @@
 		07A90F571D5A03E800D4B7E4 /* RespondPartyIssueTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RespondPartyIssueTableViewController.swift; sourceTree = "<group>"; };
 		07A90F591D5A0B8300D4B7E4 /* RespondPartyViewsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RespondPartyViewsTableViewController.swift; sourceTree = "<group>"; };
 		07A90F5B1D5A0BC700D4B7E4 /* RespondPartyViewsCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RespondPartyViewsCellViewController.swift; sourceTree = "<group>"; };
+		07B1B9AF1D5DD97A004BEAF8 /* PartyCellIssuesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyCellIssuesViewController.swift; sourceTree = "<group>"; };
+		07B1B9B11D5DD996004BEAF8 /* PartyTableIssuesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyTableIssuesViewController.swift; sourceTree = "<group>"; };
 		07B8253C1D411F3400E20DD4 /* PolCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolCellViewController.swift; sourceTree = "<group>"; };
 		07DDA55E1D4617CF0001B507 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		07DDA5601D461E310001B507 /* politicsni.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = politicsni.png; path = Images/politicsni.png; sourceTree = "<group>"; };
@@ -191,6 +197,7 @@
 				07A90F571D5A03E800D4B7E4 /* RespondPartyIssueTableViewController.swift */,
 				07A90F591D5A0B8300D4B7E4 /* RespondPartyViewsTableViewController.swift */,
 				07A90F5B1D5A0BC700D4B7E4 /* RespondPartyViewsCellViewController.swift */,
+				071762091D5C6E2C007A31C9 /* PartyEvalTopCellViewController.swift */,
 			);
 			name = "My Issues";
 			sourceTree = "<group>";
@@ -228,6 +235,8 @@
 				0741AD851D4B862D009CDABF /* PartyTwitterViewController.swift */,
 				07A4E2E61D4F736D00523B3E /* PartyIssuesViewController.swift */,
 				07A4E2EC1D4F7C5900523B3E /* PartyIssuesCellViewController.swift */,
+				07B1B9AF1D5DD97A004BEAF8 /* PartyCellIssuesViewController.swift */,
+				07B1B9B11D5DD996004BEAF8 /* PartyTableIssuesViewController.swift */,
 			);
 			name = Party;
 			sourceTree = "<group>";
@@ -552,11 +561,14 @@
 				071F343F1D51DCCC000400F7 /* SelectIssuesTableViewController.swift in Sources */,
 				07A90F5A1D5A0B8300D4B7E4 /* RespondPartyViewsTableViewController.swift in Sources */,
 				0719DF3F1D53677B00C1C55B /* PartyEvaluationViewController.swift in Sources */,
+				07B1B9B01D5DD97A004BEAF8 /* PartyCellIssuesViewController.swift in Sources */,
 				0741AD861D4B862D009CDABF /* PartyTwitterViewController.swift in Sources */,
 				07A90F581D5A03E800D4B7E4 /* RespondPartyIssueTableViewController.swift in Sources */,
+				0717620A1D5C6E2C007A31C9 /* PartyEvalTopCellViewController.swift in Sources */,
 				07A4E2E71D4F736D00523B3E /* PartyIssuesViewController.swift in Sources */,
 				079EA8D01D3FB1AB000570B2 /* Party.swift in Sources */,
 				079EA8CE1D3FA7A3000570B2 /* Politician.swift in Sources */,
+				07B1B9B21D5DD996004BEAF8 /* PartyTableIssuesViewController.swift in Sources */,
 				07DDA55F1D4617CF0001B507 /* User.swift in Sources */,
 				07A4E2EB1D4F75C600523B3E /* PartyView.swift in Sources */,
 				07E0EFF11D49FBFD0013B5B7 /* PartyCellViewController.swift in Sources */,
