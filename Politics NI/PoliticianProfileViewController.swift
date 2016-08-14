@@ -11,9 +11,11 @@ import Firebase
 import TwitterKit
 
 
-class PoliticianProfileViewController: UIViewController {
+class PoliticianProfileViewController: UITableViewController{
     let mlaRef = FIRDatabase.database().reference().child("MLAContact")
     
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var container: UIView!
     @IBOutlet weak var polPartyName: UIButton!
     @IBOutlet weak var phoneNumTextView: UITextView!
     @IBOutlet weak var polProfileImage: UIImageView!
@@ -43,10 +45,9 @@ class PoliticianProfileViewController: UIViewController {
         polPartyName.titleLabel!.adjustsFontSizeToFitWidth = true
         polPartyName.titleLabel!.minimumScaleFactor = 0.5
         
-        //hiding twitter options until verified politician has twitter
-        
-        
-            mlaRef.observeEventType(.Value, withBlock: { snapshot in
+        dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
+            let semaphore = dispatch_semaphore_create(0)
+            self.mlaRef.observeEventType(.Value, withBlock: { snapshot in
                 print(snapshot.value)
                 print(self.currentPol?.id)
                 for child in snapshot.children {
@@ -71,16 +72,20 @@ class PoliticianProfileViewController: UIViewController {
                         
                     }
                 }
-                
-                if (self.currentPol?.twitter == "na") {
-                    if  let arrayOfTabBarItems = self.tabBarController!.tabBar.items as! AnyObject as? NSArray,tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
-                        tabBarItem.enabled = false
-                    }
-                }
-                
+                dispatch_semaphore_signal(semaphore)
                 }, withCancelBlock:  { error in
                     print(error.description)
             })
+            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+            print(self.currentPol?.twitter)
+            let tbc: PolTwitterViewController = (self.childViewControllers[0] as! PolTwitterViewController)
+            tbc.viewDidLoad()
+        }
+        
+        self.phoneNumTextView.text = "0" + (self.currentPol?.phoneNumber)!
+        self.emailTextView.text = self.currentPol?.email
+        self.altEmailTextView.text = self.currentPol?.altEmail
+
         
         
         // Add a button to the center of the view to show the timeline
@@ -95,6 +100,7 @@ class PoliticianProfileViewController: UIViewController {
        // polProfileImage.layer.masksToBounds = true
        // polProfileImage.layer.borderWidth = 0.1;
         polName.text = (currentPol?.firstName)! + " " + (currentPol?.lastName)! + ", MLA"
+        name.text = (currentPol?.firstName)! + " " + (currentPol?.lastName)!
     }
     
     
@@ -124,12 +130,17 @@ class PoliticianProfileViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if  segue.identifier == "goToParty" {
             let tabBarC : UITabBarController = segue.destinationViewController as! UITabBarController
-            let desView: PartyProfileVIewController = tabBarC.viewControllers?.first as! PartyProfileVIewController
-            let des2View: PartyTwitterController = tabBarC.viewControllers?[1] as! PartyTwitterController
-            let des3View: PartyIssuesViewController = tabBarC.viewControllers?[2] as! PartyIssuesViewController
+            let desView: PartyProfileVIewController = tabBarC.viewControllers?[0] as! PartyProfileVIewController
+            let des3View: PartyTableIssuesViewController = tabBarC.viewControllers?[1] as! PartyTableIssuesViewController
             desView.currentParty = party
-            des2View.currentParty = party
             des3View.currentParty = party
         }
+        else if segue.identifier == "containerViewSegue" {
+            let containerViewController = segue.destinationViewController as? PolTwitterViewController
+            containerViewController?.currentPol = currentPol
+        }
     }
-}
+    
+    
+
+    }

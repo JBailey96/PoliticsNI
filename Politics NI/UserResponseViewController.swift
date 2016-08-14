@@ -7,7 +7,8 @@
 //
 
 import Firebase
-class UserResponseViewController: UIViewController {
+
+class UserResponseViewController: UITableViewController {
     var partyViews: [PartyView]!
     var agreeViews = [PartyView]()
     var disagreeViews = [PartyView]()

@@ -8,14 +8,27 @@
 
 import TwitterKit
 
-class PolTwitterViewController: TWTRTimelineViewController {
+class PolTwitterViewController: TWTRTimelineViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     var currentPol: Politician?
     
     override func viewDidLoad() {
             super.viewDidLoad()
-            UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState:.Normal)
-            self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
             let client = TWTRAPIClient()
+        
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
+        tableView.tableFooterView = UIView()
+        
+        if (currentPol?.twitter != "")  && (currentPol?.twitter != "na") {
             self.dataSource = TWTRUserTimelineDataSource(screenName: currentPol!.twitter, APIClient: client)
+        }
+        tableView.intrinsicContentSize()
     }
+    
+    func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
+        let str = "This politician does not have a twitter account."
+        let attrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)]
+        return NSAttributedString(string: str, attributes: attrs)
+    }
+    
 }

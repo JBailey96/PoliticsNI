@@ -69,11 +69,9 @@ class PartyTableViewController: UITableViewController {
         if  segue.identifier == "goToPartyProfile" {
         let tabBarC : UITabBarController = segue.destinationViewController as! UITabBarController
         let desView: PartyProfileVIewController = tabBarC.viewControllers?.first as! PartyProfileVIewController
-        let des2View: PartyTwitterController = tabBarC.viewControllers?[1] as! PartyTwitterController
-        let des3View: PartyTableIssuesViewController = tabBarC.viewControllers?[2] as! PartyTableIssuesViewController
+        let des3View: PartyTableIssuesViewController = tabBarC.viewControllers?[1] as! PartyTableIssuesViewController
         let partyIndex = tableView.indexPathForSelectedRow?.row
         desView.currentParty = parties[partyIndex!]
-        des2View.currentParty = parties[partyIndex!]
         des3View.currentParty = parties[partyIndex!]
         }
 

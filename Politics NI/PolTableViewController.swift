@@ -7,11 +7,17 @@
 //
 
 import UIKit
+import Firebase
 
 class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     lazy var politciansArr = DatabaseUtility.loadAllMembers() //array of all the politicians
     var myPol = [Politician]() //array of your politicians
     lazy var userConstituency = userUtility.user.constituency //get current user's constituency
+    var currentPol: Politician?
+    var indexPathPol: Int?
+    var firstRun = false
+    var display = false
+
     
     
     @IBOutlet weak var constituencyLabel: UILabel!
@@ -41,7 +47,7 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        navigationItem.title = "Politicians in my area"
+        navigationItem.title = "Politicians in my Area"
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -49,12 +55,29 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return myPol.count
+        if (firstRun) {
+            return myPol.count + 1
+        } else {
+            return myPol.count
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if (firstRun == true) {
+            let cell = tableView.dequeueReusableCellWithIdentifier("infoCell", forIndexPath: indexPath) 
+            firstRun = false
+            display = true
+            return cell
+        }
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! PolCellViewController
-        let entry = myPol[indexPath.row]
+        
+        var entry: Politician!
+        
+        if (display) {
+            entry = myPol[indexPath.row-1]
+        } else {
+            entry = myPol[indexPath.row]
+        }
     
         let url = NSURL(string:entry.imageURL)
         let dat = NSData(contentsOfURL: url!)
@@ -69,26 +92,71 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(politciansArr[indexPath.row].firstName)
+        if (display) {
+            self.currentPol = myPol[indexPath.row-1]
+        } else {
+            self.currentPol = myPol[indexPath.row]
+        }
     }
     
     //segues to politician profile
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if  segue.identifier == "goToProfile" {
-            let tabBarC : UITabBarController = segue.destinationViewController as! UITabBarController
-            let desView: PoliticianProfileViewController = tabBarC.viewControllers?.first as! PoliticianProfileViewController
-            let des2View: PolTwitterViewController = tabBarC.viewControllers?[1] as! PolTwitterViewController
-            let polIndex = tableView.indexPathForSelectedRow?.row
-            desView.currentPol = myPol[polIndex!]
-            des2View.currentPol = myPol[polIndex!]
+            
+            let path = tableView.indexPathForSelectedRow
+            let paths = path?.row
+            
+            if (display) {
+                self.currentPol = myPol[paths!-1]
+            } else {
+                self.currentPol = myPol[paths!]
+            }
+            
+            //let des2View = PolTwitterViewController()
+            //des2View.currentPol = myPol[polIndex!]
+//            
+//            let mlaRef = FIRDatabase.database().reference().child("MLAContact")
+//            mlaRef.observeSingleEventOfType(.Value, withBlock: { snapshot in
+//                    print(snapshot.value)
+//                    print(self.currentPol?.id)
+//                    for child in snapshot.children {
+//                        let childSnapshot = snapshot.childSnapshotForPath(child.key)
+//                        if (self.currentPol!.id == childSnapshot.value!.objectForKey("id")?.stringValue) {
+//                            let phoneNum = childSnapshot.value!.objectForKey("Telephone Number")?.stringValue
+//                            self.currentPol?.phoneNumber = phoneNum!
+//                            
+//                            let email = childSnapshot.value!.objectForKey("Email contact address") as! String
+//                            //print(email)
+//                            self.currentPol?.email = email
+//                            
+//                            let twitter = childSnapshot.value!.objectForKey("Twitter") as! String
+//                            self.currentPol?.twitter = twitter
+//                            
+//                            let altEmail = childSnapshot.value!.objectForKey("Alternative Email contact") as! String
+//                            self.currentPol?.altEmail = altEmail
+//                        }
+//                }
+//                })
+                print("we did it")
+                let desView = (segue.destinationViewController as! PoliticianProfileViewController)
+                desView.currentPol = self.currentPol
+        }
+        
     }
-}
     
     func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
         let str = "There was a problem loading your local politicians. Could there be an issue with your internet?"
         let attrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)]
         return NSAttributedString(string: str, attributes: attrs)
     }
-
+    @IBAction func infoToggle(sender: AnyObject) {
+        if (display) {
+            firstRun = false
+            display = false
+        } else {
+            firstRun = true
+        }
+        tableView.reloadData()
+    }
     
 }

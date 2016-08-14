@@ -8,9 +8,10 @@
 
 import TwitterKit
 
-class PartyProfileVIewController: UIViewController {
+class PartyProfileVIewController: UITableViewController {
     var currentParty: Party?
     
+    @IBOutlet weak var tweetsFrom: UILabel!
     @IBOutlet weak var partyName: UILabel!
     @IBOutlet weak var phoneNum: UITextView!
     @IBOutlet weak var webLink: UITextView!
@@ -40,7 +41,15 @@ class PartyProfileVIewController: UIViewController {
         partyName.text = currentParty?.name
         webLink.text = currentParty?.webLink
         emailAddress.text = currentParty?.email
+        tweetsFrom.text = currentParty?.name
         //polNameTwitter.text = polName.text
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+       if segue.identifier == "containerViewSegueParty" {
+            let containerViewController = segue.destinationViewController as? PartyTwitterController
+            containerViewController?.currentParty = self.currentParty
+        }
     }
     
     
