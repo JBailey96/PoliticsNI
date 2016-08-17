@@ -13,12 +13,15 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
     lazy var partiesRef = FIRDatabase.database().reference().child("parties").child("party")
     var parties = [Party]()
     var partyEval = [PartyEval]()
-
+    var chosenRow: Int!
+    var equal = false
+    var equalDone = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.emptyDataSetSource = self
-        tableView.emptyDataSetDelegate = self
-        tableView.tableFooterView = UIView()
+        self.tableView.emptyDataSetSource = self
+        self.tableView.emptyDataSetDelegate = self
+        self.tableView.tableFooterView = UIView()
             self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
             //self.tableView.rowHeight = 150
                 self.tableView.contentInset = UIEdgeInsetsMake(25, 0, 0, 0)
@@ -63,24 +66,33 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
         var cmpPartyEval1: PartyEval!
         var cmpPartyEval2: PartyEval!
         
-        if (indexPath.row <= 2)  {
+        equal = false
+        
+        if (indexPath.row >= 1) && (!equalDone) {
+            for party in partyEval {
+                if party.partyID == entry.id {
+                    cmpPartyEval1 = party
+                } else if parties[indexPath.row-1].id == party.partyID {
+                    cmpPartyEval2 = party
+                }
+            }
+            if (cmpPartyEval1.percent == cmpPartyEval2.percent) {
+                equal = true
+            } else {
+                equal = false
+                equalDone = true
+            }
+        }
+
+
+        
+        if (indexPath.row <= 2) || (equal) {
             let topCell = tableView.dequeueReusableCellWithIdentifier("topCell", forIndexPath: indexPath) as! PartyEvalTopCellViewController
             topCell.partyLogo.image = UIImage(named: entry.logo)
             topCell.partyName.text = entry.name
             
-            if (indexPath.row >= 1) {
-                for party in partyEval {
-                    if party.partyID == entry.id {
-                        cmpPartyEval1 = party
-                    } else if parties[indexPath.row-1].id == party.partyID {
-                        cmpPartyEval2 = party
-                    }
-                }
-                if (cmpPartyEval1.percent == cmpPartyEval2.percent) {
-                    topCell.rank.text = "="
-                } else {
-                    topCell.rank.text = String(indexPath.row + 1)
-                }
+            if (equal) {
+                 topCell.rank.text = "="
             } else {
                 topCell.rank.text = String(indexPath.row + 1)
             }
@@ -250,7 +262,7 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.row <= 2 {
+        if indexPath.row <= 2 || equal {
             return 120
         }
         else {
@@ -262,6 +274,18 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
         let str = "You have not responded to enough issues. Please respond to more issues."
         let attrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)]
         return NSAttributedString(string: str, attributes: attrs)
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        chosenRow = indexPath.row
+        performSegueWithIdentifier("goToPartyViewEvaluation", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "goToPartyViewEvaluation" {
+            let desView = segue.destinationViewController as! PartyEvalAgreeDisagreeViewController
+            desView.party = parties[chosenRow]
+        }
     }
 
 }

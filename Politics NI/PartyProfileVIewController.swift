@@ -20,7 +20,7 @@ class PartyProfileVIewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "Party"
+        self.tabBarController!.title = "Party"
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState:.Normal)
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
         self.navigationController?.navigationBar.titleTextAttributes =  [NSForegroundColorAttributeName : UIColor.whiteColor()]
@@ -51,6 +51,7 @@ class PartyProfileVIewController: UITableViewController {
             containerViewController?.currentParty = self.currentParty
         }
     }
+    
     
     
     

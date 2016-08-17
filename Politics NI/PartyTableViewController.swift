@@ -7,12 +7,20 @@
 //
 import Firebase
 
-class PartyTableViewController: UITableViewController {
+class PartyTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     lazy var partiesRef = FIRDatabase.database().reference().child("parties").child("party")
     var parties = [Party]()
     
+    var firstAttempt = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.emptyDataSetDelegate = self
+        tableView.emptyDataSetSource = self
+        
+        firstAttempt = true
+        
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         self.tableView.rowHeight = 90
             self.tableView.contentInset = UIEdgeInsetsMake(25, 0, 0, 0)
@@ -42,7 +50,8 @@ class PartyTableViewController: UITableViewController {
                     let party = Party(id: id, name: name, logo: logo, webLink: webLink, twitterLink: twitter, phoneNum: phoneNum, email: email)
                     self.parties.append(party)
                 }
-            self.tableView.reloadData()
+                self.firstAttempt = false
+                self.tableView.reloadData()
             })
         
     }
@@ -74,7 +83,22 @@ class PartyTableViewController: UITableViewController {
         desView.currentParty = parties[partyIndex!]
         des3View.currentParty = parties[partyIndex!]
         }
-
-    
 }
+    
+    func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
+        let str = "There was a problem loading the political parties. Could there be an issue with your internet?"
+        let attrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)]
+        return NSAttributedString(string: str, attributes: attrs)
+    }
+    
+    
+    func emptyDataSetShouldDisplay(scrollView: UIScrollView) -> Bool {
+        if (firstAttempt) {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    
 }

@@ -8,13 +8,16 @@
 
 import Firebase
 
-class RespondPartyViewsTableViewController: UITableViewController {
+class RespondPartyViewsTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
     var partyViews = [PartyView]()
     var agreeViews =  [PartyView]()
     var disagreeViews =  [PartyView]()
     var unsureViews = [PartyView]()
     var neutralViews = [PartyView]()
+    
+    var viewDoneButton = false
+    var issues = [Issue]()
     
     var agreeViewsSorted =  [PartyView]()
     var disagreeViewsSorted =  [PartyView]()
@@ -24,24 +27,112 @@ class RespondPartyViewsTableViewController: UITableViewController {
     var opinions =  [String]()
     var parties = [Party]()
     
+    
     @IBOutlet weak var mySegmentedControl: UISegmentedControl!
     
+    @IBOutlet weak var done: UIBarButtonItem!
     
     override func viewDidLoad() {
-        agreeViews = userUtility.agreeViews
-        disagreeViews = userUtility.disagreeViews
-        unsureViews = userUtility.unsureViews
-        neutralViews = userUtility.neutralViews
-        chooseOpinion()
-        
+        self.navigationItem.title = "Your Responses"
         super.viewDidLoad()
         //opinions.removeAll()
         //chooseOpinion()
+        
+        if (!viewDoneButton) {
+            done.tintColor = UIColor.clearColor()
+            done.enabled = false
+        } else {
+            done.tintColor = UIColor.whiteColor()
+            done.enabled = true
+        }
+        
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.backItem?.backBarButtonItem?.title = ""
+        
+        let attrs = [
+            NSForegroundColorAttributeName : UIColor.whiteColor(),]
+        self.navigationController!.navigationBar.titleTextAttributes = attrs
+        
+        
+        dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
+            
+            let uidRef = FIRDatabase.database().reference().child("users").child((FIRAuth.auth()?.currentUser?.uid)!)
+            let issueResp = uidRef.child("issueResponses")
+            var issuesinBlock = [Issue]()
+            var agreeinBlock =  [PartyView]()
+            var disagreeinBlock = [PartyView]()
+            var unsureinBlock = [PartyView]()
+            var neutralinBlock = [PartyView]()
+            
+            let semaphore = dispatch_semaphore_create(0)
+            issueResp.observeSingleEventOfType(.Value, withBlock: { snapshot in
+                for child in snapshot.children {
+                    let childSnapshot = snapshot.childSnapshotForPath(child.key)
+                    let issueDesc = childSnapshot.value?.objectForKey("issueDesc") as! String
+                    let issueID = childSnapshot.value?.objectForKey("issueID") as! String
+                    let issue = Issue(desc: issueDesc, id: issueID)
+                    issuesinBlock.append(issue)
+                    
+                    var viewsChild = snapshot.childSnapshotForPath(issue.id).childSnapshotForPath("partyViews").childSnapshotForPath("Agree")
+                    for child in viewsChild.children {
+                        let childSnapshot = viewsChild.childSnapshotForPath(child.key)
+                        let partyID = childSnapshot.value!.objectForKey("partyID") as! String
+                        let view = childSnapshot.value!.objectForKey("view") as! String
+                        let viewsrc = childSnapshot.value!.objectForKey("viewsrc") as! String
+                        let partyView = PartyView(issueID: issue.id, issueDesc: issue.desc, partyID: partyID, view: view, viewsrc: viewsrc)
+                        agreeinBlock.append(partyView)
+                    }
+                    
+                    viewsChild = snapshot.childSnapshotForPath(issue.id).childSnapshotForPath("partyViews").childSnapshotForPath("Disagree")
+                    for child in viewsChild.children {
+                        let childSnapshot = viewsChild.childSnapshotForPath(child.key)
+                        let partyID = childSnapshot.value!.objectForKey("partyID") as! String
+                        let view = childSnapshot.value!.objectForKey("view") as! String
+                        let viewsrc = childSnapshot.value!.objectForKey("viewsrc") as! String
+                        let partyView = PartyView(issueID: issue.id, issueDesc: issue.desc, partyID: partyID, view: view, viewsrc: viewsrc)
+                        disagreeinBlock.append(partyView)
+                    }
+                    
+                    viewsChild = snapshot.childSnapshotForPath(issue.id).childSnapshotForPath("partyViews").childSnapshotForPath("Neutral")
+                    for child in viewsChild.children {
+                        let childSnapshot = viewsChild.childSnapshotForPath(child.key)
+                        let partyID = childSnapshot.value!.objectForKey("partyID") as! String
+                        let view = childSnapshot.value!.objectForKey("view") as! String
+                        let viewsrc = childSnapshot.value!.objectForKey("viewsrc") as! String
+                        let partyView = PartyView(issueID: issue.id, issueDesc: issue.desc, partyID: partyID, view: view, viewsrc: viewsrc)
+                        neutralinBlock.append(partyView)
+                    }
+                    
+                    viewsChild = snapshot.childSnapshotForPath(issue.id).childSnapshotForPath("partyViews").childSnapshotForPath("Unsure")
+                    for child in viewsChild.children {
+                        let childSnapshot = viewsChild.childSnapshotForPath(child.key)
+                        let partyID = childSnapshot.value!.objectForKey("partyID") as! String
+                        let view = childSnapshot.value!.objectForKey("view") as! String
+                        let viewsrc = childSnapshot.value!.objectForKey("viewsrc") as! String
+                        let partyView = PartyView(issueID: issue.id, issueDesc: issue.desc, partyID: partyID, view: view, viewsrc: viewsrc)
+                        unsureinBlock.append(partyView)
+                    }
+                }
+                self.issues = issuesinBlock
+                self.agreeViews =  agreeinBlock
+                self.disagreeViews = disagreeinBlock
+                self.unsureViews = unsureinBlock
+                self.neutralViews = neutralinBlock
+                
+                dispatch_semaphore_signal(semaphore)
+                }, withCancelBlock:  { error in
+                    print(error.description)
+                }
+                
+            )
+            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+            self.chooseOpinion()
+        }
+        viewDoneButton = false
     }
-    
+
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let returnValue = 0
         switch(mySegmentedControl.selectedSegmentIndex) {
@@ -114,6 +205,7 @@ class RespondPartyViewsTableViewController: UITableViewController {
             }
             }
     }
+        tableView.reloadData()
     }
     
     

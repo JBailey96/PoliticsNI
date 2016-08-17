@@ -55,7 +55,7 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (firstRun) {
+        if (display) {
             return myPol.count + 1
         } else {
             return myPol.count
@@ -63,22 +63,21 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if (firstRun == true) {
-            let cell = tableView.dequeueReusableCellWithIdentifier("infoCell", forIndexPath: indexPath) 
-            firstRun = false
-            display = true
+        if (display) && (indexPath.row == 0) {
+            let cell = tableView.dequeueReusableCellWithIdentifier("infoCell", forIndexPath: indexPath)
             return cell
         }
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! PolCellViewController
         
         var entry: Politician!
         
+        
         if (display) {
             entry = myPol[indexPath.row-1]
         } else {
             entry = myPol[indexPath.row]
         }
-    
+        
         let url = NSURL(string:entry.imageURL)
         let dat = NSData(contentsOfURL: url!)
     
@@ -87,6 +86,10 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
         cell.profilePic.image = image
         cell.nameLabel.text = entry.firstName + " " + entry.lastName
         cell.constituencyLabel.text = entry.party
+        
+        if (indexPath.row == myPol.count+1) {
+            display = true
+        }
         
         return cell
     }
@@ -151,12 +154,18 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
     }
     @IBAction func infoToggle(sender: AnyObject) {
         if (display) {
-            firstRun = false
             display = false
         } else {
-            firstRun = true
+            display = true
         }
         tableView.reloadData()
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if (display) && indexPath.row == 0 {
+            return 150
+        }
+        return 90
     }
     
 }

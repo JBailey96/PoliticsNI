@@ -14,8 +14,13 @@ class SelectIssuesTableViewController: UITableViewController, DZNEmptyDataSetSou
     var issue:Issue!
     var partyViewsCollect = [PartyView]()
     
+    var firstAttempt = true
+    
+    @IBOutlet weak var backItem: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        firstAttempt = true
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
@@ -25,7 +30,14 @@ class SelectIssuesTableViewController: UITableViewController, DZNEmptyDataSetSou
         self.tableView.contentInset = UIEdgeInsetsMake(25, 0, 0, 0)
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
+        let attrs = [
+            NSForegroundColorAttributeName : UIColor.whiteColor(),
+            ]
+        
+        self.navigationController?.navigationBar.titleTextAttributes = attrs
         loadPartyViews()
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -107,6 +119,7 @@ class SelectIssuesTableViewController: UITableViewController, DZNEmptyDataSetSou
                 }
             }
         }
+        firstAttempt = false
         self.tableView.reloadData()
     }
     
@@ -116,4 +129,11 @@ class SelectIssuesTableViewController: UITableViewController, DZNEmptyDataSetSou
         return NSAttributedString(string: str, attributes: attrs)
     }
 
+    func emptyDataSetShouldDisplay(scrollView: UIScrollView) -> Bool {
+        if (firstAttempt) {
+            return false
+        } else {
+            return true
+        }
+    }
 }

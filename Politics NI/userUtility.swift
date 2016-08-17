@@ -31,6 +31,9 @@ class userUtility {
         })
 }
     class func getUserIssues() {
+        
+        dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
+            
         let uidRef = FIRDatabase.database().reference().child("users").child((FIRAuth.auth()?.currentUser?.uid)!)
         let issueResp = uidRef.child("issueResponses")
         var issuesinBlock = [Issue]()
@@ -39,8 +42,8 @@ class userUtility {
         var unsureinBlock = [PartyView]()
         var neutralinBlock = [PartyView]()
         
+        let semaphore = dispatch_semaphore_create(0)
         issueResp.observeSingleEventOfType(.Value, withBlock: { snapshot in
-      
             for child in snapshot.children {
                 let childSnapshot = snapshot.childSnapshotForPath(child.key)
                 let issueDesc = childSnapshot.value?.objectForKey("issueDesc") as! String
@@ -93,11 +96,14 @@ class userUtility {
             self.disagreeViews = disagreeinBlock
             self.unsureViews = unsureinBlock
             self.neutralViews = neutralinBlock
+            
+            dispatch_semaphore_signal(semaphore)
             }, withCancelBlock:  { error in
                 print(error.description)
         }
 
         )
-        
+            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+        }
     }
 }

@@ -9,46 +9,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Politics NI/PartyCellViewController.swift"
-            timestampString = "492897731.567243"
+            filePath = "Politics NI/RespondPartyViewsTableViewController.swift"
+            timestampString = "493071680.867905"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "9"
-            endingLineNumber = "9"
-            landmarkName = "PartyCellViewController"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Politics_NI.PartyCellViewController.init (style : __C.UITableViewCellStyle, reuseIdentifier : Swift.Optional&lt;Swift.String&gt;) -&gt; Politics_NI.PartyCellViewController"
-                  moduleName = "Politics NI"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/appcamp/Documents/Politics%20NI/Politics%20NI/PartyCellViewController.swift"
-                  timestampString = "492899276.44224"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "11"
-                  endingLineNumber = "11"
-                  offsetFromSymbolStart = "77">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Politics_NI.PartyCellViewController.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Politics_NI.PartyCellViewController&gt;"
-                  moduleName = "Politics NI"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/appcamp/Documents/Politics%20NI/Politics%20NI/PartyCellViewController.swift"
-                  timestampString = "492899276.442559"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "11"
-                  endingLineNumber = "11"
-                  offsetFromSymbolStart = "37">
-               </Location>
-            </Locations>
+            startingLineNumber = "171"
+            endingLineNumber = "171"
+            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

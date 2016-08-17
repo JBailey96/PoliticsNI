@@ -8,7 +8,7 @@
 
 import Firebase
 
-class ResetPasswordController: UIViewController, UITextFieldDelegate {
+class ResetPasswordController: UITableViewController, UITextFieldDelegate {
     
     
     @IBOutlet weak var emailField: UITextField!

@@ -15,6 +15,7 @@ class UserResponseViewController: UITableViewController {
     var unsureViews = [PartyView]()
     var neutralViews = [PartyView]()
     
+    
     var dictionaryPartyViews = [[String: String!]]()
     
     let ref = FIRDatabase.database().reference()
@@ -28,49 +29,77 @@ class UserResponseViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         count = 0
-        viewDesc.text = partyViews[count].view
-        issue.text = partyViews[count].issueDesc
+        
+        let attrs = [
+            NSForegroundColorAttributeName : UIColor.whiteColor(),]
+       self.navigationController!.navigationBar.titleTextAttributes = attrs
+        nextQuestion()
         updateCount()
     }
     
     @IBAction func agree(sender: AnyObject) {
-        agreeViews.append(partyViews[count])
-        nextQuestion()
-        updateCount()
+        agree()
     }
     
     @IBAction func disagree(sender: AnyObject) {
-        disagreeViews.append(partyViews[count])
-        nextQuestion()
-        updateCount()
+        disagree()
     }
     
     @IBAction func neitherAgree(sender: AnyObject) {
-        neutralViews.append(partyViews[count])
-        nextQuestion()
-        updateCount()
+        neitherAgree()
     }
     
     @IBAction func unsure(sender: AnyObject) {
-        unsureViews.append(partyViews[count])
+        unsure()
+    }
+    
+    func agree() {
+        agreeViews.append(partyViews[count])
+        viewDesc.fadeOut()
+        count = count+1
         nextQuestion()
-        updateCount()
+    }
+    
+    func disagree() {
+        disagreeViews.append(partyViews[count])
+        viewDesc.fadeOut()
+        count = count+1
+        nextQuestion()
+    }
+    
+    func neitherAgree() {
+        neutralViews.append(partyViews[count])
+        viewDesc.fadeOut()
+        count = count+1
+        nextQuestion()
+    }
+    
+    func unsure() {
+        unsureViews.append(partyViews[count])
+        viewDesc.fadeOut()
+        count = count+1
+        nextQuestion()
     }
     
     func nextQuestion() {
-        count = count + 1
-        if (count < partyViews.count) {
+        if (count != partyViews.count) {
             viewDesc.text = partyViews[count].view
             issue.text = partyViews[count].issueDesc
+            viewDesc.fadeIn()
+            updateCount()
         } else {
             setUserIssues()
-            performSegueWithIdentifier("returnToIssues", sender: self)
+            super.performSegueWithIdentifier("goToResponses", sender: self)
         }
     }
     
     func updateCount() {
-        let countCurrent = String(count+1)
-        issueCountNotif.text = "Issue " + countCurrent + "/" + String(partyViews.count)
+        if partyViews.count != count {
+            let countCurrent = String(count+1)
+            issueCountNotif.text = "View " + countCurrent + "/" + String(partyViews.count)
+        } else {
+            issueCountNotif.hidden = true
+        }
     }
     
     func setUserIssues() {
@@ -218,11 +247,51 @@ class UserResponseViewController: UITableViewController {
 //            } else {
 //                constitRef.setValue(1)
 //            }
-                
+            
 //                dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
 //                dispatch_semaphore_wait(semaphore1, DISPATCH_TIME_FOREVER)
 //                dispatch_semaphore_wait(semaphore2, DISPATCH_TIME_FOREVER)
-    }
+        }
 }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if (indexPath.row == 2) {
+            return 180
+        }
+        else if (indexPath.row >= 3) {
+            let screenDefaultHeight: CGFloat = UIScreen.mainScreen().bounds.size.height-325
+            return screenDefaultHeight/5
+        } else {
+            return 40
+        }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        switch(indexPath.row) {
+        case 3:
+            agree()
+        case 4:
+            disagree()
+        case 5:
+            neitherAgree()
+        case 6:
+            unsure()
+        default:
+            break
+        }
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "goToResponses" {
+            let navVC = segue.destinationViewController as! UINavigationController
+            let tableVC = navVC.viewControllers.first as! RespondPartyViewsTableViewController
+            tableVC.partyViews = self.partyViews
+            tableVC.viewDoneButton = true
+            partyViews.removeAll()
+        }
+    }
+    
+    
 
 }

@@ -16,10 +16,14 @@ class RespondPartyIssueTableViewController: UITableViewController, DZNEmptyDataS
     var respondIssues = [Issue]()
     var partyViewsCollect = [PartyView]()
     
+    var firstAttempt = true
+    
     override func viewDidLoad() {
+        firstAttempt = true
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         self.tableView.rowHeight = 122
         self.tableView.contentInset = UIEdgeInsetsMake(25, 0, 0, 0)
@@ -102,6 +106,7 @@ class RespondPartyIssueTableViewController: UITableViewController, DZNEmptyDataS
             }
         }
         self.respondIssues = currentIssueResp
+        firstAttempt = false
         self.tableView.reloadData()
     }
     
@@ -126,7 +131,13 @@ class RespondPartyIssueTableViewController: UITableViewController, DZNEmptyDataS
     }
 
 
-
+    func emptyDataSetShouldDisplay(scrollView: UIScrollView) -> Bool {
+        if (firstAttempt) {
+            return false
+        } else {
+            return true
+        }
+    }
 
 
 }
