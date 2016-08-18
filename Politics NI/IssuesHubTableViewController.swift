@@ -14,6 +14,7 @@ class IssuesHubTableViewController: UITableViewController {
     var issue:Issue!
     
     override func viewDidLoad() {
+
         rootRef = FIRDatabase.database().reference()
         super.viewDidLoad()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
@@ -24,12 +25,10 @@ class IssuesHubTableViewController: UITableViewController {
         
         let attrs = [
             NSForegroundColorAttributeName : UIColor.whiteColor(),]
-        
-        self.navigationController?.navigationBar.backItem?.title
-        
         self.navigationController?.navigationBar.titleTextAttributes = attrs
-
+        
     }
+    
     
     
 }

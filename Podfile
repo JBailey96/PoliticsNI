@@ -14,4 +14,5 @@ target 'Politics NI' do
     pod ‘TwitterKit’
     pod ’TwitterCore’
     pod 'SCLAlertView'
+    pod 'SVProgressHUD'
 end

@@ -36,6 +36,7 @@ PODS:
   - GoogleUtilities (1.3.1):
     - GoogleSymbolUtilities (~> 1.0)
   - SCLAlertView (0.5.9)
+  - SVProgressHUD (2.0.3)
   - SwiftyJSON (2.3.2)
   - TwitterCore (2.3.0):
     - Fabric
@@ -48,6 +49,7 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Database
   - SCLAlertView
+  - SVProgressHUD
   - SwiftyJSON
   - TwitterCore
   - TwitterKit
@@ -65,10 +67,11 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: 33117db1b5f290c6fbf259585e4885b4c84b98d7
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
   SCLAlertView: d7c6a48c7d340e60206d4ed0e8ebcbff3b9d2a44
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   TwitterCore: 817eae3e291fa4125b47789e26a4f6f024115c1f
   TwitterKit: 8a383da8d9c21b0423716381ea8bbfce20622d91
 
-PODFILE CHECKSUM: d9ab435b7e993588fd2a4de76c65beeea8be81f8
+PODFILE CHECKSUM: de9a926e545e0e826b9f340a4b9bc65694b479e0
 
 COCOAPODS: 1.0.1

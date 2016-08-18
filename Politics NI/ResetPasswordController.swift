@@ -7,6 +7,7 @@
 //
 
 import Firebase
+import SCLAlertView
 
 class ResetPasswordController: UITableViewController, UITextFieldDelegate {
     
@@ -27,13 +28,17 @@ class ResetPasswordController: UITableViewController, UITextFieldDelegate {
         
         FIRAuth.auth()?.sendPasswordResetWithEmail(email!) { error in
             if let error = error {
-                self.alert("Email not recognised. Have you created an account?")
+                SCLAlertView().showError("Error with reset", subTitle: "Email not recognised. Have you created an account?")
             } else {
-                let alert = UIAlertController(title: "Alert", message: "Password email sent", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { _ in
+                let appearance = SCLAlertView.SCLAppearance(
+                    showCloseButton: false // hide default button
+                )
+                let alert = SCLAlertView(appearance: appearance) // create alert with appearance
+                alert.addButton("OK", action: { // create button on alert
                     self.performSegueWithIdentifier("resetEmailComplete", sender: nil)
-                }))
-                self.presentViewController(alert, animated: true, completion: nil)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                })
+                alert.showSuccess("Success", subTitle: "A verification email has been sent.")
             }
         }
     }

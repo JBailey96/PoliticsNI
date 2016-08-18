@@ -10,7 +10,10 @@ import TwitterKit
 
 class PolTwitterViewController: TWTRTimelineViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     var currentPol: Politician?
-    var firstAttempt = true
+    var enter = false
+    var done = false
+    var str = ""
+    
     
     override func viewDidLoad() {
             super.viewDidLoad()
@@ -20,24 +23,29 @@ class PolTwitterViewController: TWTRTimelineViewController, DZNEmptyDataSetSourc
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
         
-        if (currentPol?.twitter != "")  && (currentPol?.twitter != "na") {
-            self.dataSource = TWTRUserTimelineDataSource(screenName: currentPol!.twitter, APIClient: client)
+        if enter {
+            if (currentPol?.twitter != "")  && (currentPol?.twitter != "na") {
+                self.dataSource = TWTRUserTimelineDataSource(screenName: currentPol!.twitter, APIClient: client)
+                tableView.reloadData()
+            } else {
+                done = true
+                tableView.reloadData()
+            }
+            enter = false
         }
         tableView.intrinsicContentSize()
-        firstAttempt = false
     }
     
     func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
-        let str = "This politician does not have a twitter account."
         let attrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)]
-        return NSAttributedString(string: str, attributes: attrs)
+        return NSAttributedString(string: "This politician does not have twitter.", attributes: attrs)
     }
     
     func emptyDataSetShouldDisplay(scrollView: UIScrollView) -> Bool {
-        if (firstAttempt) {
-            return false
-        } else {
+        if done {
             return true
+        } else {
+            return false
         }
     }
     

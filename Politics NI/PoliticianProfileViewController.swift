@@ -79,8 +79,18 @@ class PoliticianProfileViewController: UITableViewController{
             dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
             print(self.currentPol?.twitter)
             let tbc: PolTwitterViewController = (self.childViewControllers[0] as! PolTwitterViewController)
+            tbc.enter = true
             tbc.viewDidLoad()
         }
+        
+        let url = NSURL(string:(currentPol?.imageURL)!)
+        let dat = NSData(contentsOfURL: url!)
+        let image = UIImage(data: dat!)
+        polProfileImage.image = image
+        
+        polName.text = (currentPol?.firstName)! + " " + (currentPol?.lastName)! + ", MLA"
+        name.text = (currentPol?.firstName)! + " " + (currentPol?.lastName)!
+        
         
         self.phoneNumTextView.text = "0" + (self.currentPol?.phoneNumber)!
         self.emailTextView.text = self.currentPol?.email
@@ -138,6 +148,12 @@ class PoliticianProfileViewController: UITableViewController{
         else if segue.identifier == "containerViewSegue" {
             let containerViewController = segue.destinationViewController as? PolTwitterViewController
             containerViewController?.currentPol = currentPol
+        }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if (indexPath.row == 1) {
+            performSegueWithIdentifier("goToParty", sender: self)
         }
     }
     

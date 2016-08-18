@@ -7,6 +7,7 @@
 //
 
 import SwiftyJSON
+import SVProgressHUD
 
 class DatabaseUtility {
     
@@ -15,31 +16,31 @@ class DatabaseUtility {
     class func loadAllMembers() -> [Politician] {
         var politiciansArr = [Politician]()
         
-        let urlString = "http://data.niassembly.gov.uk/members_json.ashx?m=GetAllCurrentMembers"
-        
-        if let url = NSURL(string: urlString) {
-            if let data = try? NSData(contentsOfURL: url, options: []) {
-                let json = JSON(data: data)
-                for item in json["AllMembersList"]["Member"].arrayValue {
-                    let id = item["PersonId"].stringValue
-                    let firstName = item["MemberFirstName"].stringValue
-                    let lastName = item["MemberLastName"].stringValue
-                    let constituency = item["ConstituencyName"].stringValue
-                    let party = item["PartyName"].stringValue
-                    let imageURL = item["MemberImgUrl"].stringValue
-                    let email = ""
-                    let phoneNumber = ""
-                    let altEmail = ""
-                    let twitter = ""
-                    
-                    let pol = Politician(id: id, firstName: firstName, lastName: lastName, constituency: constituency, party: party, imageURL: imageURL, email: email, phoneNumber: phoneNumber, twitter: twitter, altEmail: altEmail)
-                    politiciansArr.append(pol)
+            let urlString = "http://data.niassembly.gov.uk/members_json.ashx?m=GetAllCurrentMembers"
+            
+            if let url = NSURL(string: urlString) {
+                if let data = try? NSData(contentsOfURL: url, options: []) {
+                    let json = JSON(data: data)
+                    for item in json["AllMembersList"]["Member"].arrayValue {
+                        let id = item["PersonId"].stringValue
+                        let firstName = item["MemberFirstName"].stringValue
+                        let lastName = item["MemberLastName"].stringValue
+                        let constituency = item["ConstituencyName"].stringValue
+                        let party = item["PartyName"].stringValue
+                        let imageURL = item["MemberImgUrl"].stringValue
+                        let email = ""
+                        let phoneNumber = ""
+                        let altEmail = ""
+                        let twitter = ""
+                        
+                        let pol = Politician(id: id, firstName: firstName, lastName: lastName, constituency: constituency, party: party, imageURL: imageURL, email: email, phoneNumber: phoneNumber, twitter: twitter, altEmail: altEmail)
+                        politiciansArr.append(pol)
+                    }
                 }
-                return politiciansArr
             }
-}
-        return [Politician]()
-}
+        return politiciansArr
+    }
+    
 
     
     //method for getting the name of a constiuency by searching through nia assembly API

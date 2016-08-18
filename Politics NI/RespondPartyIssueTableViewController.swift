@@ -24,6 +24,11 @@ class RespondPartyIssueTableViewController: UITableViewController, DZNEmptyDataS
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        
+        if let topItem = self.navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        }
+        
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         self.tableView.rowHeight = 122
         self.tableView.contentInset = UIEdgeInsetsMake(25, 0, 0, 0)
@@ -136,7 +141,11 @@ class RespondPartyIssueTableViewController: UITableViewController, DZNEmptyDataS
             return false
         } else {
             return true
-        }
+        } 
+    }
+    
+    func imageForEmptyDataSet(scrollView: UIScrollView) -> UIImage? {
+        return UIImage(named: "issuesresponses")!
     }
 
 

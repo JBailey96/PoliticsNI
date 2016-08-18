@@ -28,6 +28,11 @@ class UserResponseViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let topItem = self.navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        }
+        
         count = 0
         
         let attrs = [
@@ -291,6 +296,8 @@ class UserResponseViewController: UITableViewController {
             partyViews.removeAll()
         }
     }
+    
+    
     
     
 

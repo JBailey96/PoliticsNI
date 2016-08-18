@@ -16,9 +16,16 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
     var chosenRow: Int!
     var equal = false
     var equalDone = false
+    var extraRows = 0
+    var rowLimit = 2
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        equal = false
+        equalDone = false
+        
+        
         self.tableView.emptyDataSetSource = self
         self.tableView.emptyDataSetDelegate = self
         self.tableView.tableFooterView = UIView()
@@ -31,13 +38,14 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
             NSForegroundColorAttributeName : UIColor.whiteColor(),
         ]
         
-        self.navigationController?.navigationBar.backItem?.title
         
         self.navigationController?.navigationBar.titleTextAttributes = attrs
-            loadParties()
-    }
-    
-    func loadParties() {
+        
+        if let topItem = self.navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        }
+        
+        
         partiesRef.keepSynced(true)
         partiesRef.observeSingleEventOfType(.Value, withBlock: { snapshot in
             for child in snapshot.children {
@@ -58,7 +66,9 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
             self.parties = self.sortParties()
             self.tableView.reloadData()
         })
+
     }
+    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let entry = parties[indexPath.row]
@@ -68,7 +78,7 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
         
         equal = false
         
-        if (indexPath.row >= 1) && (!equalDone) {
+        if (indexPath.row > 2) && (!equalDone) {
             for party in partyEval {
                 if party.partyID == entry.id {
                     cmpPartyEval1 = party
@@ -78,28 +88,34 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
             }
             if (cmpPartyEval1.percent == cmpPartyEval2.percent) {
                 equal = true
+                extraRows = extraRows + 1
             } else {
                 equal = false
                 equalDone = true
+                rowLimit = rowLimit + extraRows
             }
         }
-
-
+    
         
-        if (indexPath.row <= 2) || (equal) {
+        if (indexPath.row <= rowLimit) || (equal) {
             let topCell = tableView.dequeueReusableCellWithIdentifier("topCell", forIndexPath: indexPath) as! PartyEvalTopCellViewController
+            topCell.backgroundColor = UIColor(red:0.30, green:0.59, blue:0.96, alpha:1.0)
             topCell.partyLogo.image = UIImage(named: entry.logo)
             topCell.partyName.text = entry.name
             
-            if (equal) {
+            if (equal) || ((indexPath.row > 2) && (indexPath.row <= rowLimit)) {
                  topCell.rank.text = "="
             } else {
                 topCell.rank.text = String(indexPath.row + 1)
             }
             
+            
+            
+            
             for party in partyEval {
-                if (party.percent != nil) {
-                    if (party.partyID == entry.id) {
+                for partyt in parties {
+                    if (party.partyID == partyt.id) {
+                        if (partyt.id == entry.id) {
                         if (party.percent >= 0.90) {
                             topCell.partyEvaluation.text = "Strongly agree on issues"
                         } else if (party.percent >= 0.75) {
@@ -113,9 +129,8 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
                         } else {
                             topCell.partyEvaluation.text = "Strongly disagree on issues"
                         }
+                        }
                     }
-                } else {
-                    topCell.partyEvaluation.text = "Not enough information."
                 }
             }
             return topCell
@@ -132,29 +147,34 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
                         cmpPartyEval2 = party
                     }
                 }
-                if (cmpPartyEval1.percent == cmpPartyEval2.percent) {
+            if (cmpPartyEval1.percent == cmpPartyEval2.percent) {
                     cell.rank.text = "="
             } else {
                 cell.rank.text = String(indexPath.row + 1)
             }
 
+            
             for party in partyEval {
-                if (party.percent != nil) {
-                    if (party.partyID == entry.id) {
-                        if (party.percent >= 0.75) {
-                            cell.partyPercent.text = "Strongly agree on issues"
-                        } else if (party.percent >= 0.50) {
-                            cell.partyPercent.text = "Mostly agree on issues"
-                        } else if (party.percent >= 0.25) {
-                            cell.partyPercent.text = "Mostly disagree on issues"
-                        } else if (party.percent >= 0) {
-                            cell.partyPercent.text = "Strongly disagree on issues"
+                    for partyt in parties {
+                        if (party.partyID == partyt.id) {
+                            if (partyt.id == entry.id) {
+                                if (party.percent >= 0.90) {
+                                    cell.partyPercent.text = "Strongly agree on issues"
+                                } else if (party.percent >= 0.75) {
+                                    cell.partyPercent.text = "Mostly agree on issues"
+                                } else if (party.percent > 0.50) {
+                                    cell.partyPercent.text = "Generally agree on issues"
+                                } else if (party.percent >= 45) {
+                                    cell.partyPercent.text = "Balanced on agreement on issues"
+                                } else if (party.percent >= 0.25) {
+                                    cell.partyPercent.text = "Mostly disagree on issues"
+                                } else {
+                                    cell.partyPercent.text = "Strongly disagree on issues"
+                                }
+                            }
                         }
-                    }
-                } else {
-                    cell.partyPercent.text = "Not enough information."
                 }
-            }
+                }
             return cell
         }
     }
@@ -209,6 +229,14 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
                 }
             }
         }
+        var partyEvalVerif = [PartyEval]()
+        for party in self.partyEval.enumerate() {
+            if party.element.percent != nil {
+                partyEvalVerif.append(party.element)
+            }
+        }
+        
+        self.partyEval = partyEvalVerif
     }
     
     
@@ -218,7 +246,7 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
         
         for partyE in partyEvalsorted  {
             for party in parties {
-                if (partyE.partyID == party.id) && (partyE.numViewsAns >= 3){
+                if (partyE.partyID == party.id) && (partyE.numViewsAns >= 3) {
                     sortedParties.append(party)
                 }
             }
@@ -287,5 +315,7 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
             desView.party = parties[chosenRow]
         }
     }
+
+    
 
 }

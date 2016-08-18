@@ -20,9 +20,9 @@ class SelectIssuesTableViewController: UITableViewController, DZNEmptyDataSetSou
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        firstAttempt = true
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
+        firstAttempt = true
         tableView.tableFooterView = UIView()
         rootRef = FIRDatabase.database().reference()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
@@ -40,9 +40,9 @@ class SelectIssuesTableViewController: UITableViewController, DZNEmptyDataSetSou
         
     }
     
-    override func viewDidAppear(animated: Bool) {
-        compareIssues()
-    }
+//    override func viewDidAppear(animated: Bool) {
+//
+//    }
     
     func loadPartyViews() {
         let issuesRef = FIRDatabase.database().reference().child("parties").child("issues").child("issue")
@@ -68,6 +68,7 @@ class SelectIssuesTableViewController: UITableViewController, DZNEmptyDataSetSou
                     self.partyViews.append(partyView)
                 }
             }
+            self.compareIssues()
         })
     }
     
@@ -136,4 +137,9 @@ class SelectIssuesTableViewController: UITableViewController, DZNEmptyDataSetSou
             return true
         }
     }
+    
+    func imageForEmptyDataSet(scrollView: UIScrollView) -> UIImage? {
+        return UIImage(named: "issueic")!
+    }
+
 }

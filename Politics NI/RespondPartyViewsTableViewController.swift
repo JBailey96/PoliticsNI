@@ -27,6 +27,7 @@ class RespondPartyViewsTableViewController: UITableViewController, DZNEmptyDataS
     var opinions =  [String]()
     var parties = [Party]()
     
+    var selectedSeg = 0
     
     @IBOutlet weak var mySegmentedControl: UISegmentedControl!
     
@@ -135,7 +136,9 @@ class RespondPartyViewsTableViewController: UITableViewController, DZNEmptyDataS
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let returnValue = 0
-        switch(mySegmentedControl.selectedSegmentIndex) {
+        selectedSeg = mySegmentedControl.selectedSegmentIndex
+        
+        switch(selectedSeg) {
         case 0:
             return agreeViewsSorted.count
         case 1:
@@ -153,8 +156,10 @@ class RespondPartyViewsTableViewController: UITableViewController, DZNEmptyDataS
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell5", forIndexPath: indexPath) as! RespondPartyViewsCellViewController
         
+        selectedSeg = mySegmentedControl.selectedSegmentIndex
+        
         var entry: PartyView!
-        switch(mySegmentedControl.selectedSegmentIndex) {
+        switch(selectedSeg) {
             case 0:
             entry = agreeViewsSorted[indexPath.row]
             case 1:
@@ -205,8 +210,10 @@ class RespondPartyViewsTableViewController: UITableViewController, DZNEmptyDataS
             }
             }
     }
-        tableView.reloadData()
-    }
+        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+            self.tableView.reloadData()
+        })
+}
     
     
     func setLogo(partyID: String) -> UIImage {
@@ -237,7 +244,8 @@ class RespondPartyViewsTableViewController: UITableViewController, DZNEmptyDataS
     }
     
     @IBAction func segmentedControlActionChanged(sender: AnyObject) {
-        tableView.reloadData()
+        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+            self.tableView.reloadData()
+        })
     }
-    
 }

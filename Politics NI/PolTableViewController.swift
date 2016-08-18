@@ -8,15 +8,18 @@
 
 import UIKit
 import Firebase
+import SVProgressHUD
+import SwiftyJSON
 
 class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
-    lazy var politciansArr = DatabaseUtility.loadAllMembers() //array of all the politicians
+    var politciansArr = [Politician]() //array of all the politicians
     var myPol = [Politician]() //array of your politicians
     lazy var userConstituency = userUtility.user.constituency //get current user's constituency
     var currentPol: Politician?
     var indexPathPol: Int?
     var firstRun = false
     var display = false
+    var firstAttempt = true
 
     
     
@@ -29,12 +32,7 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
     
     override func viewDidLoad() {
         //finds your constituency's politicians
-        for member in politciansArr {
-            if userConstituency == member.constituency {
-                myPol.append(member)
-            }
-        }
-        
+        self.firstAttempt = true
         super.viewDidLoad()
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
@@ -48,6 +46,48 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         navigationItem.title = "Politicians in my Area"
+        
+        self.politciansArr = [Politician]()
+        
+        SVProgressHUD.show()
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
+            
+            let urlString = "http://data.niassembly.gov.uk/members_json.ashx?m=GetAllCurrentMembers"
+            
+            if let url = NSURL(string: urlString) {
+                if let data = try? NSData(contentsOfURL: url, options: []) {
+                    let json = JSON(data: data)
+                    for item in json["AllMembersList"]["Member"].arrayValue {
+                        let id = item["PersonId"].stringValue
+                        let firstName = item["MemberFirstName"].stringValue
+                        let lastName = item["MemberLastName"].stringValue
+                        let constituency = item["ConstituencyName"].stringValue
+                        let party = item["PartyName"].stringValue
+                        let imageURL = item["MemberImgUrl"].stringValue
+                        let email = ""
+                        let phoneNumber = ""
+                        let altEmail = ""
+                        let twitter = ""
+                        
+                        let pol = Politician(id: id, firstName: firstName, lastName: lastName, constituency: constituency, party: party, imageURL: imageURL, email: email, phoneNumber: phoneNumber, twitter: twitter, altEmail: altEmail)
+                        self.politciansArr .append(pol)
+                    }
+                }
+            }
+            
+            for member in self.politciansArr {
+                if self.userConstituency == member.constituency {
+                    self.myPol.append(member)
+                }
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), {() -> Void in
+                self.firstAttempt = false
+                self.tableView.reloadData()
+                SVProgressHUD.dismiss()
+            })
+            
+        })
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -140,7 +180,6 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
 //                        }
 //                }
 //                })
-                print("we did it")
                 let desView = (segue.destinationViewController as! PoliticianProfileViewController)
                 desView.currentPol = self.currentPol
         }
@@ -167,5 +206,18 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
         }
         return 90
     }
+    
+    func emptyDataSetShouldDisplay(scrollView: UIScrollView) -> Bool {
+        if (firstAttempt) {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    func imageForEmptyDataSet(scrollView: UIScrollView) -> UIImage? {
+        return UIImage(named: "group")!
+    }
+
     
 }

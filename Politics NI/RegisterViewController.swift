@@ -124,7 +124,7 @@ class RegisterViewController: UITableViewController, UITextFieldDelegate, CLLoca
             FIRAuth.auth()?.createUserWithEmail(email1.text!, password: password1.text!) { (user, error) in
                 print(error?.description)
                 if let error = error {
-                    self.alert("Could not sign up. Have you entered a valid password and email?")
+                    self.alert("Could not sign up. Have you entered a valid email and password?")
                 }
                 if let user = user {
                     let user1 = ["dob": self.userAge, "gender": self.gender, "constituency": self.userConstit]
