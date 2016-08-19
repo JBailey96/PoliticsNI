@@ -6,6 +6,7 @@
 //  Copyright © 2016 App Camp. All rights reserved.
 //
 
+import Foundation
 import UIKit
 import Firebase
 import SVProgressHUD
@@ -17,10 +18,9 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
     lazy var userConstituency = userUtility.user.constituency //get current user's constituency
     var currentPol: Politician?
     var indexPathPol: Int?
-    var firstRun = false
+    var done = false
     var display = false
-    var firstAttempt = true
-
+    var data: NSData?
     
     
     @IBOutlet weak var constituencyLabel: UILabel!
@@ -28,12 +28,13 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
     @IBOutlet weak var photoImageView: UIImageView!
     
     
-    
+    override func viewWillDisappear(animated: Bool) {
+        SVProgressHUD.dismiss()
+    }
     
     override func viewDidLoad() {
-        //finds your constituency's politicians
-        self.firstAttempt = true
         super.viewDidLoad()
+        //finds your constituency's politicians
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
@@ -49,45 +50,103 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
         
         self.politciansArr = [Politician]()
         
-        SVProgressHUD.show()
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
+        
+        dispatch_async(dispatch_get_global_queue(0, 0), {() -> Void in
+            SVProgressHUD.show()
+            let webAddress = "http://data.niassembly.gov.uk/members_json.ashx?m=GetAllCurrentMembers"
+            let url = NSURL(string: webAddress)
+            let request = NSURLRequest(URL: url!, cachePolicy: .ReloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 5)
             
-            let urlString = "http://data.niassembly.gov.uk/members_json.ashx?m=GetAllCurrentMembers"
+            let urlconfig = NSURLSessionConfiguration.defaultSessionConfiguration()
+            urlconfig.timeoutIntervalForRequest = 10
+            //urlconfig.timeoutIntervalForResource = 10
+            let session = NSURLSession(configuration: urlconfig)
             
-            if let url = NSURL(string: urlString) {
-                if let data = try? NSData(contentsOfURL: url, options: []) {
-                    let json = JSON(data: data)
-                    for item in json["AllMembersList"]["Member"].arrayValue {
-                        let id = item["PersonId"].stringValue
-                        let firstName = item["MemberFirstName"].stringValue
-                        let lastName = item["MemberLastName"].stringValue
-                        let constituency = item["ConstituencyName"].stringValue
-                        let party = item["PartyName"].stringValue
-                        let imageURL = item["MemberImgUrl"].stringValue
-                        let email = ""
-                        let phoneNumber = ""
-                        let altEmail = ""
-                        let twitter = ""
-                        
-                        let pol = Politician(id: id, firstName: firstName, lastName: lastName, constituency: constituency, party: party, imageURL: imageURL, email: email, phoneNumber: phoneNumber, twitter: twitter, altEmail: altEmail)
-                        self.politciansArr .append(pol)
+            let semaphore = dispatch_semaphore_create(0)
+            session.dataTaskWithRequest(request, completionHandler: {(data, response, error) in
+                self.data = data
+                print(data)
+                print(response)
+                print(error)
+                dispatch_semaphore_signal(semaphore)
+            }).resume()
+            
+            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+            
+            if (self.data != nil) {
+                let json = JSON(data: self.data!)
+                for item in json["AllMembersList"]["Member"].arrayValue {
+                    let id = item["PersonId"].stringValue
+                    let firstName = item["MemberFirstName"].stringValue
+                    let lastName = item["MemberLastName"].stringValue
+                    let constituency = item["ConstituencyName"].stringValue
+                    let party = item["PartyName"].stringValue
+                    let imageURL = item["MemberImgUrl"].stringValue
+                    let email = ""
+                    let phoneNumber = ""
+                    let altEmail = ""
+                    let twitter = ""
+                    
+                    
+                    let pol = Politician(id: id, firstName: firstName, lastName: lastName, constituency: constituency, party: party, imageURL: imageURL, email: email, phoneNumber: phoneNumber, twitter: twitter, altEmail: altEmail)
+                    self.politciansArr.append(pol)
+                }
+                
+                for member in self.politciansArr {
+                    if self.userConstituency == member.constituency {
+                        self.myPol.append(member)
                     }
                 }
-            }
-            
-            for member in self.politciansArr {
-                if self.userConstituency == member.constituency {
-                    self.myPol.append(member)
-                }
-            }
-            
-            dispatch_async(dispatch_get_main_queue(), {() -> Void in
-                self.firstAttempt = false
-                self.tableView.reloadData()
+                //SVProgressHUD.dismiss()
                 SVProgressHUD.dismiss()
-            })
-            
+                self.tableView.reloadData()
+            } else {
+                //SVProgressHUD.dismiss()
+                self.done = true
+                SVProgressHUD.dismiss()
+                self.tableView.reloadData()
+            }
+        
         })
+//        
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
+//            
+//            let urlString = "http://data.niassembly.gov.uk/members_json.ashx?m=GetAllCurrentMembers"
+//            
+//            if let url = NSURL(string: urlString) {
+//                if let data = try? NSData(contentsOfURL: url, options: []) {
+//                    let json = JSON(data: data)
+//                    for item in json["AllMembersList"]["Member"].arrayValue {
+//                        let id = item["PersonId"].stringValue
+//                        let firstName = item["MemberFirstName"].stringValue
+//                        let lastName = item["MemberLastName"].stringValue
+//                        let constituency = item["ConstituencyName"].stringValue
+//                        let party = item["PartyName"].stringValue
+//                        let imageURL = item["MemberImgUrl"].stringValue
+//                        let email = ""
+//                        let phoneNumber = ""
+//                        let altEmail = ""
+//                        let twitter = ""
+//                        
+//                        let pol = Politician(id: id, firstName: firstName, lastName: lastName, constituency: constituency, party: party, imageURL: imageURL, email: email, phoneNumber: phoneNumber, twitter: twitter, altEmail: altEmail)
+//                        self.politciansArr .append(pol)
+//                    }
+//                }
+//            }
+//            
+//            for member in self.politciansArr {
+//                if self.userConstituency == member.constituency {
+//                    self.myPol.append(member)
+//                }
+//            }
+//            
+//            dispatch_async(dispatch_get_main_queue(), {() -> Void in
+//                self.firstAttempt = false
+//                self.tableView.reloadData()
+//                SVProgressHUD.dismiss()
+//            })
+//            
+//        })
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -130,7 +189,6 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
         if (indexPath.row == myPol.count+1) {
             display = true
         }
-        
         return cell
     }
     
@@ -207,17 +265,39 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
         return 90
     }
     
+    
     func emptyDataSetShouldDisplay(scrollView: UIScrollView) -> Bool {
-        if (firstAttempt) {
-            return false
-        } else {
+        if done {
             return true
+        } else {
+            return false
         }
     }
     
     func imageForEmptyDataSet(scrollView: UIScrollView) -> UIImage? {
         return UIImage(named: "group")!
     }
+    
+    
+//    func getData() {
+//        let webAddress = "http://data.niassembly.gov.uk/members_json.ashx?m=GetAllCurrentMembers"
+//        let url = NSURL(string: webAddress)
+//        let request = NSURLRequest(URL: url!, cachePolicy: .ReloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 5.0)
+//        
+//        let urlconfig = NSURLSessionConfiguration.defaultSessionConfiguration()
+//        urlconfig.timeoutIntervalForRequest = 12
+//        urlconfig.timeoutIntervalForResource = 12
+//        let session = NSURLSession(configuration: urlconfig)
+//        
+//        session.dataTaskWithRequest(request, completionHandler: {(data, response, error) in
+//            print(data)
+//            print(response)
+//            print(error)
+//        }).resume()
+//        
+//    }
+    
+    
 
     
 }

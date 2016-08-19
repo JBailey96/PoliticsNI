@@ -103,15 +103,28 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
             topCell.partyLogo.image = UIImage(named: entry.logo)
             topCell.partyName.text = entry.name
             
-            if (equal) || ((indexPath.row > 2) && (indexPath.row <= rowLimit)) {
-                 topCell.rank.text = "="
-            } else {
-                topCell.rank.text = String(indexPath.row + 1)
+            if (indexPath.row >= 1) {
+                for party in partyEval {
+                    if party.partyID == entry.id {
+                        cmpPartyEval1 = party
+                    } else if parties[indexPath.row-1].id == party.partyID {
+                        cmpPartyEval2 = party
+                    }
+                }
+                
+                if (cmpPartyEval1.percent == cmpPartyEval2.percent) {
+                    equal = true
+
+                }
             }
-            
-            
-            
-            
+        
+        if (equal) || ((indexPath.row > 2) && (indexPath.row <= rowLimit)) {
+            topCell.rank.text = "="
+        } else {
+            topCell.rank.text = String(indexPath.row + 1)
+        }
+
+        
             for party in partyEval {
                 for partyt in parties {
                     if (party.partyID == partyt.id) {
@@ -140,6 +153,7 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
             cell.partyLogo.image = image
             cell.partyName.text = entry.name
             
+            
                 for party in partyEval {
                     if party.partyID == entry.id {
                         cmpPartyEval1 = party
@@ -147,6 +161,7 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
                         cmpPartyEval2 = party
                     }
                 }
+            
             if (cmpPartyEval1.percent == cmpPartyEval2.percent) {
                     cell.rank.text = "="
             } else {

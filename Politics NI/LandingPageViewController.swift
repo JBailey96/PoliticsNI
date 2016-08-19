@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 import Firebase
-
+import SCLAlertView
+    
 class LandingPageViewController: UIViewController, UITextFieldDelegate {
     let data = PolTableViewController()
     @IBOutlet weak var emailAddress: UITextField!
@@ -26,9 +27,10 @@ class LandingPageViewController: UIViewController, UITextFieldDelegate {
     @IBAction func logInButton(sender: AnyObject) {
         FIRAuth.auth()?.signInWithEmail(emailAddress.text!, password: password.text!) { (user, error) in
             if let error = error {
-                let alert = UIAlertController(title: "Could not log in.", message: "Your details are not recognised.", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
+                
+                let appearance = SCLAlertView.SCLAppearance(showCloseButton:true)
+                let alert = SCLAlertView(appearance: appearance)
+                alert.showError("Error logging in", subTitle: "Could not recognise your details.")
             } else {
                 userUtility.issues = [Issue]()
                 userUtility.agreeViews = [PartyView]()
@@ -47,6 +49,9 @@ class LandingPageViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if (textField == self.password) {
+            logInButton(textField)
+        }
         emailAddress.resignFirstResponder()
         password.resignFirstResponder()
         return true
