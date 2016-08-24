@@ -12,7 +12,7 @@ import Firebase
 import CoreLocation
 import SCLAlertView
 
-class EditDetailsViewController: UITableViewController, CLLocationManagerDelegate, UITextFieldDelegate {
+class EditDetailsViewController: UITableViewController, UITextFieldDelegate {
     let ref = FIRDatabase.database().reference()
     let locationManager = CLLocationManager()
     var userConstit: String!
@@ -26,19 +26,23 @@ class EditDetailsViewController: UITableViewController, CLLocationManagerDelegat
     @IBOutlet weak var locat: UILabel!
     @IBOutlet weak var postCode: UITextField!
 
+    @IBOutlet weak var locationLabel: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+        locationLabel.hidden = true
+//        locationManager.delegate = self
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        locationManager.requestWhenInUseAuthorization()
+//        locationManager.startUpdatingLocation()
         
         changeEmail.delegate = self
         currentPass.delegate = self
         newPass.delegate = self
         postCode.delegate = self
         
-        postCode.hidden = true
+        postCode.hidden = false
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
         self.navigationController?.navigationBar.titleTextAttributes =  [NSForegroundColorAttributeName : UIColor.whiteColor()]
@@ -50,39 +54,39 @@ class EditDetailsViewController: UITableViewController, CLLocationManagerDelegat
     
     
     @IBAction func findLocat(sender: AnyObject) {
-        if (postCode.hidden == true) {
-            if CLLocationManager.locationServicesEnabled() {
-                switch(CLLocationManager.authorizationStatus()) {
-                case .NotDetermined, .Restricted, .Denied:
-                    SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
-                    postCode.hidden = false
-                case .AuthorizedAlways, .AuthorizedWhenInUse:
-                    if locationManager.location != nil {
-                        let latitude = String(format: "%f", locationManager.location!.coordinate.latitude)
-                        let longitude = String(format: "%f", locationManager.location!.coordinate.longitude)
-                        userConstit = DatabaseUtility.getConstituency(latitude, long: longitude)
-                        if userConstit == "" {
-                            SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
-                            postCode.hidden = false
-                        } else {
-                            locat.text = userConstit
-                            self.locationSet = true
-                        }
-                    } else {
-                        SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
-
-                        postCode.hidden = false
-                    }
-                }
-            } else {
-                SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
-
-                postCode.hidden = false
-            }
-        } else {
+//        if (postCode.hidden == true) {
+//            if CLLocationManager.locationServicesEnabled() {
+//                switch(CLLocationManager.authorizationStatus()) {
+//                case .NotDetermined, .Restricted, .Denied:
+//                    SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
+//                    postCode.hidden = false
+//                case .AuthorizedAlways, .AuthorizedWhenInUse:
+//                    if locationManager.location != nil {
+//                        let latitude = String(format: "%f", locationManager.location!.coordinate.latitude)
+//                        let longitude = String(format: "%f", locationManager.location!.coordinate.longitude)
+//                        userConstit = DatabaseUtility.getConstituency(latitude, long: longitude)
+//                        if userConstit == "" {
+//                            SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
+//                            postCode.hidden = false
+//                        } else {
+//                            locat.text = userConstit
+//                            self.locationSet = true
+//                        }
+//                    } else {
+//                        SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
+//
+//                        postCode.hidden = false
+//                    }
+//                }
+//            } else {
+//                SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
+//
+//                postCode.hidden = false
+//            }
+//        } else {
             let postcode = postCode.text
             findLocatPostCode(postcode!)
-        }
+//        }
     }
     
     func findLocatPostCode(postCode: String) {
@@ -91,6 +95,7 @@ class EditDetailsViewController: UITableViewController, CLLocationManagerDelegat
         if userConstit == "" {
             SCLAlertView().showError("Error", subTitle: "Not a valid Northern Ireland postcode.")
         } else {
+            locationLabel.hidden = false
             locat.text = userConstit
             self.locationSet = true
             userUtility.user.constituency = userConstit

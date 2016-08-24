@@ -172,7 +172,7 @@ class RespondPartyViewsTableViewController: UITableViewController, DZNEmptyDataS
             break
         }
 
-        cell.partyView.text = entry.view
+        cell.partyView.text = "\"" + entry.view + "\""
         cell.partySrc.text = entry.viewsrc
         cell.partyLogo.image = setLogo(entry.partyID)
         //cell.userOpinion.text = opinions[indexPath.row]

@@ -11,6 +11,7 @@ import UIKit
 import Firebase
 import SVProgressHUD
 import SwiftyJSON
+import SDWebImage
 
 class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     var politciansArr = [Politician]() //array of all the politicians
@@ -35,6 +36,7 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
     override func viewDidLoad() {
         super.viewDidLoad()
         //finds your constituency's politicians
+        done = false
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
@@ -65,13 +67,14 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
             let semaphore = dispatch_semaphore_create(0)
             session.dataTaskWithRequest(request, completionHandler: {(data, response, error) in
                 self.data = data
-                print(data)
-                print(response)
-                print(error)
+//                print(data)
+//                print(response)
+//                print(error)
                 dispatch_semaphore_signal(semaphore)
             }).resume()
-            
-            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW,
+                Int64(10 * Double(NSEC_PER_SEC)))
+            dispatch_semaphore_wait(semaphore, UInt64(delayTime))
             
             if (self.data != nil) {
                 let json = JSON(data: self.data!)
@@ -98,13 +101,16 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
                     }
                 }
                 //SVProgressHUD.dismiss()
-                SVProgressHUD.dismiss()
-                self.tableView.reloadData()
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.tableView.reloadData()
+                })
             } else {
                 //SVProgressHUD.dismiss()
-                self.done = true
-                SVProgressHUD.dismiss()
-                self.tableView.reloadData()
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.done = true
+                    SVProgressHUD.dismiss()
+                    self.tableView.reloadData()
+                })
             }
         
         })
@@ -162,6 +168,7 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        SVProgressHUD.dismiss()
         if (display) && (indexPath.row == 0) {
             let cell = tableView.dequeueReusableCellWithIdentifier("infoCell", forIndexPath: indexPath)
             return cell
@@ -178,11 +185,10 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
         }
         
         let url = NSURL(string:entry.imageURL)
-        let dat = NSData(contentsOfURL: url!)
-    
-        let image = UIImage(data: dat!)
-        
-        cell.profilePic.image = image
+//        let dat = NSData(contentsOfURL: url!)
+//        let image = UIImage(data: dat!)
+        cell.profilePic.sd_setImageWithURL(url)
+//        cell.profilePic.image = image
         cell.nameLabel.text = entry.firstName + " " + entry.lastName
         cell.constituencyLabel.text = entry.party
         
@@ -249,6 +255,7 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
         let attrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)]
         return NSAttributedString(string: str, attributes: attrs)
     }
+    
     @IBAction func infoToggle(sender: AnyObject) {
         if (display) {
             display = false
@@ -275,7 +282,7 @@ class PolTableViewController:  UITableViewController, DZNEmptyDataSetSource, DZN
     }
     
     func imageForEmptyDataSet(scrollView: UIScrollView) -> UIImage? {
-        return UIImage(named: "group")!
+        return UIImage(named: "person")!
     }
     
     

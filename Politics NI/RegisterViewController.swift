@@ -12,7 +12,7 @@ import Firebase
 import CoreLocation
 import SCLAlertView
 
-class RegisterViewController: UITableViewController, UITextFieldDelegate, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class RegisterViewController: UITableViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     let ref = FIRDatabase.database().reference()
     let locationManager = CLLocationManager()
     let pickerData = ["Prefer not to say", "Under 16", "17-19", "20-24", "25-49", "50+"]
@@ -26,6 +26,8 @@ class RegisterViewController: UITableViewController, UITextFieldDelegate, CLLoca
     @IBOutlet weak var maleButton: UIButton!
     @IBOutlet weak var preferNotToSay: UIButton!
     
+    @IBOutlet weak var locationLabel: UILabel!
+    
     @IBOutlet weak var ageField: UITextField!
     var gender: String!
     var genderSet: Bool = false
@@ -35,17 +37,17 @@ class RegisterViewController: UITableViewController, UITextFieldDelegate, CLLoca
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        locationLabel.hidden = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(RegisterViewController.tap(_:)))
         view.addGestureRecognizer(tapGesture)
         
         
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+//        locationManager.delegate = self
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        locationManager.requestWhenInUseAuthorization()
+//        locationManager.startUpdatingLocation()
         
-        homePostCode.hidden = true
+        homePostCode.hidden = false
         
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
@@ -76,7 +78,7 @@ class RegisterViewController: UITableViewController, UITextFieldDelegate, CLLoca
         password2.delegate = self
         email1.delegate = self
         ageField.delegate = self
-    }
+        }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -184,39 +186,39 @@ class RegisterViewController: UITableViewController, UITextFieldDelegate, CLLoca
     
     
     @IBAction func findLocat(sender: AnyObject) {
-        if (homePostCode.hidden == true) {
-            if CLLocationManager.locationServicesEnabled() {
-                switch(CLLocationManager.authorizationStatus()) {
-                case .NotDetermined, .Restricted, .Denied:
-                    SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
-                    homePostCode.hidden = false
-                case .AuthorizedAlways, .AuthorizedWhenInUse:
-                    if locationManager.location != nil {
-                    let latitude = String(format: "%f", locationManager.location!.coordinate.latitude)
-                    let longitude = String(format: "%f", locationManager.location!.coordinate.longitude)
-                    userConstit = DatabaseUtility.getConstituency(latitude, long: longitude)
-                        if userConstit == "" {
-                            SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
-                            homePostCode.hidden = false
-                        } else {
-                            location.text = userConstit
-                            self.locationSet = true
-                        }
-
-                    } else {
-                        SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
-                        homePostCode.hidden = false
-                                }
-                }
-            } else {
-               SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
-                homePostCode.hidden = false
-            }
-        } else {
+//        if (homePostCode.hidden == true) {
+//            if CLLocationManager.locationServicesEnabled() {
+//                switch(CLLocationManager.authorizationStatus()) {
+//                case .NotDetermined, .Restricted, .Denied:
+//                    SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
+//                    homePostCode.hidden = false
+//                case .AuthorizedAlways, .AuthorizedWhenInUse:
+//                    if locationManager.location != nil {
+//                    let latitude = String(format: "%f", locationManager.location!.coordinate.latitude)
+//                    let longitude = String(format: "%f", locationManager.location!.coordinate.longitude)
+//                    userConstit = DatabaseUtility.getConstituency(latitude, long: longitude)
+//                        if userConstit == "" {
+//                            SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
+//                            homePostCode.hidden = false
+//                        } else {
+//                            location.text = userConstit
+//                            self.locationSet = true
+//                        }
+//
+//                    } else {
+//                        SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
+//                        homePostCode.hidden = false
+//                                }
+//                }
+//            } else {
+//               SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
+//                homePostCode.hidden = false
+//            }
+//        } else {
             let postcode = homePostCode.text
             findLocatPostCode(postcode!)
-        }
-        }
+//        }
+       }
     
     func findLocatPostCode(postCode: String) {
         userConstit = DatabaseUtility.getConstituencyPostCode(postCode)
@@ -224,6 +226,7 @@ class RegisterViewController: UITableViewController, UITextFieldDelegate, CLLoca
         if userConstit == "" {
             SCLAlertView().showWarning("Warning", subTitle: "Problem with your postcode entry. Is it a valid Northern Ireland postcode?")        }
         else {
+            locationLabel.hidden = false
             location.text = userConstit
             self.locationSet = true
         }
@@ -277,6 +280,7 @@ class RegisterViewController: UITableViewController, UITextFieldDelegate, CLLoca
     func cancelClick() {
         ageField.resignFirstResponder()
     }
+    
     
     
 

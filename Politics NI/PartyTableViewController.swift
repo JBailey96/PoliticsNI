@@ -10,8 +10,11 @@ import Firebase
 class PartyTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     lazy var partiesRef = FIRDatabase.database().reference().child("parties").child("party")
     var parties = [Party]()
-    
+    var display = false
     var firstAttempt = true
+    var currentParty: Party!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +39,7 @@ class PartyTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
     func loadParties() {
         
         partiesRef.keepSynced(true)
-            partiesRef.observeEventType(.Value, withBlock: { snapshot in
+        partiesRef.observeEventType(.Value, withBlock: { snapshot in
                 for child in snapshot.children {
                     let childSnapshot = snapshot.childSnapshotForPath(child.key)
                     
@@ -50,16 +53,28 @@ class PartyTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
                     let party = Party(id: id, name: name, logo: logo, webLink: webLink, twitterLink: twitter, phoneNum: phoneNum, email: email)
                     self.parties.append(party)
                 }
-                self.firstAttempt = false
                 self.tableView.reloadData()
-            })
+        })
+        self.firstAttempt = false
+        self.tableView.reloadData()
         
     }
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if (display) && (indexPath.row == 0) {
+            let cell = tableView.dequeueReusableCellWithIdentifier("partyInfoCell", forIndexPath: indexPath)
+            return cell
+        }
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! PartyCellViewController
-        let entry = parties[indexPath.row]
+        
+        var entry: Party!
+        if (display) {
+            entry = parties[indexPath.row-1]
+        } else {
+            entry = parties[indexPath.row]
+        }
+        
         let image = UIImage(named: entry.logo)
         cell.partyLogo.image = image
         cell.partyName.text = entry.name
@@ -71,17 +86,28 @@ class PartyTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return parties.count
+        if (display) {
+            return parties.count + 1
+        } else {
+            return parties.count
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if  segue.identifier == "goToPartyProfile" {
+            let path = tableView.indexPathForSelectedRow
+            let paths = path?.row
+            if (display) {
+                self.currentParty = parties[paths!-1]
+            } else {
+                self.currentParty = parties[paths!]
+            }
+            
         let tabBarC : UITabBarController = segue.destinationViewController as! UITabBarController
         let desView: PartyProfileVIewController = tabBarC.viewControllers?.first as! PartyProfileVIewController
         let des3View: PartyTableIssuesViewController = tabBarC.viewControllers?[1] as! PartyTableIssuesViewController
-        let partyIndex = tableView.indexPathForSelectedRow?.row
-        desView.currentParty = parties[partyIndex!]
-        des3View.currentParty = parties[partyIndex!]
+        desView.currentParty = currentParty
+        des3View.currentParty = currentParty
         }
 }
     
@@ -91,6 +117,16 @@ class PartyTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
         return NSAttributedString(string: str, attributes: attrs)
     }
     
+    func imageForEmptyDataSet(scrollView: UIScrollView) -> UIImage? {
+        return UIImage(named: "group")
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if (display) && indexPath.row == 0 {
+            return 118
+        }
+        return 90
+    }
     
     func emptyDataSetShouldDisplay(scrollView: UIScrollView) -> Bool {
         if (firstAttempt) {
@@ -100,5 +136,13 @@ class PartyTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
         }
     }
     
+    @IBAction func infoToggle(sender: AnyObject) {
+        if (display) {
+            display = false
+        } else {
+            display = true
+        }
+        tableView.reloadData()
+    }
     
 }

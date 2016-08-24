@@ -23,6 +23,10 @@ class LandingPageViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         emailAddress.delegate = self
         password.delegate = self
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LandingPageViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: self.view.window)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LandingPageViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: self.view.window)
+        self.navigationController?.view.backgroundColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
     }
     @IBAction func logInButton(sender: AnyObject) {
         FIRAuth.auth()?.signInWithEmail(emailAddress.text!, password: password.text!) { (user, error) in
@@ -56,6 +60,31 @@ class LandingPageViewController: UIViewController, UITextFieldDelegate {
         password.resignFirstResponder()
         return true
     }
+    
+    
+    override func viewWillDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: self.view.window)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: self.view.window)
+    }
+    
+    
+    func keyboardWillShow(sender: NSNotification) {
+        let userInfo: [NSObject : AnyObject] = sender.userInfo!
+        let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
+        
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            self.view.frame.origin.y = -keyboardSize.height
+        })
+    }
+    
+    func keyboardWillHide(sender: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            UIView.animateWithDuration(0.2, animations: { () -> Void in
+                self.view.frame.origin.y = 0
+            })
+        }
+    }
+    
     
 
 }

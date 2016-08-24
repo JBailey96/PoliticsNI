@@ -135,7 +135,7 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
                             topCell.partyEvaluation.text = "Mostly agree on issues"
                         } else if (party.percent > 0.50) {
                             topCell.partyEvaluation.text = "Generally agree on issues"
-                        } else if (party.percent >= 45) {
+                        } else if (party.percent >= 0.45) {
                             topCell.partyEvaluation.text = "Balanced on agreement on issues"
                         } else if (party.percent >= 0.25) {
                             topCell.partyEvaluation.text = "Mostly disagree on issues"
@@ -179,7 +179,7 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
                                     cell.partyPercent.text = "Mostly agree on issues"
                                 } else if (party.percent > 0.50) {
                                     cell.partyPercent.text = "Generally agree on issues"
-                                } else if (party.percent >= 45) {
+                                } else if (party.percent >= 0.45) {
                                     cell.partyPercent.text = "Balanced on agreement on issues"
                                 } else if (party.percent >= 0.25) {
                                     cell.partyPercent.text = "Mostly disagree on issues"
@@ -329,6 +329,10 @@ class PartyEvaluationViewController: UITableViewController, DZNEmptyDataSetSourc
             let desView = segue.destinationViewController as! PartyEvalAgreeDisagreeViewController
             desView.party = parties[chosenRow]
         }
+    }
+    
+    func imageForEmptyDataSet(scrollView: UIScrollView) -> UIImage? {
+        return UIImage(named: "evalstack")!
     }
 
     

@@ -14,5 +14,7 @@ target 'Politics NI' do
     pod ‘TwitterKit’
     pod ’TwitterCore’
     pod 'SCLAlertView'
-    pod 'SVProgressHUD'
+    pod 'SVProgressHUD’
+    pod 'AFNetworking', '~> 3.0'
+    pod 'SDWebImage', '~>3.8'
 end

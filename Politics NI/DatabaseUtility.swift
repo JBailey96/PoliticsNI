@@ -10,8 +10,6 @@ import SwiftyJSON
 import SVProgressHUD
 
 class DatabaseUtility {
-    
-
     // method for loading all the members of NI assembly
     class func loadAllMembers() -> [Politician] {
         var politiciansArr = [Politician]()
@@ -97,6 +95,8 @@ class DatabaseUtility {
         }
         return constit
     }
+    
+    //method for getting the constituency from the user's inputted postcode.
     
     class func getConstituencyPostCode(postCode: String) -> String {
         let uri = "http://uk-postcodes.com/postcode/" + postCode + ".json"

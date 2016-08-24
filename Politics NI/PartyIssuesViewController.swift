@@ -64,7 +64,7 @@ class PartyIssuesViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell2", forIndexPath: indexPath) as! PartyIssuesCellViewController
         let entry = partyViewsArray[indexPath.row]
         
-        cell.partyView.text  = entry.view
+         cell.partyView.text = "\"" + entry.view + "\""
         cell.partyViewSrc.text = entry.viewsrc
         return cell
     }

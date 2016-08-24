@@ -83,16 +83,7 @@ class PartyEvalAgreeDisagreeViewController: UITableViewController {
                             }
                         }
         }
-        for issue in userRespondIssue {
-            for view in unsureViews {
-                if (view.issueID == issue.id) {
-                    if (party.id == view.partyID) {
-                        unsureViewsParty.append(view)
-                    }
-                }
-            }
-        }
-}
+    }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell20", forIndexPath: indexPath) as! PartyEvalAgDisCell
         
@@ -112,7 +103,7 @@ class PartyEvalAgreeDisagreeViewController: UITableViewController {
         
         cell.partyPic.image = UIImage(named: party.logo)
         cell.issueSrc.text = entry.viewsrc
-        cell.view.text = entry.view
+        cell.view.text = "\"" + entry.view + "\""
         cell.issue.text = entry.issueDesc
         return cell
     }

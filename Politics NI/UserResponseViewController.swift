@@ -9,17 +9,20 @@
 import Firebase
 
 class UserResponseViewController: UITableViewController {
+    //all the views
     var partyViews: [PartyView]!
     var agreeViews = [PartyView]()
     var disagreeViews = [PartyView]()
     var unsureViews = [PartyView]()
     var neutralViews = [PartyView]()
     
-    
+    //dictionary array of views to upload to firebase database
     var dictionaryPartyViews = [[String: String!]]()
     
+    //reference to fb
     let ref = FIRDatabase.database().reference()
-    var selectIssue: Issue!
+    
+    //count of current question
     var count = 0
     
     @IBOutlet weak var issueCountNotif: UILabel!
@@ -33,7 +36,7 @@ class UserResponseViewController: UITableViewController {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         }
         
-        count = 0
+        count = 0 //resets count to 0
         
         let attrs = [
             NSForegroundColorAttributeName : UIColor.whiteColor(),]
@@ -86,9 +89,10 @@ class UserResponseViewController: UITableViewController {
         nextQuestion()
     }
     
+    //gets question and
     func nextQuestion() {
         if (count != partyViews.count) {
-            viewDesc.text = partyViews[count].view
+            viewDesc.text = "\"" + partyViews[count].view + "\""
             issue.text = partyViews[count].issueDesc
             viewDesc.fadeIn()
             updateCount()
@@ -152,16 +156,16 @@ class UserResponseViewController: UITableViewController {
          dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
             let semaphore = dispatch_semaphore_create(0)
             let semaphore1 = dispatch_semaphore_create(0)
-            let semaphore2 = dispatch_semaphore_create(0)
-                
+//            let semaphore2 = dispatch_semaphore_create(0)
+            
             let viewStatRef = statRef.child(view.issueID).child(view.partyID).child(opinion)
             let userAge = userUtility.user.birthDay
             let userGender = userUtility.user.gender
             
-            let userConstit = userUtility.user.constituency
+//            let userConstit = userUtility.user.constituency
             let ageRef = viewStatRef.child("Age").child(userAge)
             let genderRef = viewStatRef.child("Gender").child(userGender)
-            let constitRef = viewStatRef.child("Constit").child(userConstit)
+//            let constitRef = viewStatRef.child("Constit").child(userConstit)
 
                 
             ageRef.runTransactionBlock({
@@ -203,24 +207,24 @@ class UserResponseViewController: UITableViewController {
                 
                 dispatch_semaphore_wait(semaphore1, DISPATCH_TIME_FOREVER)
                 
-                    constitRef.runTransactionBlock({
-                    (currentData:FIRMutableData!) in
-                    var value = currentData.value as? Int
-                    if (value == nil) {
-                        value = 0
-                    }
-                    currentData.value = value! + 1
-                    return FIRTransactionResult.successWithValue(currentData)
-                        }, andCompletionBlock: {(error: NSError?, committed: Bool, snapshot: FIRDataSnapshot?) -> Void in
-                            if error != nil {
-                                print("Error: \(error!)")
-                            }
-                            if committed {
-                                dispatch_semaphore_signal(semaphore2)
-                            }
-                        })
-                
-                dispatch_semaphore_wait(semaphore2, DISPATCH_TIME_FOREVER)
+//                    constitRef.runTransactionBlock({
+//                    (currentData:FIRMutableData!) in
+//                    var value = currentData.value as? Int
+//                    if (value == nil) {
+//                        value = 0
+//                    }
+//                    currentData.value = value! + 1
+//                    return FIRTransactionResult.successWithValue(currentData)
+//                        }, andCompletionBlock: {(error: NSError?, committed: Bool, snapshot: FIRDataSnapshot?) -> Void in
+//                            if error != nil {
+//                                print("Error: \(error!)")
+//                            }
+//                            if committed {
+//                                dispatch_semaphore_signal(semaphore2)
+//                            }
+//                        })
+            
+//                dispatch_semaphore_wait(semaphore2, DISPATCH_TIME_FOREVER)
         
         
 //            let ageSnapshot = snapshot.childSnapshotForPath(view.issueID).childSnapshotForPath(view.partyID).childSnapshotForPath(opinion).childSnapshotForPath("Age")

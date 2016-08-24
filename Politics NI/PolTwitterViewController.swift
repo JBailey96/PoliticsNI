@@ -25,11 +25,15 @@ class PolTwitterViewController: TWTRTimelineViewController, DZNEmptyDataSetSourc
         
         if enter {
             if (currentPol?.twitter != "")  && (currentPol?.twitter != "na") {
-                self.dataSource = TWTRUserTimelineDataSource(screenName: currentPol!.twitter, APIClient: client)
-                tableView.reloadData()
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.dataSource = TWTRUserTimelineDataSource(screenName: self.currentPol!.twitter, APIClient: client)
+                self.tableView.reloadData()
+                })
             } else {
-                done = true
-                tableView.reloadData()
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.done = true
+                    self.tableView.reloadData()
+                })
             }
             enter = false
         }
@@ -39,6 +43,10 @@ class PolTwitterViewController: TWTRTimelineViewController, DZNEmptyDataSetSourc
     func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
         let attrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)]
         return NSAttributedString(string: "This politician does not have twitter.", attributes: attrs)
+    }
+    
+    func imageForEmptyDataSet(scrollView: UIScrollView) -> UIImage? {
+        return UIImage(named: "twitter-grey" )
     }
     
     func emptyDataSetShouldDisplay(scrollView: UIScrollView) -> Bool {

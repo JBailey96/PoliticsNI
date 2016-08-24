@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import TwitterKit
+import SDWebImage
 
 
 class PoliticianProfileViewController: UITableViewController{
@@ -44,6 +45,11 @@ class PoliticianProfileViewController: UITableViewController{
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         polPartyName.titleLabel!.adjustsFontSizeToFitWidth = true
         polPartyName.titleLabel!.minimumScaleFactor = 0.5
+        
+        //make the buttons content appear in the top-left
+        polPartyName.contentHorizontalAlignment = .Left
+        polPartyName.contentVerticalAlignment = .Top
+        polPartyName.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 0.0)
         
         dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
             let semaphore = dispatch_semaphore_create(0)
@@ -84,9 +90,12 @@ class PoliticianProfileViewController: UITableViewController{
         }
         
         let url = NSURL(string:(currentPol?.imageURL)!)
-        let dat = NSData(contentsOfURL: url!)
-        let image = UIImage(data: dat!)
-        polProfileImage.image = image
+//        let dat = NSData(contentsOfURL: url!)
+//        let image = UIImage(data: dat!)
+        polProfileImage.sd_setImageWithURL(url)
+        
+        
+        polProfileImage.sd_setImageWithURL(url)
         
         polName.text = (currentPol?.firstName)! + " " + (currentPol?.lastName)! + ", MLA"
         name.text = (currentPol?.firstName)! + " " + (currentPol?.lastName)!
@@ -102,10 +111,10 @@ class PoliticianProfileViewController: UITableViewController{
     }
     
     override func viewWillAppear(animated: Bool) {
-        let url = NSURL(string:(currentPol?.imageURL)!)
-        let dat = NSData(contentsOfURL: url!)
-        let image = UIImage(data: dat!)
-        polProfileImage.image = image
+//        let url = NSURL(string:(currentPol?.imageURL)!)
+////        let dat = NSData(contentsOfURL: url!)
+////        let image = UIImage(data: dat!)
+//        polProfileImage.sd_setImageWithURL(url)
         //polProfileImage.layer.cornerRadius = 25
        // polProfileImage.layer.masksToBounds = true
        // polProfileImage.layer.borderWidth = 0.1;
@@ -156,6 +165,7 @@ class PoliticianProfileViewController: UITableViewController{
             performSegueWithIdentifier("goToParty", sender: self)
         }
     }
+    
     
     
 

@@ -11,11 +11,11 @@ import Firebase
 class userUtility {
     static var user: User = User(birthDay: "", gender: "", constituency: "") //current user
    
-    static var issues =  [Issue]()
-    static var agreeViews = [PartyView]()
-    static var disagreeViews = [PartyView]()
-    static var unsureViews = [PartyView]()
-    static var neutralViews = [PartyView]()
+    static var issues =  [Issue]() //all the issues in fb
+    static var agreeViews = [PartyView]() //views the user agrees with
+    static var disagreeViews = [PartyView]() //views the user disagrees with
+    static var unsureViews = [PartyView]() //unsure
+    static var neutralViews = [PartyView]() //neutral
     
     //gets all the users information and saves it as the current user variable
     class func getUserInfo() {
@@ -30,6 +30,8 @@ class userUtility {
                 print(error.description)
         })
 }
+    
+    //gets all the user's issues from fb
     class func getUserIssues() {
         
         dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
