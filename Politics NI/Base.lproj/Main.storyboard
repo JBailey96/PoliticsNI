@@ -25,8 +25,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="146"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Members of the Legislative Assembly (MLAs) are politicians who work for us at the Northern Ireland Assembly in Belfast." textAlignment="center" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="3vZ-dt-KM8">
-                                            <rect key="frame" x="0.0" y="22" width="392" height="50"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Members of the Legislative Assembly (MLAs) are politicians who work for us at the Northern Ireland Assembly in Belfast." textAlignment="center" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="3vZ-dt-KM8">
+                                            <rect key="frame" x="0.0" y="8" width="592" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="d0n-aj-U4e"/>
                                                 <constraint firstAttribute="height" constant="50" id="uRm-SA-n64"/>
@@ -39,47 +39,67 @@
                                                     <exclude reference="d0n-aj-U4e"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="0.0" y="22" width="592" height="50"/>
+                                            <variation key="widthClass=compact">
                                                 <mask key="constraints">
                                                     <include reference="d0n-aj-U4e"/>
                                                     <exclude reference="uRm-SA-n64"/>
                                                 </mask>
                                             </variation>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="a5X-D9-Nlf">
-                                            <rect key="frame" x="0.0" y="80" width="392" height="50"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="a5X-D9-Nlf">
+                                            <rect key="frame" x="0.0" y="80" width="592" height="50"/>
                                             <string key="text">They make laws and decisions about Northern Ireland and they represent the people living thereby listening to their views and helping them to solve problems.</string>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
-                                            <variation key="widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="0.0" y="80" width="592" height="50"/>
-                                            </variation>
                                         </label>
                                     </subviews>
                                     <color key="backgroundColor" red="0.29803921570000003" green="0.59215686270000001" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
-                                        <constraint firstItem="3vZ-dt-KM8" firstAttribute="leading" secondItem="QHZ-nF-tGU" secondAttribute="leading" id="6cx-lW-yMp"/>
-                                        <constraint firstItem="a5X-D9-Nlf" firstAttribute="leading" secondItem="QHZ-nF-tGU" secondAttribute="leadingMargin" constant="-8" id="BRW-fq-oE1"/>
-                                        <constraint firstItem="3vZ-dt-KM8" firstAttribute="top" secondItem="QHZ-nF-tGU" secondAttribute="topMargin" constant="14" id="DHW-su-lAS"/>
-                                        <constraint firstItem="3vZ-dt-KM8" firstAttribute="leading" secondItem="QHZ-nF-tGU" secondAttribute="leadingMargin" constant="-8" id="KRY-3X-pDD"/>
-                                        <constraint firstItem="a5X-D9-Nlf" firstAttribute="trailing" secondItem="QHZ-nF-tGU" secondAttribute="trailingMargin" id="QY2-pq-zwo"/>
+                                        <constraint firstItem="3vZ-dt-KM8" firstAttribute="leading" secondItem="QHZ-nF-tGU" secondAttribute="leading" id="6cx-lW-yMp">
+                                            <variation key="widthClass=compact" constant="4"/>
+                                        </constraint>
+                                        <constraint firstItem="a5X-D9-Nlf" firstAttribute="leading" secondItem="QHZ-nF-tGU" secondAttribute="leadingMargin" constant="-8" id="BRW-fq-oE1">
+                                            <variation key="widthClass=compact" constant="-4"/>
+                                        </constraint>
+                                        <constraint firstItem="3vZ-dt-KM8" firstAttribute="top" secondItem="QHZ-nF-tGU" secondAttribute="topMargin" constant="14" id="DHW-su-lAS">
+                                            <variation key="widthClass=compact" constant="0.0"/>
+                                        </constraint>
+                                        <constraint firstItem="3vZ-dt-KM8" firstAttribute="leading" secondItem="QHZ-nF-tGU" secondAttribute="leadingMargin" constant="-8" id="KRY-3X-pDD">
+                                            <variation key="widthClass=compact" constant="-4"/>
+                                        </constraint>
+                                        <constraint firstItem="a5X-D9-Nlf" firstAttribute="trailing" secondItem="QHZ-nF-tGU" secondAttribute="trailingMargin" id="QY2-pq-zwo">
+                                            <variation key="widthClass=compact" constant="4"/>
+                                        </constraint>
                                         <constraint firstItem="3vZ-dt-KM8" firstAttribute="trailing" secondItem="a5X-D9-Nlf" secondAttribute="trailing" id="SCs-LZ-Rbw"/>
-                                        <constraint firstItem="a5X-D9-Nlf" firstAttribute="leading" secondItem="QHZ-nF-tGU" secondAttribute="leadingMargin" constant="-8" id="Tnz-OT-A9s"/>
-                                        <constraint firstItem="a5X-D9-Nlf" firstAttribute="trailing" secondItem="QHZ-nF-tGU" secondAttribute="trailingMargin" id="U8V-0z-diT"/>
-                                        <constraint firstItem="a5X-D9-Nlf" firstAttribute="top" secondItem="3vZ-dt-KM8" secondAttribute="bottom" constant="8" symbolic="YES" id="VEf-sx-DvV"/>
+                                        <constraint firstItem="a5X-D9-Nlf" firstAttribute="leading" secondItem="QHZ-nF-tGU" secondAttribute="leadingMargin" constant="-8" id="Tnz-OT-A9s">
+                                            <variation key="widthClass=compact" constant="-4"/>
+                                        </constraint>
+                                        <constraint firstItem="a5X-D9-Nlf" firstAttribute="trailing" secondItem="QHZ-nF-tGU" secondAttribute="trailingMargin" id="U8V-0z-diT">
+                                            <variation key="widthClass=compact" constant="4"/>
+                                        </constraint>
+                                        <constraint firstItem="a5X-D9-Nlf" firstAttribute="top" secondItem="3vZ-dt-KM8" secondAttribute="bottom" constant="22" id="VEf-sx-DvV"/>
                                         <constraint firstItem="3vZ-dt-KM8" firstAttribute="leading" secondItem="QHZ-nF-tGU" secondAttribute="leading" id="VUB-4f-7Ih"/>
-                                        <constraint firstItem="3vZ-dt-KM8" firstAttribute="leading" secondItem="QHZ-nF-tGU" secondAttribute="leadingMargin" constant="-8" id="VbR-zd-wCJ"/>
+                                        <constraint firstItem="3vZ-dt-KM8" firstAttribute="leading" secondItem="QHZ-nF-tGU" secondAttribute="leadingMargin" constant="-8" id="VbR-zd-wCJ">
+                                            <variation key="widthClass=compact" constant="-4"/>
+                                        </constraint>
                                         <constraint firstAttribute="bottomMargin" secondItem="a5X-D9-Nlf" secondAttribute="bottom" constant="8" id="Xl4-Pm-DYU"/>
                                         <constraint firstItem="3vZ-dt-KM8" firstAttribute="trailing" secondItem="a5X-D9-Nlf" secondAttribute="trailing" id="h7H-CC-KGk"/>
                                         <constraint firstItem="3vZ-dt-KM8" firstAttribute="leading" secondItem="a5X-D9-Nlf" secondAttribute="leading" id="hBD-Hz-bpQ"/>
                                         <constraint firstItem="3vZ-dt-KM8" firstAttribute="leading" secondItem="a5X-D9-Nlf" secondAttribute="leading" id="iVt-hl-ErZ"/>
-                                        <constraint firstItem="3vZ-dt-KM8" firstAttribute="trailing" secondItem="QHZ-nF-tGU" secondAttribute="trailingMargin" id="iub-7T-QS4"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="a5X-D9-Nlf" secondAttribute="bottom" constant="8" id="n03-4g-EYN"/>
-                                        <constraint firstItem="3vZ-dt-KM8" firstAttribute="top" secondItem="QHZ-nF-tGU" secondAttribute="topMargin" constant="14" id="ryb-hz-cgM"/>
-                                        <constraint firstItem="3vZ-dt-KM8" firstAttribute="trailing" secondItem="QHZ-nF-tGU" secondAttribute="trailingMargin" id="uZY-xT-1eL"/>
-                                        <constraint firstItem="a5X-D9-Nlf" firstAttribute="top" secondItem="3vZ-dt-KM8" secondAttribute="bottom" constant="8" symbolic="YES" id="ytL-mX-ojL"/>
+                                        <constraint firstItem="3vZ-dt-KM8" firstAttribute="trailing" secondItem="QHZ-nF-tGU" secondAttribute="trailingMargin" id="iub-7T-QS4">
+                                            <variation key="widthClass=compact" constant="4"/>
+                                        </constraint>
+                                        <constraint firstAttribute="bottomMargin" secondItem="a5X-D9-Nlf" secondAttribute="bottom" constant="8" id="n03-4g-EYN">
+                                            <variation key="widthClass=compact" constant="11"/>
+                                        </constraint>
+                                        <constraint firstItem="3vZ-dt-KM8" firstAttribute="top" secondItem="QHZ-nF-tGU" secondAttribute="topMargin" id="ryb-hz-cgM"/>
+                                        <constraint firstItem="3vZ-dt-KM8" firstAttribute="trailing" secondItem="QHZ-nF-tGU" secondAttribute="trailingMargin" id="uZY-xT-1eL">
+                                            <variation key="widthClass=compact" constant="4"/>
+                                        </constraint>
+                                        <constraint firstItem="a5X-D9-Nlf" firstAttribute="top" secondItem="3vZ-dt-KM8" secondAttribute="bottom" constant="8" symbolic="YES" id="ytL-mX-ojL">
+                                            <variation key="widthClass=compact" constant="19"/>
+                                        </constraint>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
@@ -266,7 +286,7 @@
             <objects>
                 <tableViewController id="ikK-NQ-PJo" customClass="PartyTableIssuesViewController" customModule="Politics_NI" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="97" sectionHeaderHeight="28" sectionFooterHeight="28" id="7dk-I5-HrM">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.92941176469999998" green="0.92941176469999998" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
@@ -1104,7 +1124,7 @@
             <objects>
                 <tableViewController id="Lg9-E0-bhT" customClass="PartyTwitterController" customModule="Politics_NI" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="HUB-xE-yzs">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="499"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -1162,7 +1182,7 @@
             <objects>
                 <tableViewController id="W74-vz-ZpA" customClass="PartyIssuesViewController" customModule="Politics_NI" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="253" sectionHeaderHeight="18" sectionFooterHeight="18" id="mel-ze-5CL">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
@@ -1190,7 +1210,8 @@
                                                     <exclude reference="bIk-J8-klG"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="widthClass=compact">
+                                            <variation key="widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="15" y="195" width="577" height="33"/>
                                                 <mask key="constraints">
                                                     <include reference="bIk-J8-klG"/>
                                                     <exclude reference="xSk-AQ-opc"/>
@@ -1202,6 +1223,9 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
+                                            <variation key="widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="15" y="15" width="577" height="165"/>
+                                            </variation>
                                         </label>
                                     </subviews>
                                     <constraints>
@@ -1375,7 +1399,7 @@
             <objects>
                 <tableViewController title="Party" id="9BQ-y6-HVX" customClass="PartyProfileVIewController" customModule="Politics_NI" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="E26-C1-o3V">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
@@ -2415,6 +2439,9 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
+                                            <variation key="widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="158" y="8" width="201" height="55"/>
+                                            </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9Ox-bX-Vgw">
                                             <rect key="frame" x="8" y="8" width="38" height="92"/>
@@ -2432,7 +2459,8 @@
                                                     <exclude reference="KMZ-po-2Mg"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="widthClass=compact">
+                                            <variation key="widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="8" y="8" width="22" height="103"/>
                                                 <mask key="constraints">
                                                     <include reference="KMZ-po-2Mg"/>
                                                     <exclude reference="ygD-oj-j7E"/>
@@ -2455,7 +2483,8 @@
                                                     <exclude reference="fUE-6f-Fi9"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="widthClass=compact">
+                                            <variation key="widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="158" y="66" width="201" height="53"/>
                                                 <mask key="constraints">
                                                     <exclude reference="ZIR-Zu-zIQ"/>
                                                     <include reference="fUE-6f-Fi9"/>
@@ -2475,7 +2504,8 @@
                                                     <exclude reference="gN3-Ql-k74"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="widthClass=compact">
+                                            <variation key="widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="38" y="11" width="100" height="100"/>
                                                 <mask key="constraints">
                                                     <include reference="SnD-gW-eOK"/>
                                                     <include reference="gN3-Ql-k74"/>
