@@ -7,17 +7,22 @@
 //
 
 import Firebase
-class UserResponseViewController: UIViewController {
+
+class UserResponseViewController: UITableViewController {
+    //all the views
     var partyViews: [PartyView]!
     var agreeViews = [PartyView]()
     var disagreeViews = [PartyView]()
     var unsureViews = [PartyView]()
     var neutralViews = [PartyView]()
     
+    //dictionary array of views to upload to firebase database
     var dictionaryPartyViews = [[String: String!]]()
     
+    //reference to fb
     let ref = FIRDatabase.database().reference()
-    var selectIssue: Issue!
+    
+    //count of current question
     var count = 0
     
     @IBOutlet weak var issueCountNotif: UILabel!
@@ -26,59 +31,95 @@ class UserResponseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        count = 0
-        viewDesc.text = partyViews[count].view
-        issue.text = partyViews[count].issueDesc
+        
+        if let topItem = self.navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        }
+        
+        count = 0 //resets count to 0
+        
+        let attrs = [
+            NSForegroundColorAttributeName : UIColor.whiteColor(),]
+       self.navigationController!.navigationBar.titleTextAttributes = attrs
+        nextQuestion()
         updateCount()
     }
     
     @IBAction func agree(sender: AnyObject) {
-        agreeViews.append(partyViews[count])
-        nextQuestion()
-        updateCount()
+        agree()
     }
     
     @IBAction func disagree(sender: AnyObject) {
-        disagreeViews.append(partyViews[count])
-        nextQuestion()
-        updateCount()
+        disagree()
     }
     
     @IBAction func neitherAgree(sender: AnyObject) {
-        neutralViews.append(partyViews[count])
-        nextQuestion()
-        updateCount()
+        neitherAgree()
     }
     
     @IBAction func unsure(sender: AnyObject) {
-        unsureViews.append(partyViews[count])
-        nextQuestion()
-        updateCount()
+        unsure()
     }
     
+    func agree() {
+        agreeViews.append(partyViews[count])
+        viewDesc.fadeOut()
+        count = count+1
+        nextQuestion()
+    }
+    
+    func disagree() {
+        disagreeViews.append(partyViews[count])
+        viewDesc.fadeOut()
+        count = count+1
+        nextQuestion()
+    }
+    
+    func neitherAgree() {
+        neutralViews.append(partyViews[count])
+        viewDesc.fadeOut()
+        count = count+1
+        nextQuestion()
+    }
+    
+    func unsure() {
+        unsureViews.append(partyViews[count])
+        viewDesc.fadeOut()
+        count = count+1
+        nextQuestion()
+    }
+    
+    //gets question and
     func nextQuestion() {
-        count = count + 1
-        if (count < partyViews.count) {
-            viewDesc.text = partyViews[count].view
+        if (count != partyViews.count) {
+            viewDesc.text = "\"" + partyViews[count].view + "\""
             issue.text = partyViews[count].issueDesc
+            viewDesc.fadeIn()
+            updateCount()
         } else {
             setUserIssues()
-            performSegueWithIdentifier("returnToIssues", sender: self)
+            super.performSegueWithIdentifier("goToResponses", sender: self)
         }
     }
     
     func updateCount() {
-        let countCurrent = String(count+1)
-        issueCountNotif.text = "Issue " + countCurrent + "/" + String(partyViews.count)
+        if partyViews.count != count {
+            let countCurrent = String(count+1)
+            issueCountNotif.text = "View " + countCurrent + "/" + String(partyViews.count)
+        } else {
+            issueCountNotif.hidden = true
+        }
     }
     
     func setUserIssues() {
         let user = FIRAuth.auth()?.currentUser
         let issueWrite = ["issueDesc": partyViews[0].issueDesc, "issueID": partyViews[0].issueID]
         self.ref.child("users").child(user!.uid).child("issueResponses").child(partyViews[0].issueID).setValue(issueWrite)
+        
        
         for view in agreeViews {
             let partyView = ["partyID": view.partyID, "view": view.view, "viewsrc": view.viewsrc]
+            saveUserStat(view, opinion: "Agree")
             dictionaryPartyViews.append(partyView)
         }
             self.ref.child("users").child(user!.uid).child("issueResponses").child(partyViews[0].issueID).child("partyViews").child("Agree").setValue(dictionaryPartyViews)
@@ -86,13 +127,15 @@ class UserResponseViewController: UIViewController {
         
         for view in disagreeViews {
             let partyView = ["partyID": view.partyID, "view": view.view, "viewsrc": view.viewsrc]
+            saveUserStat(view, opinion: "Disagree")
             dictionaryPartyViews.append(partyView)
         }
             self.ref.child("users").child(user!.uid).child("issueResponses").child(partyViews[0].issueID).child("partyViews").child("Disagree").setValue(dictionaryPartyViews)
-            dictionaryPartyViews.removeAll()
+        dictionaryPartyViews.removeAll()
         
         for view in unsureViews {
             let partyView = ["partyID": view.partyID, "view": view.view, "viewsrc": view.viewsrc]
+            saveUserStat(view, opinion: "Unsure")
             dictionaryPartyViews.append(partyView)
         }
             self.ref.child("users").child(user!.uid).child("issueResponses").child(partyViews[0].issueID).child("partyViews").child("Unsure").setValue(dictionaryPartyViews)
@@ -100,51 +143,166 @@ class UserResponseViewController: UIViewController {
         
         for view in neutralViews {
             let partyView = ["partyID": view.partyID, "view": view.view, "viewsrc": view.viewsrc]
+            saveUserStat(view, opinion: "Neutral")
             dictionaryPartyViews.append(partyView)
         }
             self.ref.child("users").child(user!.uid).child("issueResponses").child(partyViews[0].issueID).child("partyViews").child("Neutral").setValue(dictionaryPartyViews)
             dictionaryPartyViews.removeAll()
+            userUtility.getUserIssues()
     }
     
-//    class func getUserIssues() {
-//        let issueResp = rootRef.child("users").child(authData!).child("issueResponses")
-//        
-//        issueResp.observeEventType(.Value, withBlock: { snapshot in
-//            for child in snapshot.children {
-//                let childSnapshot = snapshot.childSnapshotForPath(child.key)
-//                let issueDesc = childSnapshot.value?.objectForKey("issueDesc") as! String
-//                let issueID = childSnapshot.value?.objectForKey("issueID") as! String
-//                let issue = Issue(desc: issueDesc, id: issueID)
-//                issues.append(issue)
-//                
-//                let viewsChild = childSnapshot.childSnapshotForPath("partyViews")
-//                for child in viewsChild.children {
-//                    let test = viewsChild.childSnapshotForPath(child.key)
-//                    let partyID = test.value!.objectForKey("partyID") as! String
-//                    let view = test.value!.objectForKey("view") as! String
-//                    let viewsrc = test.value!.objectForKey("viewsrc") as! String
-//                    let partyView = PartyView(issueID: issue.id, issueDesc: issue.desc, partyID: partyID, view: view, viewsrc: viewsrc)
-//                    
-//                    switch test.value!.objectForKey("viewsrc") as! String {
-//                    case "A":
-//                        agreeViews.append(partyView)
-//                    case "D":
-//                        disagreeViews.append(partyView)
-//                    case "U":
-//                        unsureViews.append(partyView)
-//                    case "N":
-//                        neutralViews.append(partyView)
-//                    default:
-//                        unsureViews.append(partyView)
+    func saveUserStat(view: PartyView, opinion: String) {
+        let statRef = self.ref.child("Stats")
+         dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
+            let semaphore = dispatch_semaphore_create(0)
+            let semaphore1 = dispatch_semaphore_create(0)
+//            let semaphore2 = dispatch_semaphore_create(0)
+            
+            let viewStatRef = statRef.child(view.issueID).child(view.partyID).child(opinion)
+            let userAge = userUtility.user.birthDay
+            let userGender = userUtility.user.gender
+            
+//            let userConstit = userUtility.user.constituency
+            let ageRef = viewStatRef.child("Age").child(userAge)
+            let genderRef = viewStatRef.child("Gender").child(userGender)
+//            let constitRef = viewStatRef.child("Constit").child(userConstit)
+
+                
+            ageRef.runTransactionBlock({
+                    (currentData:FIRMutableData!) in
+                    var value = currentData.value as? Int
+                    if (value == nil) {
+                        value = 0
+                    }
+                    currentData.value = value! + 1
+                    return FIRTransactionResult.successWithValue(currentData)
+                }, andCompletionBlock: {(error: NSError?, committed: Bool, snapshot: FIRDataSnapshot?) -> Void in
+                    if error != nil {
+                        print("Error: \(error!)")
+                    }
+                    if committed {
+                        dispatch_semaphore_signal(semaphore)
+                    }
+                })
+
+                dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+                    
+                
+                genderRef.runTransactionBlock({
+                    (currentData:FIRMutableData!) in
+                    var value = currentData.value as? Int
+                    if (value == nil) {
+                        value = 0
+                    }
+                    currentData.value = value! + 1
+                    return FIRTransactionResult.successWithValue(currentData)
+                    }, andCompletionBlock: {(error: NSError?, committed: Bool, snapshot: FIRDataSnapshot?) -> Void in
+                        if error != nil {
+                            print("Error: \(error!)")
+                        }
+                        if committed {
+                            dispatch_semaphore_signal(semaphore1)
+                        }
+                    })
+                
+                dispatch_semaphore_wait(semaphore1, DISPATCH_TIME_FOREVER)
+                
+//                    constitRef.runTransactionBlock({
+//                    (currentData:FIRMutableData!) in
+//                    var value = currentData.value as? Int
+//                    if (value == nil) {
+//                        value = 0
 //                    }
-//                }
+//                    currentData.value = value! + 1
+//                    return FIRTransactionResult.successWithValue(currentData)
+//                        }, andCompletionBlock: {(error: NSError?, committed: Bool, snapshot: FIRDataSnapshot?) -> Void in
+//                            if error != nil {
+//                                print("Error: \(error!)")
+//                            }
+//                            if committed {
+//                                dispatch_semaphore_signal(semaphore2)
+//                            }
+//                        })
+            
+//                dispatch_semaphore_wait(semaphore2, DISPATCH_TIME_FOREVER)
+        
+        
+//            let ageSnapshot = snapshot.childSnapshotForPath(view.issueID).childSnapshotForPath(view.partyID).childSnapshotForPath(opinion).childSnapshotForPath("Age")
+//            let ageRef = viewStatRef.child("Age").child(userAge)
+//                if ageSnapshot.childSnapshotForPath(userAge).exists() {
+//                let currentCountAge = ageSnapshot.value!.objectForKey(userAge) as? Int
+//                let newCountAge = currentCountAge! + 1
+//                ageRef.setValue(newCountAge)
+//            } else {
+//                ageRef.setValue(1)
 //            }
 //            
-//            }, withCancelBlock:  { error in
-//                print(error.description)
-//        })
-//        
-//    }
-
+//            let genderSnapshot = snapshot.childSnapshotForPath(view.issueID).childSnapshotForPath(view.partyID).childSnapshotForPath(opinion).childSnapshotForPath("Gender")
+//            let genderRef = viewStatRef.child("Gender").child(userGender)
+//            if genderSnapshot.childSnapshotForPath(userGender).exists() {
+//                let currentCountGender = genderSnapshot.value!.objectForKey(userGender) as? Int
+//                let newCountGender = currentCountGender! + 1
+//                genderRef.setValue(newCountGender)
+//            } else {
+//                genderRef.setValue(1)
+//            }
+//            
+//            let constitSnapshot = snapshot.childSnapshotForPath(view.issueID).childSnapshotForPath(view.partyID).childSnapshotForPath(opinion).childSnapshotForPath("Constit")
+//            let constitRef = viewStatRef.child("Constit").child(userConstit)
+//            if  constitSnapshot.childSnapshotForPath(userConstit).exists() {
+//                let currentCountConstit = constitSnapshot.value!.objectForKey(userConstit) as? Int
+//                let newCountConstit = currentCountConstit! + 1
+//                constitRef.setValue(newCountConstit)
+//            } else {
+//                constitRef.setValue(1)
+//            }
+            
+//                dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+//                dispatch_semaphore_wait(semaphore1, DISPATCH_TIME_FOREVER)
+//                dispatch_semaphore_wait(semaphore2, DISPATCH_TIME_FOREVER)
+        }
+}
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if (indexPath.row == 2) {
+            return 180
+        }
+        else if (indexPath.row >= 3) {
+            let screenDefaultHeight: CGFloat = UIScreen.mainScreen().bounds.size.height-325
+            return screenDefaultHeight/5
+        } else {
+            return 40
+        }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        switch(indexPath.row) {
+        case 3:
+            agree()
+        case 4:
+            disagree()
+        case 5:
+            neitherAgree()
+        case 6:
+            unsure()
+        default:
+            break
+        }
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "goToResponses" {
+            let navVC = segue.destinationViewController as! UINavigationController
+            let tableVC = navVC.viewControllers.first as! RespondPartyViewsTableViewController
+            tableVC.partyViews = self.partyViews
+            tableVC.viewDoneButton = true
+            partyViews.removeAll()
+        }
+    }
+    
+    
+    
+    
 
 }

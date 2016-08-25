@@ -7,62 +7,39 @@
 //
 
 import SwiftyJSON
-import Firebase
-import FirebaseDatabase
+import SVProgressHUD
 
 class DatabaseUtility {
-    static let rootRef = FIRDatabase.database().reference()
-    
-
     // method for loading all the members of NI assembly
     class func loadAllMembers() -> [Politician] {
         var politiciansArr = [Politician]()
         
-        let urlString = "http://data.niassembly.gov.uk/members_json.ashx?m=GetAllCurrentMembers"
-        
-        if let url = NSURL(string: urlString) {
-            if let data = try? NSData(contentsOfURL: url, options: []) {
-                let json = JSON(data: data)
-                for item in json["AllMembersList"]["Member"].arrayValue {
-                    let id = item["PersonId"].stringValue
-                    let firstName = item["MemberFirstName"].stringValue
-                    let lastName = item["MemberLastName"].stringValue
-                    let constituency = item["ConstituencyName"].stringValue
-                    let party = item["PartyName"].stringValue
-                    let imageURL = item["MemberImgUrl"].stringValue
-                    let email = ""
-                    let phoneNumber = ""
-                    let altEmail = ""
-                    let twitter = ""
-                    
-                    let pol = Politician(id: id, firstName: firstName, lastName: lastName, constituency: constituency, party: party, imageURL: imageURL, email: email, phoneNumber: phoneNumber, twitter: twitter, altEmail: altEmail)
-                    politiciansArr.append(pol)
+            let urlString = "http://data.niassembly.gov.uk/members_json.ashx?m=GetAllCurrentMembers"
+            
+            if let url = NSURL(string: urlString) {
+                if let data = try? NSData(contentsOfURL: url, options: []) {
+                    let json = JSON(data: data)
+                    for item in json["AllMembersList"]["Member"].arrayValue {
+                        let id = item["PersonId"].stringValue
+                        let firstName = item["MemberFirstName"].stringValue
+                        let lastName = item["MemberLastName"].stringValue
+                        let constituency = item["ConstituencyName"].stringValue
+                        let party = item["PartyName"].stringValue
+                        let imageURL = item["MemberImgUrl"].stringValue
+                        let email = ""
+                        let phoneNumber = ""
+                        let altEmail = ""
+                        let twitter = ""
+                        
+                        let pol = Politician(id: id, firstName: firstName, lastName: lastName, constituency: constituency, party: party, imageURL: imageURL, email: email, phoneNumber: phoneNumber, twitter: twitter, altEmail: altEmail)
+                        politiciansArr.append(pol)
+                    }
                 }
-                return politiciansArr
             }
-}
-        return [Politician]()
-}
-    // class for loading all the constiuencies and their respective ID
+        return politiciansArr
+    }
     
-//    class func getConstituencies() -> [[String: String]] {
-//        var constitArr = [[String: String]]()
-//        let urlString = "http://data.niassembly.gov.uk/members_json.ashx?m=GetAllConstituencies"
-//        
-//        
-//        if let url = NSURL(string: urlString) {
-//            if let data = try? NSData(contentsOfURL: url, options: []) {
-//                let json = JSON(data: data)
-//                for item in json["AllConstituencies"]["Constituency"].arrayValue {
-//                    let cons = item["ConstituencyName"].stringValue
-//                    let consID = item["ConstituencyId"].stringValue
-//                    constitArr.append([cons: consID])
-//                }
-//                return constitArr
-//            }
-//        }
-//        return constitArr
-//    }
+
     
     //method for getting the name of a constiuency by searching through nia assembly API
     class func getConstituenciesName(conID: String) -> String {
@@ -118,6 +95,8 @@ class DatabaseUtility {
         }
         return constit
     }
+    
+    //method for getting the constituency from the user's inputted postcode.
     
     class func getConstituencyPostCode(postCode: String) -> String {
         let uri = "http://uk-postcodes.com/postcode/" + postCode + ".json"

@@ -19,11 +19,10 @@ class HubViewControlller: UITableViewController {
             NSForegroundColorAttributeName : UIColor.whiteColor(),
             //NSFontAttributeName : UIFont(name: "Georgia-Bold", size: 24)!
         ]
-        
-        self.navigationController?.navigationBar.backItem?.title
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         
         self.navigationController?.navigationBar.titleTextAttributes = attrs
-        self.tableView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0)
+        //self.tableView.contentInset = UIEdgeInsetsMake(25, 0, 0, 0)
         
         if self.revealViewController() != nil {
             openSide.target = self.revealViewController()

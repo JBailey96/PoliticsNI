@@ -4,7 +4,27 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>AFNetworking.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Politics NI.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SCLAlertView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SDWebImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SVProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -17,12 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0FC3F8622945B9CAD2AF8351CAC1A403</key>
+		<key>1C3436CEA5C3D39764C5F54374794ECB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C88BAF19BE57E99DDA6F669B25A64DA7</key>
+		<key>2B92E3E735D096712AEC9678A6E0BE44</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3C942CE3B570EA863D31AE6A6DBC9853</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AFF0834398841CDD5A226F8823492265</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BA4C2F88B04C5F44FA411F62C961AD82</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F81B5FEB3A3547CFBFF2F0792C9C4D8B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

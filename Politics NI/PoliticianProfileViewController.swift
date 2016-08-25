@@ -9,11 +9,14 @@
 import UIKit
 import Firebase
 import TwitterKit
+import SDWebImage
 
 
-class PoliticianProfileViewController: UIViewController {
-    let rootRef = FIRDatabase.database().reference()
+class PoliticianProfileViewController: UITableViewController{
+    let mlaRef = FIRDatabase.database().reference().child("MLAContact")
     
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var container: UIView!
     @IBOutlet weak var polPartyName: UIButton!
     @IBOutlet weak var phoneNumTextView: UITextView!
     @IBOutlet weak var polProfileImage: UIImageView!
@@ -28,20 +31,29 @@ class PoliticianProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController!.navigationBar.topItem!.title = "Politicians in my Area"
+        self.navigationItem.title = "Politician"
         polPartyName.hidden = true
         loadParties()
         
-        //setting up properties of nav bar
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState:.Normal)
+        
+            //setting up properties of nav bar
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
         self.navigationController?.navigationBar.titleTextAttributes =  [NSForegroundColorAttributeName : UIColor.whiteColor()]
         self.navigationController?.navigationBar.backItem?.backBarButtonItem?.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        polPartyName.titleLabel!.adjustsFontSizeToFitWidth = true
+        polPartyName.titleLabel!.minimumScaleFactor = 0.5
         
-        //hiding twitter options until verified politician has twitter
+        //make the buttons content appear in the top-left
+        polPartyName.contentHorizontalAlignment = .Left
+        polPartyName.contentVerticalAlignment = .Top
+        polPartyName.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 0.0)
         
-            let mlaRef = rootRef.child("MLAContact") //
-        
-            mlaRef.observeEventType(.Value, withBlock: { snapshot in
+        dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
+            let semaphore = dispatch_semaphore_create(0)
+            self.mlaRef.observeEventType(.Value, withBlock: { snapshot in
                 print(snapshot.value)
                 print(self.currentPol?.id)
                 for child in snapshot.children {
@@ -66,30 +78,48 @@ class PoliticianProfileViewController: UIViewController {
                         
                     }
                 }
-                
-                if (self.currentPol?.twitter == "na") {
-                    if  let arrayOfTabBarItems = self.tabBarController!.tabBar.items as! AnyObject as? NSArray,tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
-                        tabBarItem.enabled = false
-                    }
-                }
-                
+                dispatch_semaphore_signal(semaphore)
                 }, withCancelBlock:  { error in
                     print(error.description)
             })
+            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+            print(self.currentPol?.twitter)
+            let tbc: PolTwitterViewController = (self.childViewControllers[0] as! PolTwitterViewController)
+            tbc.enter = true
+            tbc.viewDidLoad()
+        }
+        
+        let url = NSURL(string:(currentPol?.imageURL)!)
+//        let dat = NSData(contentsOfURL: url!)
+//        let image = UIImage(data: dat!)
+        polProfileImage.sd_setImageWithURL(url)
+        
+        
+        polProfileImage.sd_setImageWithURL(url)
+        
+        polName.text = (currentPol?.firstName)! + " " + (currentPol?.lastName)! + ", MLA"
+        name.text = (currentPol?.firstName)! + " " + (currentPol?.lastName)!
+        
+        
+        self.phoneNumTextView.text = "0" + (self.currentPol?.phoneNumber)!
+        self.emailTextView.text = self.currentPol?.email
+        self.altEmailTextView.text = self.currentPol?.altEmail
+
         
         
         // Add a button to the center of the view to show the timeline
     }
     
     override func viewWillAppear(animated: Bool) {
-        let url = NSURL(string:(currentPol?.imageURL)!)
-        let dat = NSData(contentsOfURL: url!)
-        let image = UIImage(data: dat!)
-        polProfileImage.image = image
+//        let url = NSURL(string:(currentPol?.imageURL)!)
+////        let dat = NSData(contentsOfURL: url!)
+////        let image = UIImage(data: dat!)
+//        polProfileImage.sd_setImageWithURL(url)
         //polProfileImage.layer.cornerRadius = 25
        // polProfileImage.layer.masksToBounds = true
        // polProfileImage.layer.borderWidth = 0.1;
         polName.text = (currentPol?.firstName)! + " " + (currentPol?.lastName)! + ", MLA"
+        name.text = (currentPol?.firstName)! + " " + (currentPol?.lastName)!
     }
     
     
@@ -119,12 +149,24 @@ class PoliticianProfileViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if  segue.identifier == "goToParty" {
             let tabBarC : UITabBarController = segue.destinationViewController as! UITabBarController
-            let desView: PartyProfileVIewController = tabBarC.viewControllers?.first as! PartyProfileVIewController
-            let des2View: PartyTwitterController = tabBarC.viewControllers?[1] as! PartyTwitterController
-            let des3View: PartyIssuesViewController = tabBarC.viewControllers?[2] as! PartyIssuesViewController
+            let desView: PartyProfileVIewController = tabBarC.viewControllers?[0] as! PartyProfileVIewController
+            let des3View: PartyTableIssuesViewController = tabBarC.viewControllers?[1] as! PartyTableIssuesViewController
             desView.currentParty = party
-            des2View.currentParty = party
             des3View.currentParty = party
         }
+        else if segue.identifier == "containerViewSegue" {
+            let containerViewController = segue.destinationViewController as? PolTwitterViewController
+            containerViewController?.currentPol = currentPol
+        }
     }
-}
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if (indexPath.row == 1) {
+            performSegueWithIdentifier("goToParty", sender: self)
+        }
+    }
+    
+    
+    
+
+    }

@@ -7,11 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0716B8A01D5B2382002F8F1D /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0716B89F1D5B2382002F8F1D /* UIScrollView+EmptyDataSet.m */; };
+		0716B8A31D5B33DD002F8F1D /* ResetPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0716B8A21D5B33DD002F8F1D /* ResetPasswordController.swift */; };
+		0717620A1D5C6E2C007A31C9 /* PartyEvalTopCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071762091D5C6E2C007A31C9 /* PartyEvalTopCellViewController.swift */; };
+		0719DF3F1D53677B00C1C55B /* PartyEvaluationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0719DF3E1D53677B00C1C55B /* PartyEvaluationViewController.swift */; };
+		0719DF411D53687A00C1C55B /* PartyEvalCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0719DF401D53687A00C1C55B /* PartyEvalCellViewController.swift */; };
+		071B084A1D6D9BC500057A15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 071B08491D6D9BC500057A15 /* GoogleService-Info.plist */; };
 		071F343F1D51DCCC000400F7 /* SelectIssuesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071F343E1D51DCCC000400F7 /* SelectIssuesTableViewController.swift */; };
 		071F34411D51DE73000400F7 /* IssuesCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071F34401D51DE73000400F7 /* IssuesCellViewController.swift */; };
 		07211A2F1D50ACE400C502D3 /* UserResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07211A2E1D50ACE400C502D3 /* UserResponseViewController.swift */; };
 		07211A311D50AFDA00C502D3 /* IssuesHubTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07211A301D50AFDA00C502D3 /* IssuesHubTableViewController.swift */; };
-		0727682C1D42301900FA9821 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0727682B1D42301900FA9821 /* Default-568h@2x.png */; };
 		0741AD841D4B6576009CDABF /* PolTwitterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0741AD831D4B6576009CDABF /* PolTwitterViewController.swift */; };
 		0741AD861D4B862D009CDABF /* PartyTwitterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0741AD851D4B862D009CDABF /* PartyTwitterViewController.swift */; };
 		074B46701D4E7A20004F9C0E /* EditDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B466F1D4E7A20004F9C0E /* EditDetailsViewController.swift */; };
@@ -20,6 +25,7 @@
 		076516951D4111A200E4C04E /* PolTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076516941D4111A200E4C04E /* PolTableViewController.swift */; };
 		077981F11D4A1731008B6417 /* email.png in Resources */ = {isa = PBXBuildFile; fileRef = 077981F01D4A1731008B6417 /* email.png */; };
 		078C02451D44F7A400FBBF81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 078C02431D44F7A400FBBF81 /* Main.storyboard */; };
+		078C626C1D536F65003CA96F /* PartyEval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078C626B1D536F65003CA96F /* PartyEval.swift */; };
 		079EA8BC1D3FA78D000570B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079EA8BB1D3FA78D000570B2 /* AppDelegate.swift */; };
 		079EA8C31D3FA78D000570B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 079EA8C21D3FA78D000570B2 /* Assets.xcassets */; };
 		079EA8C61D3FA78D000570B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 079EA8C41D3FA78D000570B2 /* LaunchScreen.storyboard */; };
@@ -31,7 +37,15 @@
 		07A4E2E91D4F754300523B3E /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A4E2E81D4F754300523B3E /* Issue.swift */; };
 		07A4E2EB1D4F75C600523B3E /* PartyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A4E2EA1D4F75C600523B3E /* PartyView.swift */; };
 		07A4E2ED1D4F7C5900523B3E /* PartyIssuesCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A4E2EC1D4F7C5900523B3E /* PartyIssuesCellViewController.swift */; };
+		07A7CF0A1D6A533A0074A53D /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A7CF091D6A533A0074A53D /* AboutViewController.swift */; };
+		07A90F561D5A033500D4B7E4 /* RespondPartyIssuesCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A90F551D5A033500D4B7E4 /* RespondPartyIssuesCellViewController.swift */; };
+		07A90F581D5A03E800D4B7E4 /* RespondPartyIssueTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A90F571D5A03E800D4B7E4 /* RespondPartyIssueTableViewController.swift */; };
+		07A90F5A1D5A0B8300D4B7E4 /* RespondPartyViewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A90F591D5A0B8300D4B7E4 /* RespondPartyViewsTableViewController.swift */; };
+		07A90F5C1D5A0BC700D4B7E4 /* RespondPartyViewsCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A90F5B1D5A0BC700D4B7E4 /* RespondPartyViewsCellViewController.swift */; };
+		07B1B9B01D5DD97A004BEAF8 /* PartyCellIssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B1B9AF1D5DD97A004BEAF8 /* PartyCellIssuesViewController.swift */; };
+		07B1B9B21D5DD996004BEAF8 /* PartyTableIssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B1B9B11D5DD996004BEAF8 /* PartyTableIssuesViewController.swift */; };
 		07B8253D1D411F3400E20DD4 /* PolCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B8253C1D411F3400E20DD4 /* PolCellViewController.swift */; };
+		07D71F491D61BA58003735F3 /* selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 07D71F481D61BA58003735F3 /* selected.png */; };
 		07DDA55F1D4617CF0001B507 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDA55E1D4617CF0001B507 /* User.swift */; };
 		07DDA5611D461E310001B507 /* politicsni.png in Resources */ = {isa = PBXBuildFile; fileRef = 07DDA5601D461E310001B507 /* politicsni.png */; };
 		07DDA5631D4621D40001B507 /* nameIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 07DDA5621D4621D40001B507 /* nameIcon.png */; };
@@ -40,7 +54,6 @@
 		07DDA5691D4624410001B507 /* locationIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 07DDA5681D4624410001B507 /* locationIcon.png */; };
 		07DDA56B1D4625A60001B507 /* passwordIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 07DDA56A1D4625A60001B507 /* passwordIcon.png */; };
 		07DDA56D1D463E120001B507 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDA56C1D463E120001B507 /* RegisterViewController.swift */; };
-		07DDA5701D46562C0001B507 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 07DDA56F1D46562C0001B507 /* GoogleService-Info.plist */; };
 		07DE60591D439C2300AAAC37 /* PoliticianProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DE60581D439C2300AAAC37 /* PoliticianProfileViewController.swift */; };
 		07E0EFEB1D49F5E90013B5B7 /* webIcon in Resources */ = {isa = PBXBuildFile; fileRef = 07E0EFEA1D49F5E90013B5B7 /* webIcon */; };
 		07E0EFED1D49F75C0013B5B7 /* PartyProfileVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E0EFEC1D49F75C0013B5B7 /* PartyProfileVIewController.swift */; };
@@ -56,8 +69,11 @@
 		07E0F0041D4A04870013B5B7 /* tuv.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E0EFFB1D4A04870013B5B7 /* tuv.png */; };
 		07E0F0051D4A04870013B5B7 /* uup.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E0EFFC1D4A04870013B5B7 /* uup.png */; };
 		07E0F0081D4A12FB0013B5B7 /* politicsni copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E0F0071D4A12FB0013B5B7 /* politicsni copy.png */; };
+		07E2FB871D635160004EE246 /* PartyEvalAgreeDisagreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E2FB861D635160004EE246 /* PartyEvalAgreeDisagreeViewController.swift */; };
+		07E2FB891D6354C3004EE246 /* PartyEvalAgDisCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E2FB881D6354C3004EE246 /* PartyEvalAgDisCell.swift */; };
 		07EAF6371D475D6B007A2208 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07EAF6361D475D6B007A2208 /* CoreLocation.framework */; };
 		07EAF6391D47919C007A2208 /* LandingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07EAF6381D47919C007A2208 /* LandingPageViewController.swift */; };
+		07F135E41D6211F1009DC2B9 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F135E31D6211F1009DC2B9 /* UIViewExtensions.swift */; };
 		07F401D01D48A5E90007384A /* myIssues.png in Resources */ = {isa = PBXBuildFile; fileRef = 07F401CD1D48A5E90007384A /* myIssues.png */; };
 		07F401D11D48A5E90007384A /* myPolitics in Resources */ = {isa = PBXBuildFile; fileRef = 07F401CE1D48A5E90007384A /* myPolitics */; };
 		07F401D21D48A5E90007384A /* parties.png in Resources */ = {isa = PBXBuildFile; fileRef = 07F401CF1D48A5E90007384A /* parties.png */; };
@@ -69,11 +85,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0716B89E1D5B2382002F8F1D /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
+		0716B89F1D5B2382002F8F1D /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
+		0716B8A21D5B33DD002F8F1D /* ResetPasswordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordController.swift; sourceTree = "<group>"; };
+		071762091D5C6E2C007A31C9 /* PartyEvalTopCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyEvalTopCellViewController.swift; sourceTree = "<group>"; };
+		0719DF3E1D53677B00C1C55B /* PartyEvaluationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyEvaluationViewController.swift; sourceTree = "<group>"; };
+		0719DF401D53687A00C1C55B /* PartyEvalCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyEvalCellViewController.swift; sourceTree = "<group>"; };
+		071B08491D6D9BC500057A15 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		071F343E1D51DCCC000400F7 /* SelectIssuesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectIssuesTableViewController.swift; sourceTree = "<group>"; };
 		071F34401D51DE73000400F7 /* IssuesCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssuesCellViewController.swift; sourceTree = "<group>"; };
 		07211A2E1D50ACE400C502D3 /* UserResponseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserResponseViewController.swift; sourceTree = "<group>"; };
 		07211A301D50AFDA00C502D3 /* IssuesHubTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssuesHubTableViewController.swift; sourceTree = "<group>"; };
-		0727682B1D42301900FA9821 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		0741AD831D4B6576009CDABF /* PolTwitterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolTwitterViewController.swift; sourceTree = "<group>"; };
 		0741AD851D4B862D009CDABF /* PartyTwitterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyTwitterViewController.swift; sourceTree = "<group>"; };
 		074B466F1D4E7A20004F9C0E /* EditDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDetailsViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +104,7 @@
 		076516941D4111A200E4C04E /* PolTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolTableViewController.swift; sourceTree = "<group>"; };
 		077981F01D4A1731008B6417 /* email.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = email.png; path = Images/email.png; sourceTree = "<group>"; };
 		078C02441D44F7A400FBBF81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		078C626B1D536F65003CA96F /* PartyEval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyEval.swift; sourceTree = "<group>"; };
 		079EA8B81D3FA78D000570B2 /* Politics NI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Politics NI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		079EA8BB1D3FA78D000570B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		079EA8C21D3FA78D000570B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -95,7 +118,15 @@
 		07A4E2E81D4F754300523B3E /* Issue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
 		07A4E2EA1D4F75C600523B3E /* PartyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyView.swift; sourceTree = "<group>"; };
 		07A4E2EC1D4F7C5900523B3E /* PartyIssuesCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyIssuesCellViewController.swift; sourceTree = "<group>"; };
+		07A7CF091D6A533A0074A53D /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		07A90F551D5A033500D4B7E4 /* RespondPartyIssuesCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RespondPartyIssuesCellViewController.swift; sourceTree = "<group>"; };
+		07A90F571D5A03E800D4B7E4 /* RespondPartyIssueTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RespondPartyIssueTableViewController.swift; sourceTree = "<group>"; };
+		07A90F591D5A0B8300D4B7E4 /* RespondPartyViewsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RespondPartyViewsTableViewController.swift; sourceTree = "<group>"; };
+		07A90F5B1D5A0BC700D4B7E4 /* RespondPartyViewsCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RespondPartyViewsCellViewController.swift; sourceTree = "<group>"; };
+		07B1B9AF1D5DD97A004BEAF8 /* PartyCellIssuesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyCellIssuesViewController.swift; sourceTree = "<group>"; };
+		07B1B9B11D5DD996004BEAF8 /* PartyTableIssuesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyTableIssuesViewController.swift; sourceTree = "<group>"; };
 		07B8253C1D411F3400E20DD4 /* PolCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolCellViewController.swift; sourceTree = "<group>"; };
+		07D71F481D61BA58003735F3 /* selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = selected.png; path = Images/selected.png; sourceTree = "<group>"; };
 		07DDA55E1D4617CF0001B507 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		07DDA5601D461E310001B507 /* politicsni.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = politicsni.png; path = Images/politicsni.png; sourceTree = "<group>"; };
 		07DDA5621D4621D40001B507 /* nameIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nameIcon.png; path = Images/nameIcon.png; sourceTree = "<group>"; };
@@ -104,7 +135,6 @@
 		07DDA5681D4624410001B507 /* locationIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = locationIcon.png; path = Images/locationIcon.png; sourceTree = "<group>"; };
 		07DDA56A1D4625A60001B507 /* passwordIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = passwordIcon.png; path = Images/passwordIcon.png; sourceTree = "<group>"; };
 		07DDA56C1D463E120001B507 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
-		07DDA56F1D46562C0001B507 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		07DE60581D439C2300AAAC37 /* PoliticianProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoliticianProfileViewController.swift; sourceTree = "<group>"; };
 		07E0EFEA1D49F5E90013B5B7 /* webIcon */ = {isa = PBXFileReference; lastKnownFileType = file; name = webIcon; path = Images/webIcon; sourceTree = "<group>"; };
 		07E0EFEC1D49F75C0013B5B7 /* PartyProfileVIewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyProfileVIewController.swift; sourceTree = "<group>"; };
@@ -120,8 +150,11 @@
 		07E0EFFB1D4A04870013B5B7 /* tuv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tuv.png; path = Images/PartyLogos/tuv.png; sourceTree = "<group>"; };
 		07E0EFFC1D4A04870013B5B7 /* uup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uup.png; path = Images/PartyLogos/uup.png; sourceTree = "<group>"; };
 		07E0F0071D4A12FB0013B5B7 /* politicsni copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "politicsni copy.png"; path = "Images/politicsni copy.png"; sourceTree = "<group>"; };
+		07E2FB861D635160004EE246 /* PartyEvalAgreeDisagreeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyEvalAgreeDisagreeViewController.swift; sourceTree = "<group>"; };
+		07E2FB881D6354C3004EE246 /* PartyEvalAgDisCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyEvalAgDisCell.swift; sourceTree = "<group>"; };
 		07EAF6361D475D6B007A2208 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		07EAF6381D47919C007A2208 /* LandingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandingPageViewController.swift; sourceTree = "<group>"; };
+		07F135E31D6211F1009DC2B9 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		07F401CD1D48A5E90007384A /* myIssues.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = myIssues.png; path = Images/myIssues.png; sourceTree = "<group>"; };
 		07F401CE1D48A5E90007384A /* myPolitics */ = {isa = PBXFileReference; lastKnownFileType = file; name = myPolitics; path = Images/myPolitics; sourceTree = "<group>"; };
 		07F401CF1D48A5E90007384A /* parties.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = parties.png; path = Images/parties.png; sourceTree = "<group>"; };
@@ -150,6 +183,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0716B8A11D5B241F002F8F1D /* UIScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				0716B89E1D5B2382002F8F1D /* UIScrollView+EmptyDataSet.h */,
+				0716B89F1D5B2382002F8F1D /* UIScrollView+EmptyDataSet.m */,
+			);
+			name = UIScrollView;
+			sourceTree = "<group>";
+		};
 		07211A2D1D50990D00C502D3 /* My Issues */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,6 +199,15 @@
 				07211A301D50AFDA00C502D3 /* IssuesHubTableViewController.swift */,
 				071F343E1D51DCCC000400F7 /* SelectIssuesTableViewController.swift */,
 				071F34401D51DE73000400F7 /* IssuesCellViewController.swift */,
+				0719DF3E1D53677B00C1C55B /* PartyEvaluationViewController.swift */,
+				0719DF401D53687A00C1C55B /* PartyEvalCellViewController.swift */,
+				07A90F551D5A033500D4B7E4 /* RespondPartyIssuesCellViewController.swift */,
+				07A90F571D5A03E800D4B7E4 /* RespondPartyIssueTableViewController.swift */,
+				07A90F591D5A0B8300D4B7E4 /* RespondPartyViewsTableViewController.swift */,
+				07A90F5B1D5A0BC700D4B7E4 /* RespondPartyViewsCellViewController.swift */,
+				071762091D5C6E2C007A31C9 /* PartyEvalTopCellViewController.swift */,
+				07E2FB861D635160004EE246 /* PartyEvalAgreeDisagreeViewController.swift */,
+				07E2FB881D6354C3004EE246 /* PartyEvalAgDisCell.swift */,
 			);
 			name = "My Issues";
 			sourceTree = "<group>";
@@ -180,6 +231,8 @@
 				07F401D31D48A7DD0007384A /* HubViewControlller.swift */,
 				07F401DE1D4907120007384A /* SideMenuTableViewController.swift */,
 				074B466F1D4E7A20004F9C0E /* EditDetailsViewController.swift */,
+				0716B8A21D5B33DD002F8F1D /* ResetPasswordController.swift */,
+				07A7CF091D6A533A0074A53D /* AboutViewController.swift */,
 			);
 			name = "Account Management";
 			sourceTree = "<group>";
@@ -193,6 +246,8 @@
 				0741AD851D4B862D009CDABF /* PartyTwitterViewController.swift */,
 				07A4E2E61D4F736D00523B3E /* PartyIssuesViewController.swift */,
 				07A4E2EC1D4F7C5900523B3E /* PartyIssuesCellViewController.swift */,
+				07B1B9AF1D5DD97A004BEAF8 /* PartyCellIssuesViewController.swift */,
+				07B1B9B11D5DD996004BEAF8 /* PartyTableIssuesViewController.swift */,
 			);
 			name = Party;
 			sourceTree = "<group>";
@@ -200,6 +255,7 @@
 		0757BC891D43A7B2005D16B3 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				07D71F481D61BA58003735F3 /* selected.png */,
 				077981F01D4A1731008B6417 /* email.png */,
 				07E0F0071D4A12FB0013B5B7 /* politicsni copy.png */,
 				07E0EFEA1D49F5E90013B5B7 /* webIcon */,
@@ -226,6 +282,7 @@
 				07DDA55E1D4617CF0001B507 /* User.swift */,
 				07A4E2E81D4F754300523B3E /* Issue.swift */,
 				07A4E2EA1D4F75C600523B3E /* PartyView.swift */,
+				078C626B1D536F65003CA96F /* PartyEval.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -253,8 +310,8 @@
 		079EA8AF1D3FA78D000570B2 = {
 			isa = PBXGroup;
 			children = (
-				07F401D51D48B8FB0007384A /* SWRevealViewController */,
-				0727682B1D42301900FA9821 /* Default-568h@2x.png */,
+				07A14E4D1D6C898000737573 /* Addons */,
+				07F401D61D48B9170007384A /* Politics NI-Bridging-Header.h */,
 				079EA8BA1D3FA78D000570B2 /* Politics NI */,
 				079EA8B91D3FA78D000570B2 /* Products */,
 				720C82D250EA104B5D62F840 /* Pods */,
@@ -273,7 +330,7 @@
 		079EA8BA1D3FA78D000570B2 /* Politics NI */ = {
 			isa = PBXGroup;
 			children = (
-				07DDA56F1D46562C0001B507 /* GoogleService-Info.plist */,
+				071B08491D6D9BC500057A15 /* GoogleService-Info.plist */,
 				0757BC8C1D43A7FF005D16B3 /* Utility Classes */,
 				0757BC8B1D43A7EE005D16B3 /* View Controllers */,
 				0757BC8A1D43A7DE005D16B3 /* Models */,
@@ -296,12 +353,21 @@
 			path = "Politics NI";
 			sourceTree = "<group>";
 		};
+		07A14E4D1D6C898000737573 /* Addons */ = {
+			isa = PBXGroup;
+			children = (
+				07F401D51D48B8FB0007384A /* SWRevealViewController */,
+				0716B8A11D5B241F002F8F1D /* UIScrollView */,
+				07F135E31D6211F1009DC2B9 /* UIViewExtensions.swift */,
+			);
+			name = Addons;
+			sourceTree = "<group>";
+		};
 		07F401D51D48B8FB0007384A /* SWRevealViewController */ = {
 			isa = PBXGroup;
 			children = (
 				07F401D71D48B9180007384A /* SWRevealViewController.h */,
 				07F401D81D48B9180007384A /* SWRevealViewController.m */,
-				07F401D61D48B9170007384A /* Politics NI-Bridging-Header.h */,
 			);
 			name = SWRevealViewController;
 			sourceTree = "<group>";
@@ -361,7 +427,7 @@
 				TargetAttributes = {
 					079EA8B71D3FA78D000570B2 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = F6EFGE68F7;
+						DevelopmentTeam = D2S4T7H44X;
 					};
 				};
 			};
@@ -401,10 +467,9 @@
 				07E0F0041D4A04870013B5B7 /* tuv.png in Resources */,
 				07E0F0001D4A04870013B5B7 /* Independent.png in Resources */,
 				07E0F0021D4A04870013B5B7 /* sdlp.png in Resources */,
+				071B084A1D6D9BC500057A15 /* GoogleService-Info.plist in Resources */,
 				07E0F0011D4A04870013B5B7 /* pbp.png in Resources */,
 				079EA8C61D3FA78D000570B2 /* LaunchScreen.storyboard in Resources */,
-				0727682C1D42301900FA9821 /* Default-568h@2x.png in Resources */,
-				07DDA5701D46562C0001B507 /* GoogleService-Info.plist in Resources */,
 				07F401D11D48A5E90007384A /* myPolitics in Resources */,
 				07E0F0051D4A04870013B5B7 /* uup.png in Resources */,
 				07E0EFFE1D4A04870013B5B7 /* dup.png in Resources */,
@@ -413,6 +478,7 @@
 				07DDA5691D4624410001B507 /* locationIcon.png in Resources */,
 				079EA8C31D3FA78D000570B2 /* Assets.xcassets in Resources */,
 				07E0F0081D4A12FB0013B5B7 /* politicsni copy.png in Resources */,
+				07D71F491D61BA58003735F3 /* selected.png in Resources */,
 				07E0EFFF1D4A04870013B5B7 /* green.png in Resources */,
 				07DDA5671D4623E70001B507 /* genderIcon.png in Resources */,
 				07DDA56B1D4625A60001B507 /* passwordIcon.png in Resources */,
@@ -490,15 +556,23 @@
 			files = (
 				07E0EFF31D49FC390013B5B7 /* PartyTableViewController.swift in Sources */,
 				07F401D91D48B9180007384A /* SWRevealViewController.m in Sources */,
+				07A7CF0A1D6A533A0074A53D /* AboutViewController.swift in Sources */,
 				07B8253D1D411F3400E20DD4 /* PolCellViewController.swift in Sources */,
 				07211A311D50AFDA00C502D3 /* IssuesHubTableViewController.swift in Sources */,
+				07E2FB871D635160004EE246 /* PartyEvalAgreeDisagreeViewController.swift in Sources */,
+				07F135E41D6211F1009DC2B9 /* UIViewExtensions.swift in Sources */,
+				0716B8A31D5B33DD002F8F1D /* ResetPasswordController.swift in Sources */,
 				07F401D41D48A7DD0007384A /* HubViewControlller.swift in Sources */,
 				07A4E2ED1D4F7C5900523B3E /* PartyIssuesCellViewController.swift in Sources */,
 				07DDA56D1D463E120001B507 /* RegisterViewController.swift in Sources */,
 				0741AD841D4B6576009CDABF /* PolTwitterViewController.swift in Sources */,
 				071F34411D51DE73000400F7 /* IssuesCellViewController.swift in Sources */,
+				07A90F5C1D5A0BC700D4B7E4 /* RespondPartyViewsCellViewController.swift in Sources */,
+				0719DF411D53687A00C1C55B /* PartyEvalCellViewController.swift in Sources */,
 				07F401DF1D4907120007384A /* SideMenuTableViewController.swift in Sources */,
+				07A90F561D5A033500D4B7E4 /* RespondPartyIssuesCellViewController.swift in Sources */,
 				07DE60591D439C2300AAAC37 /* PoliticianProfileViewController.swift in Sources */,
+				078C626C1D536F65003CA96F /* PartyEval.swift in Sources */,
 				07A4E2E91D4F754300523B3E /* Issue.swift in Sources */,
 				07211A2F1D50ACE400C502D3 /* UserResponseViewController.swift in Sources */,
 				07E0EFED1D49F75C0013B5B7 /* PartyProfileVIewController.swift in Sources */,
@@ -508,13 +582,21 @@
 				079EA8BC1D3FA78D000570B2 /* AppDelegate.swift in Sources */,
 				07EAF6391D47919C007A2208 /* LandingPageViewController.swift in Sources */,
 				071F343F1D51DCCC000400F7 /* SelectIssuesTableViewController.swift in Sources */,
+				07A90F5A1D5A0B8300D4B7E4 /* RespondPartyViewsTableViewController.swift in Sources */,
+				0719DF3F1D53677B00C1C55B /* PartyEvaluationViewController.swift in Sources */,
+				07B1B9B01D5DD97A004BEAF8 /* PartyCellIssuesViewController.swift in Sources */,
 				0741AD861D4B862D009CDABF /* PartyTwitterViewController.swift in Sources */,
+				07A90F581D5A03E800D4B7E4 /* RespondPartyIssueTableViewController.swift in Sources */,
+				07E2FB891D6354C3004EE246 /* PartyEvalAgDisCell.swift in Sources */,
+				0717620A1D5C6E2C007A31C9 /* PartyEvalTopCellViewController.swift in Sources */,
 				07A4E2E71D4F736D00523B3E /* PartyIssuesViewController.swift in Sources */,
 				079EA8D01D3FB1AB000570B2 /* Party.swift in Sources */,
 				079EA8CE1D3FA7A3000570B2 /* Politician.swift in Sources */,
+				07B1B9B21D5DD996004BEAF8 /* PartyTableIssuesViewController.swift in Sources */,
 				07DDA55F1D4617CF0001B507 /* User.swift in Sources */,
 				07A4E2EB1D4F75C600523B3E /* PartyView.swift in Sources */,
 				07E0EFF11D49FBFD0013B5B7 /* PartyCellViewController.swift in Sources */,
+				0716B8A01D5B2382002F8F1D /* UIScrollView+EmptyDataSet.m in Sources */,
 				074B46701D4E7A20004F9C0E /* EditDetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -632,15 +714,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: James Robert Bailey (TCZ462XYSF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: James Robert Bailey (TCZ462XYSF)";
 				INFOPLIST_FILE = "Politics NI/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.AppCamp.Politics-NI";
+				PRODUCT_BUNDLE_IDENTIFIER = com.AppCamp.PoliticsNI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Politics NI-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -650,14 +734,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: James Robert Bailey (D2S4T7H44X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: James Robert Bailey (D2S4T7H44X)";
 				INFOPLIST_FILE = "Politics NI/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.AppCamp.Politics-NI";
+				PRODUCT_BUNDLE_IDENTIFIER = com.AppCamp.PoliticsNI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Politics NI-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

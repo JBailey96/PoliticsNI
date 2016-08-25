@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 import Firebase
 import CoreLocation
+import SCLAlertView
 
-class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class RegisterViewController: UITableViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     let ref = FIRDatabase.database().reference()
     let locationManager = CLLocationManager()
     let pickerData = ["Prefer not to say", "Under 16", "17-19", "20-24", "25-49", "50+"]
     
-    @IBOutlet weak var agePicker: UIPickerView!
     @IBOutlet weak var homePostCode: UITextField!
     @IBOutlet weak var password1: UITextField!
     @IBOutlet weak var password2: UITextField!
@@ -25,31 +25,60 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
     @IBOutlet weak var femaleButton: UIButton!
     @IBOutlet weak var maleButton: UIButton!
     @IBOutlet weak var preferNotToSay: UIButton!
-    @IBOutlet weak var fullName: UITextField!
     
+    @IBOutlet weak var locationLabel: UILabel!
+    
+    @IBOutlet weak var ageField: UITextField!
     var gender: String!
     var genderSet: Bool = false
-    var fullName1: String!
     var userConstit: String!
     var locationSet: Bool = false
-    var userAge: String = "Prefer not to say"
+    var userAge = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+        locationLabel.hidden = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(RegisterViewController.tap(_:)))
+        view.addGestureRecognizer(tapGesture)
         
-        homePostCode.hidden = true
-        self.agePicker.delegate = self
-        self.agePicker.dataSource = self
+        
+//        locationManager.delegate = self
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        locationManager.requestWhenInUseAuthorization()
+//        locationManager.startUpdatingLocation()
+        
+        homePostCode.hidden = false
         
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
         self.navigationController?.navigationBar.titleTextAttributes =  [NSForegroundColorAttributeName : UIColor.whiteColor()]
         self.navigationController?.navigationBar.backItem?.backBarButtonItem?.tintColor = UIColor.whiteColor()
-    }
+        
+        let pickerView  : UIPickerView = UIPickerView()
+        pickerView.dataSource = self
+        pickerView.delegate = self
+        ageField.inputView = pickerView
+        
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .Default
+        toolBar.translucent = true
+        toolBar.tintColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        toolBar.sizeToFit()
+        
+        // Adding Button ToolBar
+        let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(RegisterViewController.doneClick))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(RegisterViewController.cancelClick))
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolBar.userInteractionEnabled = true
+        ageField.inputAccessoryView = toolBar
+        
+        homePostCode.delegate = self
+        password1.delegate = self
+        password2.delegate = self
+        email1.delegate = self
+        ageField.delegate = self
+        }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -70,7 +99,7 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         userAge = pickerData[row]
-        print(userAge)
+        ageField.text = userAge
     }
     
     func passAuth() -> Bool {
@@ -86,22 +115,29 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
     
     func dateAuth() -> Bool {
         if(userAge == "") {
+            alert("You have not set your age.")
             return false
         }
         return true
     }
     
     @IBAction func registerButton(sender: AnyObject) {
-        if passAuth() && dateAuth() && validateFullName() && genderAuth() && LocationAuth() {
+        if dateAuth() && genderAuth() && LocationAuth() && passAuth() {
             FIRAuth.auth()?.createUserWithEmail(email1.text!, password: password1.text!) { (user, error) in
                 print(error?.description)
                 if let error = error {
-                    self.alert("Could not sign up.")
+                    self.alert("Could not sign up. Have you entered a valid email and password?")
                 }
                 if let user = user {
-                    let user1 = ["full_name": self.fullName1, "dob": self.userAge, "gender": self.gender, "constituency": self.userConstit]
+                    let user1 = ["dob": self.userAge, "gender": self.gender, "constituency": self.userConstit]
                     self.ref.child("users").child(user.uid).setValue(user1)
                     userUtility.getUserInfo()
+                    userUtility.getUserIssues()
+                    userUtility.issues = [Issue]()
+                    userUtility.agreeViews = [PartyView]()
+                    userUtility.disagreeViews = [PartyView]()
+                    userUtility.unsureViews = [PartyView]()
+                    userUtility.neutralViews = [PartyView]()
                     self.performSegueWithIdentifier("finishReg", sender: self)
                 }
             }
@@ -150,68 +186,105 @@ class RegisterViewController: UIViewController, CLLocationManagerDelegate, UIPic
     
     
     @IBAction func findLocat(sender: AnyObject) {
-        if (homePostCode.hidden == true) {
-            if CLLocationManager.locationServicesEnabled() {
-                switch(CLLocationManager.authorizationStatus()) {
-                case .NotDetermined, .Restricted, .Denied:
-                    alert("Problem with your location services.")
-                    homePostCode.hidden = false
-                case .AuthorizedAlways, .AuthorizedWhenInUse:
-                    let latitude = String(format: "%f", locationManager.location!.coordinate.latitude)
-                    let longitude = String(format: "%f", locationManager.location!.coordinate.longitude)
-                    userConstit = DatabaseUtility.getConstituency(latitude, long: longitude)
-                    print(userConstit)
-                    
-                    if userConstit == "" {
-                        alert("Problem with your location services.")
-                        homePostCode.hidden = false
-                    } else {
-                        location.text = userConstit
-                        self.locationSet = true
-                    }
-                }
-            } else {
-                alert("Problem with your location services.")
-                homePostCode.hidden = false
-            }
-        } else {
+//        if (homePostCode.hidden == true) {
+//            if CLLocationManager.locationServicesEnabled() {
+//                switch(CLLocationManager.authorizationStatus()) {
+//                case .NotDetermined, .Restricted, .Denied:
+//                    SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
+//                    homePostCode.hidden = false
+//                case .AuthorizedAlways, .AuthorizedWhenInUse:
+//                    if locationManager.location != nil {
+//                    let latitude = String(format: "%f", locationManager.location!.coordinate.latitude)
+//                    let longitude = String(format: "%f", locationManager.location!.coordinate.longitude)
+//                    userConstit = DatabaseUtility.getConstituency(latitude, long: longitude)
+//                        if userConstit == "" {
+//                            SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
+//                            homePostCode.hidden = false
+//                        } else {
+//                            location.text = userConstit
+//                            self.locationSet = true
+//                        }
+//
+//                    } else {
+//                        SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
+//                        homePostCode.hidden = false
+//                                }
+//                }
+//            } else {
+//               SCLAlertView().showWarning("Warning", subTitle: "Problem with your location services. Please enter your home postcode.")
+//                homePostCode.hidden = false
+//            }
+//        } else {
             let postcode = homePostCode.text
             findLocatPostCode(postcode!)
-        }
-        }
+//        }
+       }
     
     func findLocatPostCode(postCode: String) {
         userConstit = DatabaseUtility.getConstituencyPostCode(postCode)
         
         if userConstit == "" {
-            alert("Problem with your location services.")
-        } else {
+            SCLAlertView().showWarning("Warning", subTitle: "Problem with your postcode entry. Is it a valid Northern Ireland postcode?")        }
+        else {
+            locationLabel.hidden = false
             location.text = userConstit
             self.locationSet = true
         }
     }
     
-    func validateFullName() -> Bool {
-        if (fullName.text?.characters.count > 70) {
-            alert("Full name is too long.")
-            return false
-        }
-        else if (fullName.text == "") {
-                alert("You have not entered your full name.")
-                return false
-        }
-          self.fullName1 = self.fullName.text
-          return true
-    }
-    
-    @IBAction func clearTextFields(sender: AnyObject) {
-        let field = sender as! UITextField
-        field.text = ""
-    }
     
     func alert(alertDesc: String) {
-        let alert = UIAlertController(title: "Alert", message: alertDesc, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+       SCLAlertView().showError("Error with registration", subTitle: alertDesc)
     }
+    
+    
+//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+//        self.view.endEditing(true)
+//    }
+//    
+//    func textFieldShouldReturn(textField: UITextField) -> Bool {
+//        homePostCode.resignFirstResponder()
+//        password1.resignFirstResponder()
+//        password2.resignFirstResponder()
+//        email1.resignFirstResponder()
+//        ageField.resignFirstResponder()
+//        return true
+//    }
+//    
+    
+//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
+//        view.endEditing(true)
+//        super.touchesBegan(touches, withEvent: event)
+//        homePostCode.resignFirstResponder()
+//        password1.resignFirstResponder()
+//        password2.resignFirstResponder()
+//        email1.resignFirstResponder()
+//        ageField.resignFirstResponder()
+//    }
+//   
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true;
     }
+    
+    func tap(gesture: UITapGestureRecognizer) {
+        //password1.resignFirstResponder()
+        view.endEditing(true)
+    }
+    
+    func doneClick() {
+        ageField.resignFirstResponder()
+    }
+    
+    
+    func cancelClick() {
+        ageField.resignFirstResponder()
+    }
+    
+    
+    
+
+    
+    
+}
+

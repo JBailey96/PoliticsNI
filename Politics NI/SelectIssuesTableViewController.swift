@@ -7,30 +7,49 @@
 //
 
 import Firebase
-class SelectIssuesTableViewController: UITableViewController {
+class SelectIssuesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     var rootRef: FIRDatabaseReference!
     var partyViews = [PartyView]()
     var issues = [Issue]()
     var issue:Issue!
     var partyViewsCollect = [PartyView]()
     
+    var firstAttempt = true
+    
+    @IBOutlet weak var backItem: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
+        firstAttempt = true
+        tableView.tableFooterView = UIView()
         rootRef = FIRDatabase.database().reference()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         self.tableView.rowHeight = 90
-        self.tableView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0)
+        self.tableView.contentInset = UIEdgeInsetsMake(25, 0, 0, 0)
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.19, green:0.53, blue:0.96, alpha:1.0)
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
+        let attrs = [
+            NSForegroundColorAttributeName : UIColor.whiteColor(),
+            ]
+        
+        self.navigationController?.navigationBar.titleTextAttributes = attrs
         loadPartyViews()
+        
     }
+    
+//    override func viewDidAppear(animated: Bool) {
+//
+//    }
     
     func loadPartyViews() {
         let issuesRef = FIRDatabase.database().reference().child("parties").child("issues").child("issue")
         
         self.issues.removeAll()
         self.partyViews.removeAll()
-        issuesRef.observeEventType(.Value, withBlock: { snapshot in
+        issuesRef.observeSingleEventOfType(.Value, withBlock: { snapshot in
             for child in snapshot.children {
                 let childSnapshot = snapshot.childSnapshotForPath(child.key)
                 let desc = childSnapshot.value!.objectForKey("desc") as! String
@@ -58,14 +77,18 @@ class SelectIssuesTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return issues.count
+         return issues.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell3", forIndexPath: indexPath) as! IssuesCellViewController
-        let entry = issues[indexPath.row]
         
-        cell.issueLabel.text = entry.desc
+             let entry = issues[indexPath.row]
+             cell.issueLabel.text = entry.desc
+             cell.userInteractionEnabled = true
+             cell.issueLabel.textColor = UIColor.blackColor()
+             cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        
         return cell
     }
     
@@ -79,7 +102,6 @@ class SelectIssuesTableViewController: UITableViewController {
             }
             let desView = segue.destinationViewController as! UserResponseViewController
             desView.partyViews = partyViewsCollect
-
             partyViewsCollect.removeAll()
         }
         }
@@ -87,17 +109,37 @@ class SelectIssuesTableViewController: UITableViewController {
     
     func compareIssues() {
         let userResponded = userUtility.issues
-        if (!userResponded.isEmpty) {
-            for i in 0..<userResponded.count {
-                for x in 0..<userResponded.count {
-                    if userResponded[i].id == issues[x].id {
-                        issues.removeAtIndex(x)
+        if (!userResponded.isEmpty) && (!issues.isEmpty) {
+            for (usrResindex, usrRes) in userResponded.enumerate() {
+                for (issIndex, issue) in issues.enumerate() {
+                    if usrRes.id == issue.id {
+                        print("in")
+                        print(issues[issIndex].desc)
+                        issues.removeAtIndex(issIndex)
                     }
                 }
             }
-
         }
-            self.tableView.reloadData()
+        firstAttempt = false
+        self.tableView.reloadData()
+    }
+    
+    func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
+        let str = "There are no more issues to reply to."
+        let attrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)]
+        return NSAttributedString(string: str, attributes: attrs)
+    }
+
+    func emptyDataSetShouldDisplay(scrollView: UIScrollView) -> Bool {
+        if (firstAttempt) {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    func imageForEmptyDataSet(scrollView: UIScrollView) -> UIImage? {
+        return UIImage(named: "issueic")!
     }
 
 }

@@ -8,7 +8,6 @@
 import Firebase
 
 class SideMenuTableViewController: UITableViewController {
-    @IBOutlet weak var nickName: UILabel!
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "logoutSegue") {
@@ -18,6 +17,7 @@ class SideMenuTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        nickName.text = userUtility.user.fullName
+        self.revealViewController().rearViewRevealWidth = self.view.frame.width-100
+
     }
 }
